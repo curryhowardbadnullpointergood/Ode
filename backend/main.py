@@ -1,11 +1,18 @@
-from flask import Flask
+from flask import Flask, jsonify, request
+from service.register import register_user
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World! And Hello You!'
+@app.route('/user/<path:subpath>', methods=['POST'])
+def user_register(subpath):
+    # Call different functions based on the path
+    if subpath == "register":
+        return register_user(request)
+    elif subpath == "login":
+        return
+    else:
+        return jsonify({"error": f"Unknown action: {subpath}"}), 404
 
 
 # use python3 main.py
