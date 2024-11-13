@@ -25,7 +25,7 @@ def user_register(action):
     elif action == "edit" and method == 'PUT':
         return edit_user(request, users_container)
     else:
-        return jsonify({"error": f"Unknown action: {subpath}"}), 404
+        return jsonify({"error": f"Unknown action: {action}"}), 404
 
 
 # use python3 main.py
