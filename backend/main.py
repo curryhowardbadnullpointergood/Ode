@@ -6,23 +6,23 @@ import firebase_admin
 from service.register import register_user
 from service.edit import edit_user
 
-app = Flask(__name__)
 load_dotenv()
+app = Flask(__name__)
 cred = credentials.Certificate(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
 firebase_admin.initialize_app(cred)
 database = firestore.client()
 users_container = database.collection('users')
 
 
-@app.route('/user/<path:subpath>', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def user_register(subpath):
+@app.route('/user/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def user_register(action):
     method = request.method
     # Call different functions based on the path
-    if subpath == "register" and method == 'POST':
+    if action == "register" and method == 'POST':
         return register_user(request, users_container)
-    elif subpath == "login":
+    elif action == "login":
         return
-    elif subpath == "edit" and method == 'PUT':
+    elif action == "edit" and method == 'PUT':
         return edit_user(request, users_container)
     else:
         return jsonify({"error": f"Unknown action: {subpath}"}), 404
