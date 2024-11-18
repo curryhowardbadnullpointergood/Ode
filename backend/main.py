@@ -7,15 +7,16 @@ from service.register import register_user
 from service.edit import edit_user
 from service.login import login_user
 from service.logout import logout_user
-
+from service.delete import delete_user
 
 load_dotenv()
 app = Flask(__name__)
-cred = credentials.Certificate("C:/Users/user/Documents/cs/cs 3/cloud app/group project/Music-Event-App/backend/music-event-442109-firebase-adminsdk-ib5vx-0abef8c709.json")
+cred = credentials.Certificate(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
 firebase_admin.initialize_app(cred)
 print("Firebase initialized successfully")
 database = firestore.client()
 users_container = database.collection('users')
+organiser_container = database.collection('organisers')
 
 
 @app.route('/user/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -30,6 +31,26 @@ def user_controller(action):
         return logout_user()
     elif action == "edit" and method == 'PUT':
         return edit_user(request, users_container)
+    elif action == 'delete' and method == 'DELETE':
+        return delete_user(request, users_container)
+    else:
+        return jsonify({"error": f"Unknown action: {action}"}), 404
+
+
+@app.route('/organiser/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def organiser_controller(action):
+    method = request.method
+    # Call different functions based on the path
+    if action == "register" and method == 'POST':
+        return register_user(request, organiser_container)
+    elif action == "login" and method == 'POST':
+        return login_user(request, organiser_container)
+    elif action == "logout" and method == 'POST':
+        return logout_user()
+    elif action == "edit" and method == 'PUT':
+        return edit_user(request, organiser_container)
+    elif action == 'delete' and method == 'DELETE':
+        return delete_user(request, organiser_container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
 
