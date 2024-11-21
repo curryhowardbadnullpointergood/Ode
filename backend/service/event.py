@@ -2,6 +2,44 @@ from flask import jsonify
 import uuid
 
 
+def create_event(request, container, user_container):
+    request_json = request.get_json()
+    admin = request_json.get('admin')
+    users = request_json.get('users')
+
+    user_list = user_container.where(field_path='username', op_string='==', value=admin).stream()
+    user = next(user_list, None)
+    if not user:
+        return jsonify({"error": "Invalid user"}), 401
+
+    event_id = str(uuid.uuid4())
+    new_event = container.document(event_id)
+    data = {
+        'id': event_id,
+        'admin': admin,
+        'users': users
+    }
+    new_event.set(data)
+    response = {
+        "status": "success",
+        "message": "Event is created successfully",
+        "data": {'id': event_id}
+    }
+
+    return jsonify(response), 201
+
+
+def get_users_by_event_id(event_id, container):
+    event_list = container.where(field_path='id', op_string='==', value=event_id).stream()
+    event = next(event_list, None)
+    if event is None:
+        return jsonify({'error': 'Event not found'}), 404
+
+    event_data = event.to_dict()
+    user_list = event_data.get('users')
+    return user_list
+
+
 def report_user(request, database):
     request_json = request.get_json()
     username = request_json.get('username')
@@ -63,4 +101,3 @@ def block_user(request, database):
     }
 
     return jsonify(response), 200
-
