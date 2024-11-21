@@ -7,7 +7,7 @@ def create_event(request, container, user_container):
     admin = request_json.get('admin')
     users = request_json.get('users')
 
-    user_list = user_container.where(field_path='username', op_string='==', value=admin).steam()
+    user_list = user_container.where(field_path='username', op_string='==', value=admin).stream()
     user = next(user_list, None)
     if not user:
         return jsonify({"error": "Invalid user"}), 401
