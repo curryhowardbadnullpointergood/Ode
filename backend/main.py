@@ -9,6 +9,7 @@ from service.login import login_user
 from service.logout import logout_user
 from service.delete import delete_user
 from service.create_profile import create_profile
+from service.event import report_user, block_user
 
 
 load_dotenv()
