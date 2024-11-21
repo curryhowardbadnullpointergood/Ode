@@ -8,6 +8,8 @@ from service.edit import edit_user
 from service.login import login_user
 from service.logout import logout_user
 from service.delete import delete_user
+from service.create_profile import create_profile
+
 
 load_dotenv()
 app = Flask(__name__)
@@ -33,6 +35,8 @@ def user_controller(action):
         return edit_user(request, users_container)
     elif action == 'delete' and method == 'DELETE':
         return delete_user(request, users_container)
+    elif action == "create_profile" and method == 'POST':
+        return create_profile(request, users_container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
 
@@ -51,6 +55,8 @@ def organiser_controller(action):
         return edit_user(request, organiser_container)
     elif action == 'delete' and method == 'DELETE':
         return delete_user(request, organiser_container)
+    elif action == "create_profile" and method == 'POST':
+        return create_profile(request, users_container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
 
