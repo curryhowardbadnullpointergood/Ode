@@ -1,0 +1,85 @@
+.loginPage{
+   width: 50%;
+   height: 500px;
+   background-color:white;
+   display: grid;
+   place-items: center;
+   padding: 0
+  
+}
+
+.loginBlock{
+    width: 80%
+}
+
+.centerBlock{
+    width: 40%;
+    
+    
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    
+    
+   
+}
+
+.signup{
+    width: 50%;
+    height: 500px;
+    background-color:rgb(246, 210, 164);
+    display: grid;
+    place-items: center;
+}
+
+.confirmButton{
+    margin-top: 12%;
+    width: 80%;
+    height: 50px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.confirmButton:hover{
+    background-color: rgb(43, 43, 43);
+    color: white;
+}
+
+
+.loginForm{
+    text-align: center;
+    
+
+}
+
+.grad{
+    background-image: linear-gradient(to bottom right, rgb(65, 131, 254), yellow);
+    display: flex;
+
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+}
+h4{
+    margin-top: 8%;
+    margin-bottom: 3%;
+    padding: 0%;
+}
+
+input{
+    width: 100%;
+    height: 20px;
+    padding: 2%;
+    border-radius: 5px;
+    background: #9c9c9c;
+    opacity: 0.5;
+}
