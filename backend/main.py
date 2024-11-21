@@ -60,6 +60,20 @@ def organiser_controller(action):
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
 
+@app.route('/event/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def event_controller(action):
+    method = request.method
+    if action == "create" and method == 'POST':
+        return
+    elif action == "block" and method == 'POST':
+        return block_user(request, database)
+    elif action == "report" and method == 'POST':
+        return report_user(request, database)
+
+
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
 
 # use python3 main.py
 if __name__ == '__main__':
