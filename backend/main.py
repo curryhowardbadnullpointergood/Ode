@@ -1,5 +1,6 @@
 from flask_socketio import SocketIO
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from firebase_admin import firestore, credentials
 import os
 from dotenv import load_dotenv
@@ -10,10 +11,11 @@ from service.login import login_user
 from service.logout import logout_user
 from service.delete import delete_user
 from service.create_profile import create_profile
-from service.event import report_user, block_user
+from service.event import report_user, block_user, create_event, get_users_by_event_id
 
 load_dotenv()
 app = Flask(__name__)
+CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 cred = credentials.Certificate(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
 firebase_admin.initialize_app(cred)
@@ -21,6 +23,9 @@ print("Firebase initialized successfully")
 database = firestore.client()
 users_container = database.collection('users')
 organiser_container = database.collection('organisers')
+event_container = database.collection('events')
+users_to_sockets = {}
+sockets_to_users = {}
 
 
 @app.route('/user/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -37,16 +42,11 @@ def organiser_controller(action):
 def event_controller(action):
     method = request.method
     if action == "create" and method == 'POST':
-        return
+        return create_event(request, event_container, users_container)
     elif action == "block" and method == 'POST':
         return block_user(request, database)
     elif action == "report" and method == 'POST':
         return report_user(request, database)
-
-
-@socketio.on('connect')
-def handle_connect():
-    print('Client connected')
 
 
 def user_process(action, container):
@@ -66,6 +66,40 @@ def user_process(action, container):
         return create_profile(request, container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
+
+
+@socketio.on('connect')
+def handle_connect():
+    socket_id = request.sid
+    print(f'Client connected with socket ID: {socket_id}')
+
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+
+
+@socketio.on('group_chat')
+def handle_group_chat(message, event_id):
+    print(message)
+    users = get_users_by_event_id(event_id, event_container)
+    for user in users:
+        socket = users_to_sockets[user]
+        socketio.emit('group_chat', message, to=socket)
+
+
+@socketio.on('chat')
+def handle_message(message, target):
+    print(message)
+    socket = users_to_sockets[target]
+    socketio.emit('chat', message, to=socket)
+
+
+@socketio.on('join')
+def handle_join(user_id):
+    users_to_sockets[user_id] = request.sid
+    sockets_to_users[request.sid] = user_id
+    print(f"User {user_id} joined with Socket ID {request.sid}")
 
 
 # use python3 main.py
