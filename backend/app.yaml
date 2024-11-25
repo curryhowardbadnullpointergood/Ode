@@ -10,7 +10,7 @@ runtime_config:
 manual_scaling:
   instances: 1
 
-# Use low resources during development and testing
+# Use low resources during development and test
 resources:
   cpu: 1
   memory_gb: 0.5
