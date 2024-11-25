@@ -20,6 +20,12 @@ def store_messages(request, messages_container):
     for receiver in receivers:
         store_single_receiver(sender, receiver, message, messages_container)
 
+    response = {
+        "status": "success",
+        "message": "Message stored successfully"
+    }
+    return jsonify(response), 200
+
 
 def store_single_receiver(sender, receiver, message, messages_container):
     if not sender or not receiver or not message:
