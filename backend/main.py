@@ -13,6 +13,7 @@ from service.delete import delete_user
 from service.create_profile import create_profile
 from service.event import report_user, block_user, create_event, get_users_by_event_id
 from service.utils import store_image
+from service.chat import store_message, store_messages
 
 load_dotenv()
 app = Flask(__name__)
@@ -26,6 +27,7 @@ bucket = storage.bucket(os.environ.get('FIREBASE_BUCKET'))
 users_container = database.collection('users')
 organiser_container = database.collection('organisers')
 event_container = database.collection('events')
+message_container = database.collection('messages')
 users_to_sockets = {}
 sockets_to_users = {}
 
@@ -55,7 +57,9 @@ def event_controller(action):
 def chat_controller(action):
     method = request.method
     if action == "create" and method == 'POST':
-        return
+        return store_message(request, message_container)
+    if action == "group_chat" and method == 'POST':
+        return store_messages(request, message_container)
 
 
 def user_process(action, container):
