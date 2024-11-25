@@ -6,6 +6,8 @@ def create_event(request, container, user_container):
     request_json = request.get_json()
     admin = request_json.get('admin')
     users = request_json.get('users')
+    information = request_json.get('information')
+    picture = request_json.get('picture')
 
     user_list = user_container.where(field_path='username', op_string='==', value=admin).stream()
     user = next(user_list, None)
