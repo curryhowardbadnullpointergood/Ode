@@ -14,6 +14,8 @@ from service.create_profile import create_profile
 from service.event import report_user, block_user, create_event, get_users_by_event_id
 from service.utils import store_image
 from service.chat import store_message, store_messages
+from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
+
 
 load_dotenv()
 app = Flask(__name__)
@@ -81,6 +83,17 @@ def user_process(action, container):
         return store_image(request, bucket)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
+
+@app.route('/friendRequest/<path:action>', methods=['GET', 'POST', 'PUT'])
+def friend_request_controller(action):
+    method = request.method
+    if action == "send" and method == 'POST':
+        return send_friend_request(request, database)
+    elif action == "respond" and method == 'POST':
+        return receive_friend_request(request, database)
+    elif action == "view" and method == 'GET':
+        return view_friend_requests(request, database)
+    return jsonify({"error": f"Unknown action: {action}"}), 404
 
 
 @socketio.on('connect')
