@@ -103,3 +103,25 @@ def block_user(request, database):
     }
 
     return jsonify(response), 200
+
+def view_event(request, container):
+    request_json = request.get_json()
+    event_id = request_json.get('event_id')
+
+    if not event_id:
+        return jsonify({"error": "Need an event id"}), 400
+
+    event_list = container.where(field_path='id', op_string='==', value=event_id).stream()
+    event = next(event_list, None)
+
+    if not event:
+        return jsonify({"error": "No event found"}), 404
+    event_data = event.to_dict()
+
+    response = {
+        "status": "success",
+        "message": "Event data retrieved successfully",
+        "data": event_data
+    }
+
+    return jsonify(response), 200

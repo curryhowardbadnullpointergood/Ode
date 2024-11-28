@@ -11,7 +11,7 @@ from service.login import login_user
 from service.logout import logout_user
 from service.delete import delete_user
 from service.create_profile import create_profile
-from service.event import report_user, block_user, create_event, get_users_by_event_id
+from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event
 from service.utils import store_image
 from service.chat import store_message, store_messages
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
@@ -53,6 +53,8 @@ def event_controller(action):
         return block_user(request, database)
     elif action == "report" and method == 'POST':
         return report_user(request, database)
+    elif action == "view" and method == 'POST':
+        return view_event(request, event_container)
 
 
 @app.route('/chat/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
