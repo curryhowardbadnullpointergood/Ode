@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./login.scss";
+import {Link } from "react-router-dom";
 function Login() {
     function handleSubmit(e) {
         // Prevent the browser from reloading the page
@@ -35,7 +36,7 @@ function Login() {
                             </div>
                             <div>
                             <input type='username' onChange={e => setUserName(e.target.value)}
-                                name="myInput" defaultValue="Some initial value" />
+                                name="myInput" placeholder="Enter your username or email" />
                             </div>
                         </div>
                         <div>
@@ -46,7 +47,7 @@ function Login() {
                                 name="myInput" defaultValue="" /></div>
                         </div>
 
-                        <button className="confirmButton" type="submit">Submit form</button>
+                        <button className="confirmButton" type="submit">Confirm</button>
                         
                     </form>
                     </div>
@@ -54,8 +55,11 @@ function Login() {
             <div className="signup">
                 <div>
                     <h2>Welcome </h2>
-                    <h4>Haven't have an account? </h4>
-                    <button className="confirmButton">Signup</button>
+                    <h4>Don't have an account? </h4>
+                    <Link to={"../register"}>
+                        <button className="confirmButton">Sign up</button>
+                    </Link>
+                    
                 </div>
             </div>
         </div>
