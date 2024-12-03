@@ -31,8 +31,6 @@ users_container = database.collection('users')
 organiser_container = database.collection('organisers')
 event_container = database.collection('events')
 message_container = database.collection('messages')
-users_to_sockets = {}
-sockets_to_users = {}
 
 
 @app.route('/user/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])

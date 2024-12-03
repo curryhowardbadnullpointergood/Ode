@@ -16,9 +16,10 @@ def store_messages(request, messages_container):
     sender = data.get("sender")
     receivers = data.get("receivers")
     message = data.get("message")
+    group_id = data.get("group_id")
 
     for receiver in receivers:
-        store_single_receiver(sender, receiver, message, messages_container)
+        store_single_receiver(sender, receiver, message, group_id, messages_container)
 
     response = {
         "status": "success",
@@ -27,7 +28,7 @@ def store_messages(request, messages_container):
     return jsonify(response), 200
 
 
-def store_single_receiver(sender, receiver, message, messages_container):
+def store_single_receiver(sender, receiver, message, group_id, messages_container):
     if not sender or not receiver or not message:
         return jsonify({"error": "Missing sender, receiver, or message"}), 400
 
@@ -37,6 +38,7 @@ def store_single_receiver(sender, receiver, message, messages_container):
         "sender": sender,
         "receiver": receiver,
         "message": message,
+        "group_id": group_id,
         "timestamp": datetime.utcnow()
     }
 

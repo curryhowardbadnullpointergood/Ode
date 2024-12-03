@@ -19,7 +19,9 @@ def create_event(request, container, user_container):
     data = {
         'id': event_id,
         'admin': admin,
-        'users': users
+        'users': users,
+        'information': information,
+        'picture': picture,
     }
     new_event.set(data)
     response = {
