@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import Home from "./pages/home/Home";
+import Login from './pages/login/Login';
+import Register from './pages/register/Register'
+import {Routes,Route, Router, BrowserRouter} from 'react-router-dom'
+
 
 function App() {
 
@@ -24,9 +27,22 @@ function App() {
   ]);
 
   return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
+  //  <div className="App">
+  //    <Login/>
+  //    <Route path="/dashboard" component={Dashboard} />
+  //  </div>
+
+  <BrowserRouter>
+    
+       <main className="py-1">
+       <Routes>            
+        <Route path="/" element={<Login/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register/>} />
+      </Routes>
+      
+      </main>
+    </BrowserRouter>
   );
 }
 
