@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "./pages/login/login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import designFormat from "./components/designFormat";
 
 
 // login needs to Change as the other pages are developed been used as a placeholder here 
@@ -10,6 +11,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
 function App() {
+
+
+
   return (
     <Router>
       <Routes>
