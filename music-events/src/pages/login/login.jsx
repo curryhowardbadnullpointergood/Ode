@@ -11,7 +11,7 @@ const Login = () => {
             <p> A bit about our app! Something like oh this is a music app about events, needs to be catchy and short, but informative and formal.</p>
             <span> Click here to register! </span>
             <Link to = '/register'>
-            <button>Register</button>
+                <button>Register</button>
             </Link>
             
 

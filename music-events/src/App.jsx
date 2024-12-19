@@ -1,5 +1,6 @@
 import React from "react";
 import Login from "./pages/login/login";
+import Register from "./pages/register/Register";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import designFormat from "./components/designFormat";
 
@@ -22,7 +23,7 @@ function App() {
         {/* think og like a instagram like profile page  */}
         <Route path="/home" element={<div> Home</div>} />
         {/* sort of like a facebook home page, maybe? to be decided tbh  */}
-        <Route path="/register" element={<div> Register</div>} />
+        <Route path="/register" element={<Register/>} />
         {/* simple modern register page  */}
         <Route path="/chat" element={<div> Chat</div>} />
         {/* this is the chat/group chat, think of discord like, might not get done tbh  */}
