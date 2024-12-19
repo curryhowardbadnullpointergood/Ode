@@ -43,7 +43,7 @@ function Register() {
                     <p>Here's your portal into the world of music fantasy. Just need a simple account and you are all set!</p>
                     <h4>Already have an account?</h4>
                     <Link to="/login">
-                        <button>Sign In</button>
+                        <button>Login</button>
                     </Link>
                     
                 </div>
