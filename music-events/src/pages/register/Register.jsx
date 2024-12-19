@@ -28,11 +28,11 @@ function Register() {
                     <h1>Register</h1>
                     <form method="post" onSubmit={handleSubmit} className="regForm">
                         <input type='username' onChange={e => setUserName(e.target.value)}
-                            name="myInput" placeholder="user name" />
+                            name="myInput" placeholder="Enter Username:" />
                         <input type='username' onChange={e => setUserName(e.target.value)}
-                            name="myInput" placeholder="Enter Email" />
+                            name="myInput" placeholder="Enter Email:" />
                         <input type='password'  onChange={e => setPassword(e.target.value)}
-                            name="myInput" placeholder="Enter Password" />
+                            name="myInput" placeholder="Enter Password:" />
                         <button  type="submit">Confirm</button>
                     </form>
                 </div>
