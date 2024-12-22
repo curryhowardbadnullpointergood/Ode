@@ -1,8 +1,18 @@
 import React from "react";
+
+// pages 
+
 import Login from "./pages/login/login";
 import Register from "./pages/register/Register";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import designFormat from "./components/designFormat";
+import Profile from "./pages/profile/profile"
+import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
+// do not remove router, else thinfs in here break, for some reason?? really bizare what is going on here ? 
+
+
+// layouts 
+import MainLayout from "./components/layouts/MainLayout";
+
+
 
 
 // login needs to Change as the other pages are developed been used as a placeholder here 
@@ -11,17 +21,15 @@ import designFormat from "./components/designFormat";
 // then lmk if you can't get it to work, this basic version of rendering doesn't work for them needs to be tweaked a bit 
 
 
-function App() {
+// changing the routing a bit for better code quality
 
-
-
-  return (
-    <Router>
-      <Routes>
+const route = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<div> Profile</div>} />
+        {/* <Route path="/profile" element={<div> Profile</div>} />  this needs to be dynamic, so need to have id on here, and be inside the layout*/}
         {/* think og like a instagram like profile page  */}
-        <Route path="/home" element={<div> Home</div>} />
+        
         {/* sort of like a facebook home page, maybe? to be decided tbh  */}
         <Route path="/register" element={<Register/>} />
         {/* simple modern register page  */}
@@ -31,8 +39,37 @@ function App() {
         {/* this is the video add sort of thing  */}
         <Route path="/" element={<div> Hello world</div>} />
         {/* this is to prank the slackers when they try run npm start and see the front end not exist lol  */}
-      </Routes>
-    </Router>
+
+        <Route path="/" element={<MainLayout/>}>
+
+          <Route path="/home" element={<div> Home</div>} />
+
+          <Route path="/profile/:id" element= {<Profile/>} /> 
+          {/* Allright so this basically makes suer that the components are like children of the main layout, we might need more layouts in the future but again that would increase complexity 
+          and so we should try and avoid that, well I should anyway, if you realise that we for some reason need a new layout style, let me know */}
+
+
+        </Route>
+
+
+      </Route>
+  )
+)
+
+function App() {
+
+  // this is for the integration, making that easier to think about, 
+  const isUser = false; 
+  // turn this flag to true for the autentication, we can protect the routes this way by prohibiting, ore redirecting the user 
+  // to the login page, or the register page, of course, can take this a couple steps further, but don't think that is necessary for this 
+  // coursework, who know though, if we have time, can try to do a partial load of the page, which requires some dynamic routing, 
+  // then show like a login page if you want to see further, sort of like instagram does. 
+
+
+  return (
+    // this is much cleaner than before, with all this mess being not encapsulated
+    <RouterProvider router={route} />
+
   );
 }
 
