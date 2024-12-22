@@ -1,50 +1,10 @@
 import "./home.scss"
+import Event from "../../components/events/Events"
 
 const Home = () => {
     return(
         <div className="home"> 
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
-            <h1> Test</h1>
+            <Event/> 
         </div>
     )
 }
