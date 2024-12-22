@@ -10,9 +10,7 @@ export default function MainLayout() {
         <Navbar1/>
 
         <div style={{display: "flex"}}>
-            <main>
                 <Outlet/> 
-            </main>
         </div>
     </div>
   )

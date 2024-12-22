@@ -45,7 +45,7 @@ function Navbar() {
         <IoMdNotifications />
         <div className="user">
           <img src={hahn} alt="" />
-          <span> Dummy User</span>
+          {/* <span> Dummy User</span> */}
         </div>
       </div>
 

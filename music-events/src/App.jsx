@@ -11,6 +11,7 @@ import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromE
 
 // layouts 
 import MainLayout from "./components/layouts/MainLayout";
+import Home from "./pages/home/home";
 
 
 
@@ -42,7 +43,7 @@ const route = createBrowserRouter(
 
         <Route path="/" element={<MainLayout/>}>
 
-          <Route path="/home" element={<div> Home</div>} />
+          <Route path="/home" element={<Home/>} />
 
           <Route path="/profile/:id" element= {<Profile/>} /> 
           {/* Allright so this basically makes suer that the components are like children of the main layout, we might need more layouts in the future but again that would increase complexity 

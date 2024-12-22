@@ -1,10 +1,18 @@
 .navBar{
+    // there is a slight sort of unintended feature here 
+    // not really a bug but the search has a white radius, even after removing the border and setting it to none
+    // can't be bothered to fix it, don't think it's a huge issue, but if you know how to fix it go ahead 
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 25px;
     height: 50px;
     border-bottom: 1px solid #CFBFB4;
+    position: sticky;
+    top: 0;
+    height: 50px;
+    background-color: #8FB88A;
     .left{
         display: flex;
         align-items: center;
@@ -21,13 +29,14 @@
             align-items: center;
             gap: 10px; 
             border: 1px solid #492E4D;
-            border-radius: 4px;
-            padding: 4px;
+            border-radius: 10px;
+            padding: 5px;
+            background-color: #8FB88A;
             input{
-                border: none;
-                border-radius: 0px;
+                border: 1px solid #8FB88A;
                 width: 300px; 
                 color: #492E4D; // nice colour for text here 
+                background-color: #8FB88A;
             }
         }
     }
