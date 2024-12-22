@@ -1,16 +1,54 @@
+import { Link } from "react-router-dom";
 import "./navBar.scss"
+
+
+import hahn from "../../assets/Hahn.jpg"
+
 // literally the basic navbar example for the documentation, should really change in the future 
 
+// importing the icons, maybe in the future we can have someone redo the icon design in illustrator
+// is that overkill? ugh maybe 
+import { IoHomeSharp } from "react-icons/io5";
+import { IoMusicalNote } from "react-icons/io5";
+import { FaSearch } from "react-icons/fa";
+import { IoMdNotifications } from "react-icons/io"; // this is for the notifications of the event and if someone tagged the user or well discord tag / instagram at 
+import { BiSolidMessageSquare } from "react-icons/bi"; // this is for messages in the group chats/ direct messages between users etc 
+
+
+// for now the name of the app is Ode, sounds allright as a name and is catchy 
 
 function Navbar() {
   return (
     <div className="navBar"> 
 
-      <nav >
-        <a href="/" >
-          Home
-        </a>
-      </nav>
+      <div className="left"> 
+        <Link to="/home" style={{ textDecoration: "none"}}> 
+        <span> Ode</span>
+        </Link>
+
+        <div className="search" > 
+          <FaSearch />
+          <input type="text" placeholder="Search..." />
+        </div>
+      </div>
+
+
+      <div className="middle"> 
+        <IoHomeSharp />
+        <IoMusicalNote /> 
+        {/* this is for the events page  */}
+      </div>
+
+
+      <div className="right"> 
+        <BiSolidMessageSquare /> 
+        <IoMdNotifications />
+        <div className="user">
+          <img src={hahn} alt="" />
+          <span> Dummy User</span>
+        </div>
+      </div>
+
 
     </div>
   

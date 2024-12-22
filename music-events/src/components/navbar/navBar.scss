@@ -1,0 +1,72 @@
+.navBar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 25px;
+    height: 50px;
+    border-bottom: 1px solid #CFBFB4;
+    .left{
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        span{
+            font-weight: bolder;
+            font-size: large;
+            color: #492E4D;
+            border: none;
+        }
+
+        .search{
+            display: flex;
+            align-items: center;
+            gap: 10px; 
+            border: 1px solid #492E4D;
+            border-radius: 4px;
+            padding: 4px;
+            input{
+                border: none;
+                border-radius: 0px;
+                width: 300px; 
+                color: #492E4D; // nice colour for text here 
+            }
+        }
+    }
+
+    .middle{
+        display: flex;
+        gap: 25px;
+        align-items: center;
+        // border: 1px solid #492E4D;
+        // border-radius: 5px;
+        // padding: 6px;
+        // maybe turn into buttons? rather than hyperlinks? 
+
+    }
+   
+    
+    .right{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        
+
+        .user{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            img{
+                height: 35px;
+                width: 35px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            span{
+                font-weight: 400;
+                
+            }
+        }
+    }
+
+}
