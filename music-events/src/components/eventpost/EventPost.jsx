@@ -11,8 +11,7 @@ import { Link } from "react-router-dom"
 export const EventPost = ({eventpost}) => {
   return (
     <div className='eventpost'> 
-    <div className="container">
-    <div className="user">
+        <div className="user">
           <div className="information">
             <img src={Sophie} alt="" />
             <div className="username">
@@ -22,8 +21,9 @@ export const EventPost = ({eventpost}) => {
             </div>
           </div>
         </div>
-    </div>
-        <div className="content"></div>
+        <div className="content">
+          Hello
+        </div>
     </div>
   )
 }
