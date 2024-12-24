@@ -5,6 +5,7 @@ import React from "react";
 import Login from "./pages/login/login";
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/profile"
+import Notifications from "./pages/notification/notification"
 import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 // do not remove router, else thinfs in here break, for some reason?? really bizare what is going on here ? 
 
@@ -49,6 +50,9 @@ const route = createBrowserRouter(
           {/* Allright so this basically makes suer that the components are like children of the main layout, we might need more layouts in the future but again that would increase complexity 
           and so we should try and avoid that, well I should anyway, if you realise that we for some reason need a new layout style, let me know */}
 
+          <Route path="/notification/:id" element={<Notifications/>} />
+
+          
 
         </Route>
 
