@@ -42,6 +42,10 @@ const route = createBrowserRouter(
         <Route path="/" element={<div> Hello world</div>} />
         {/* this is to prank the slackers when they try run npm start and see the front end not exist lol  */}
 
+        <Route path="/organisation/:id" element={<div> Video Feed</div>} />  
+
+
+
         <Route path="/" element={<MainLayout/>}>
 
           <Route path="/home" element={<Home/>} />
