@@ -7,6 +7,8 @@ import Register from "./pages/register/Register";
 import Profile from "./pages/profile/profile"
 import Notifications from "./pages/notification/notification"
 import Organisation from "./pages/organisation/organisation"
+import Chat from "./pages/messages/messages"
+
 import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 // do not remove router, else thinfs in here break, for some reason?? really bizare what is going on here ? 
 
@@ -56,6 +58,9 @@ const route = createBrowserRouter(
           and so we should try and avoid that, well I should anyway, if you realise that we for some reason need a new layout style, let me know */}
 
           <Route path="/notification/:id" element={<Notifications/>} />
+
+          <Route path="/chat/:id" element={<Chat/>} />
+
 
           
 

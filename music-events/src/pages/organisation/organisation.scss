@@ -1,4 +1,16 @@
 .organisation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: aquamarine;
+    height: 100vmax;
+    width: 100vmax;
 
-    
+
+    .span{
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+
 }
