@@ -7,13 +7,14 @@ import HahnProfile from "../../assets/HahnProfile.jpeg"
 const Events = () => {
 
     // temporary dummy data, link this up to the API
-    // it goes without saying, that if we don not have 5 event videos, 
+    // it goes without saying, that if we do not have 5 event videos, or the filtering doens't have that 
     // make this dynamic and show them less events stories 
+    // maybe add buttons to swiping so right swipe = more about the event, left is not interested 
 
     const events = [
         {
-            id: 1, // unique id for player 
-            username: "Hilary Hahn",
+            id: 1, // unique id for organiser  
+            username: "Hilary Hahn", // name of the event organiser or company 
             img: Hahn,
 
         },
@@ -46,13 +47,8 @@ const Events = () => {
 
     return (
         <div className="Events">
-            <div className="event">
-                    <img src={HahnProfile} alt="" />
-                    <span>{"Legendary Violinist!"}</span>
-
-                </div>
             {events.map(event =>(
-                <div className="event">
+                <div className="event" key={event.id}>
                     <img src={event.img} alt="" />
                     <span>{event.username}</span>
 
