@@ -12,9 +12,7 @@ doesn't need to look pretty, so will code this quick.
 const organisation = () => {
   return (
     <div className="organisation">
-    
-
-
+    Organisation account
     </div>
   )
 }
