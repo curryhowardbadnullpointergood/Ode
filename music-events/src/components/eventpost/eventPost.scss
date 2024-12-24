@@ -1,6 +1,39 @@
 .eventpost{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+
+    .containter{
+
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+        
     
+        .user{
+    
+            .information{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 20px;
+    
+                img{
+                    height: 30px;
+                    width: 30px;
+                    border-radius: 50%;
+                }
+    
+                .username{
+                    span{
+                        font-weight: bold;
+                        color: #DBE9E8;
+    
+                    }
+                }
+    
+    
+            }
+        }
+
+    }
+   
 }
