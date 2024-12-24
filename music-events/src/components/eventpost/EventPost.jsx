@@ -1,6 +1,6 @@
 import "./eventPost.scss"
 // keeping it very simple for now with only one type of post. can do video format and text format later on 
-import Sophie from "../../assets/anne-sophie-mutter_profile.jpg"
+
 import { Link } from "react-router-dom"
 
 
@@ -13,7 +13,7 @@ export const EventPost = ({eventpost}) => {
     <div className='eventpost'> 
         <div className="user">
           <div className="information">
-            <img src={Sophie} alt="" />
+            <img src={eventpost.picture} alt="" />
             <div className="username">
               <Link to={`/profile/${eventpost.id}`} style={{textDecoration: "none"}}>
               <span>{eventpost.name}</span>
@@ -22,7 +22,8 @@ export const EventPost = ({eventpost}) => {
           </div>
         </div>
         <div className="content">
-          Hello
+          <p> {eventpost.description}</p>
+          <img src={eventpost.img} alt="" />
         </div>
     </div>
   )

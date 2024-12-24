@@ -1,6 +1,7 @@
 
 import "./Eventposts.scss"
 import anneSophieMutter from "../../assets/anne-sophie-mutter.jpg"
+import Sophie from "../../assets/anne-sophie-mutter_profile.jpg"
 import { EventPost } from "../eventpost/EventPost"
 
 export const EventPosts = () => {
@@ -11,8 +12,8 @@ export const EventPosts = () => {
             {
                 id: 1, // this is organiser id links back to profile 
                 name: "ClassicalTheatre", // name of organisation 
-                picture: anneSophieMutter, // picture of organisation logo
-                description: "listen to the best solo violin concerto interpretation on sibelius", // description of the event  
+                picture: Sophie, // picture of organisation logo
+                description: "' listen to the best solo violin concerto interpretation of sibelius '", // description of the event  
                 img: anneSophieMutter, // picture of the artist or poster 
                 postId: 3, // organisers can have multiple posts, put in databse, and this is the unique id for that 
                 
