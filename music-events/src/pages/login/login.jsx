@@ -1,8 +1,13 @@
 import { Link,useNavigate } from "react-router-dom"
 import "./login.scss"
+import AuthContext from "../../authentication/AuthContext";
 import HandleLogin from "../../apiFunctions/HandleLogin";
+import {useContext} from "react";
 const Login = () => {
+
+    const {auth, login_auth} = useContext(AuthContext); // authentication with AuthContext
     const navigate = useNavigate(); // Hook for navigation
+    console.log(auth.isLoggedIn);
     return(
         <div className="login"> 
         <div className="box">
@@ -20,7 +25,7 @@ const Login = () => {
 
         <div className="right">
             <h1> Login</h1>
-            <form method="post" onSubmit={e => HandleLogin(e,navigate )}> 
+            <form method="post" onSubmit={e => HandleLogin(e,navigate, login_auth)}> 
                 <input type="text" placeholder="Enter Username: "  name="username"/>
                 <input type="password" placeholder="Enter Password: "  name="password"/>
                 <button>Login</button>

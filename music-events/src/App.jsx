@@ -8,7 +8,7 @@ import Profile from "./pages/profile/profile"
 import Notifications from "./pages/notification/notification"
 import Organisation from "./pages/organisation/organisation"
 import Chat from "./pages/messages/messages"
-import { useEffect, useState } from "react";
+import ProtectedRoute from "./authentication/ProtectedRoute "
 
 import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 // do not remove router, else thinfs in here break, for some reason?? really bizare what is going on here ? 
@@ -33,7 +33,7 @@ const route = createBrowserRouter(
   createRoutesFromElements(
     <Route>
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/profile" element={<div> Profile</div>} />  this needs to be dynamic, so need to have id on here, and be inside the layout*/}
+        {/* <Route path="/profile" element={<div> Profile</div>} />  //this needs to be dynamic, so need to have id on here, and be inside the layout*/}
         {/* think og like a instagram like profile page  */}
         
         {/* sort of like a facebook home page, maybe? to be decided tbh  */}
@@ -52,18 +52,18 @@ const route = createBrowserRouter(
 
         <Route path="/" element={<MainLayout/>}>
 
-          <Route path="/home" element={<Home/>} />
+        <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} /> {/* not sure if home should be secure from outsiders  */}
 
-          <Route path="/profile/:id" element= {<Profile/>} /> 
-          {/* Allright so this basically makes suer that the components are like children of the main layout, we might need more layouts in the future but again that would increase complexity 
-          and so we should try and avoid that, well I should anyway, if you realise that we for some reason need a new layout style, let me know */}
+        <Route path="/profile/:id" element= {<Profile/>} /> 
+        {/* Allright so this basically makes suer that the components are like children of the main layout, we might need more layouts in the future but again that would increase complexity 
+        and so we should try and avoid that, well I should anyway, if you realise that we for some reason need a new layout style, let me know */}
 
-          <Route path="/notification/:id" element={<Notifications/>} />
+        <Route path="/notification/:id" element={<Notifications/>} />
 
-          <Route path="/chat/:id" element={<Chat/>} />
+        <Route path="/chat/:id" element={<Chat/>} />
 
 
-          
+        
 
         </Route>
 

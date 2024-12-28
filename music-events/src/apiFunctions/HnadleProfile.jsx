@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-export default async function HandleLogin(e,navigate,login_auth) {
+export default async function HandleProfile(e,navigate) {
         // Prevent the browser from reloading the page
 
         let flag = true;
-        const path = 'http://localhost:8080/user/login';
+        const path = 'http://localhost:8080/user/register';
         e.preventDefault();
         console.log("handleRegister was called!");
         
@@ -16,16 +16,16 @@ export default async function HandleLogin(e,navigate,login_auth) {
         for (var [key, value] of formData.entries()) { 
             console.log(key, value);
             data[key] = value;
-        }
+          }
+
         console.log(JSON.stringify(data));
 
         try{
             const response = await axios.post(path,data );
             console.log("response: ", response);
             if (response.data.status === "success"){
-                login_auth(data["username"]);
                 alert("success!");
-                navigate("/home");
+                navigate("/login");
             }
             else{
                 alert(response.data.error);
@@ -34,7 +34,6 @@ export default async function HandleLogin(e,navigate,login_auth) {
         catch(error){
             console.error("Error: ", error.message);
         }
-    
 
         
       }

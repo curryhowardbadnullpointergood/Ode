@@ -12,6 +12,7 @@ import back from "../../assets/profile_background.jpg"
 import Sophie from "../../assets/anne-sophie-mutter_profile.jpg"
 
 const profile = () => {
+    
     return(
         <div className="profile"> 
         <div className="profileimages">
