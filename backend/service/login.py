@@ -22,7 +22,9 @@ def login_user(request, container):
     response = {
         "status": "success",
         "message": "Login successful",
-        "data": {"user_id": user.id}
+        "user_id": user.id,
+        "data" : user_data
     }
 
     return jsonify(response), 200
+

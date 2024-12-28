@@ -1,4 +1,7 @@
-import "./profile.scss"
+import "./profile.scss";
+import { useLoaderData, useParams, withRouter } from "react-router";
+import {useState} from "react";
+import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
 
 
 // this should be linked back to the profile of the person in question 
@@ -11,16 +14,35 @@ import "./profile.scss"
 import back from "../../assets/profile_background.jpg"
 import Sophie from "../../assets/anne-sophie-mutter_profile.jpg"
 
-const profile = () => {
-    
+const Profile = (props) => {
+    const params = useParams();
+	const [userData, setUserData] = useState({});
+    HandleUserInfo(params.id,setUserData);
+    let exist = true;
+    console.log(userData);
+    if (userData === "User not found"){
+        exist = false;
+    }
+	console.log(exist);
+
+    function User_exist({ name, exist }) {
+        if (!exist) {
+          return null;
+        }
+        return <li className="item">{name}</li>;
+      }
+
     return(
+        
+        exist &&   // if user exist, display the following
         <div className="profile"> 
         <div className="profileimages">
+            
             <img src={back} alt="" className="background" />
             <img src={Sophie} alt="" className="profile" />
         </div>
         <div className="personalinformation">
-            <span> Anne Sophie Mutter</span>  
+            <span> {userData.username}</span>  
 
             <div className="bio">
                 <p>
@@ -38,5 +60,5 @@ Mutter founded the Association of Friends of the Anne-Sophie Mutter Foundation e
     )
 }
 
-export default profile
+export default Profile
 

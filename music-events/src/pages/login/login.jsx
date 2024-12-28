@@ -5,7 +5,7 @@ import HandleLogin from "../../apiFunctions/HandleLogin";
 import {useContext} from "react";
 const Login = () => {
 
-    const {auth, login_auth} = useContext(AuthContext); // authentication with AuthContext
+    const {auth, login_auth, userData, set_user_detail} = useContext(AuthContext); // authentication with AuthContext
     const navigate = useNavigate(); // Hook for navigation
     console.log(auth.isLoggedIn);
     return(
@@ -25,7 +25,7 @@ const Login = () => {
 
         <div className="right">
             <h1> Login</h1>
-            <form method="post" onSubmit={e => HandleLogin(e,navigate, login_auth)}> 
+            <form method="post" onSubmit={e => HandleLogin(e,navigate, login_auth, set_user_detail)}> 
                 <input type="text" placeholder="Enter Username: "  name="username"/>
                 <input type="password" placeholder="Enter Password: "  name="password"/>
                 <button>Login</button>

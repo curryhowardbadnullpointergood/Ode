@@ -59,3 +59,19 @@ def view_interests(request, container):
         "status": "success",
         "data": {"interests": interests}
     }), 200
+
+def view_user(request, container):
+    request_json = request.get_json()
+    username = request_json.get("username")
+
+    user = next(container.where("username", "==", username).stream(), None)
+    if not user:
+        return jsonify({"error": "User not found"}), 200
+
+    user_data = user.to_dict()
+    interests = user_data.get('interests', [])
+
+    return jsonify({
+        "status": "success",
+        "data": user_data
+    }), 200
