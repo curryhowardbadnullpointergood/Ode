@@ -8,6 +8,7 @@ import Profile from "./pages/profile/profile"
 import Notifications from "./pages/notification/notification"
 import Organisation from "./pages/organisation/organisation"
 import Chat from "./pages/messages/messages"
+import { useEffect, useState } from "react";
 
 import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 // do not remove router, else thinfs in here break, for some reason?? really bizare what is going on here ? 
@@ -74,7 +75,9 @@ const route = createBrowserRouter(
 function App() {
 
   // this is for the integration, making that easier to think about, 
+
   const isUser = false; 
+  
   // turn this flag to true for the autentication, we can protect the routes this way by prohibiting, ore redirecting the user 
   // to the login page, or the register page, of course, can take this a couple steps further, but don't think that is necessary for this 
   // coursework, who know though, if we have time, can try to do a partial load of the page, which requires some dynamic routing, 

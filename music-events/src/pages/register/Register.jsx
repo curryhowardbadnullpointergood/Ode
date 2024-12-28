@@ -3,12 +3,6 @@ import "./register.scss";
 import {Link,useNavigate} from "react-router-dom";
 import handleRegister from "../../apiFunctions/HandleRegister";
 function Register() {
-
-
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-    const [pw_confirmation, setPw_confirmation] = useState('');
-    const [email, setEmail] = useState('');
     const navigate = useNavigate(); // Hook for navigation
 
   return (
@@ -18,14 +12,10 @@ function Register() {
                 <div className='regBlock'>
                     <h1>Register</h1>
                     <form method="post" onSubmit={e => handleRegister(e,navigate)} className="regForm">
-                        <input type='username' onChange={e => setUserName(e.target.value)}
-                            name="username" placeholder="Enter Username:" />
-                        <input type='email' onChange={e => setUserName(e.target.value)}
-                            name="email_address" placeholder="Enter Email:" />
-                        <input type='password'  onChange={e => setPassword(e.target.value)}
-                            name="password" placeholder="Enter Password:" />
-                        <input type='password'  onChange={e => setPassword(e.target.value)}
-                        name="confirmed_password" placeholder="Confirm Password:" />
+                        <input type='username' name="username" placeholder="Enter Username:" />
+                        <input type='email' name="email_address" placeholder="Enter Email:" />
+                        <input type='password' name="password" placeholder="Enter Password:" />
+                        <input type='password' name="confirmed_password" placeholder="Confirm Password:" />
                         <button  type="submit" >Confirm</button>
                     </form>
                 </div>
