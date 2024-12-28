@@ -1,24 +1,15 @@
 import { useState } from "react";
 import "./register.scss";
-import {Link } from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
+import handleRegister from "../../apiFunctions/HandleRegister";
 function Register() {
-    function handleSubmit(e) {
-        // Prevent the browser from reloading the page
-        e.preventDefault();
-    
-        // Read the form data
-        const form = e.target;
-        const formData = new FormData(form);
-    
-        // pass data back to backend
-        fetch('/some-api', { method: form.method, body: formData });
-    
-        // Or you can work with it as a plain object:
-        const formJson = Object.fromEntries(formData.entries());
-        console.log(formJson);
-      }
+
+
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const [pw_confirmation, setPw_confirmation] = useState('');
+    const [email, setEmail] = useState('');
+    const navigate = useNavigate(); // Hook for navigation
 
   return (
     <div className="grad">
@@ -26,14 +17,16 @@ function Register() {
             <div className='reigsterPage'>
                 <div className='regBlock'>
                     <h1>Register</h1>
-                    <form method="post" onSubmit={handleSubmit} className="regForm">
+                    <form method="post" onSubmit={e => handleRegister(e,navigate)} className="regForm">
                         <input type='username' onChange={e => setUserName(e.target.value)}
-                            name="myInput" placeholder="Enter Username:" />
-                        <input type='username' onChange={e => setUserName(e.target.value)}
-                            name="myInput" placeholder="Enter Email:" />
+                            name="username" placeholder="Enter Username:" />
+                        <input type='email' onChange={e => setUserName(e.target.value)}
+                            name="email_address" placeholder="Enter Email:" />
                         <input type='password'  onChange={e => setPassword(e.target.value)}
-                            name="myInput" placeholder="Enter Password:" />
-                        <button  type="submit">Confirm</button>
+                            name="password" placeholder="Enter Password:" />
+                        <input type='password'  onChange={e => setPassword(e.target.value)}
+                        name="confirmed_password" placeholder="Confirm Password:" />
+                        <button  type="submit" >Confirm</button>
                     </form>
                 </div>
             </div>
