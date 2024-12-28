@@ -10,8 +10,8 @@ from service.edit import edit_user
 from service.login import login_user
 from service.logout import logout_user
 from service.delete import delete_user
-from service.create_profile import create_profile
-from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event
+from service.create_profile import create_profile, view_interests
+from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre
 from service.utils import store_image
 from service.chat import store_message, store_messages
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
@@ -54,6 +54,8 @@ def event_controller(action):
         return report_user(request, database)
     elif action == "view" and method == 'POST':
         return view_event(request, event_container)
+    elif action == "filter_genre" and method == 'POST':
+        return filter_by_genre(request, event_container)
 
 
 @app.route('/chat/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -82,6 +84,8 @@ def user_process(action, container):
         return create_profile(request, container)
     elif action == "image" and method == 'POST':
         return store_image(request, bucket)
+    elif action == "view_interests" and method == 'GET':
+        return view_interests(request, container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
 
