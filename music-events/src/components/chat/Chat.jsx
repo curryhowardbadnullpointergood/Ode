@@ -10,7 +10,7 @@ const Chat = ({ currentUser }) => {
   return (
     <div className="chat">
       <div className="chatInfo">
-        <span>{JSON.stringify(data.user)}</span>
+        <span>{data.user}</span>
       </div>
       <Messages currentUser={currentUser}/>
       <Input currentUser={currentUser}/>

@@ -8,7 +8,7 @@ import {
   export const ChatContextProvider = ({ children }) => {
     const INITIAL_STATE = {
       chatId: "null",
-      user: {},
+      user: "",
     };
   
     const chatReducer = (state, action) => {

@@ -58,7 +58,7 @@ const route = createBrowserRouter(
 
         <Route path="/organisation/:id" element={<Organisation/>} />  
 
-
+        <Route path="/chat/:id" element={<ChatId/>} />
 
         <Route path="/" element={<MainLayout/>}>
 
@@ -71,11 +71,6 @@ const route = createBrowserRouter(
         <Route path="/update_profile" element= {<ProtectedRoute><UpdateProfile/></ProtectedRoute>} /> {/*the update page for profile*/}
 
         <Route path="/notification/:id" element={<Notifications/>} />
-
-        <Route path="/chat/:id" element={<ChatId/>} />
-
-
-
 
         
 

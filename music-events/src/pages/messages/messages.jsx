@@ -17,8 +17,8 @@ const Messages = () => {
   }, [id]);
 
   return (
-    <div className='home'>
-      <div className="container">
+    <div className='chatMain'>
+      <div className="chatContainer">
         <Sidebar currentUser={currentUser}/>
         <Chat currentUser={currentUser}/>
       </div>
