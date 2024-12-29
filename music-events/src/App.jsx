@@ -7,7 +7,8 @@ import Register from "./pages/register/Register";
 import Profile from "./pages/profile/profile"
 import Notifications from "./pages/notification/notification"
 import Organisation from "./pages/organisation/organisation"
-import Chat from "./pages/messages/messages"
+import Chat from "./pages/messages/chattest"
+import ChatId from "./pages/messages/messages"
 
 import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 // do not remove router, else thinfs in here break, for some reason?? really bizare what is going on here ? 
@@ -16,6 +17,9 @@ import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromE
 // layouts 
 import MainLayout from "./components/layouts/MainLayout";
 import Home from "./pages/home/home";
+
+//ChatContextProvider
+import { ChatContextProvider } from "./context/ChatContext";
 
 
 
@@ -38,7 +42,7 @@ const route = createBrowserRouter(
         {/* sort of like a facebook home page, maybe? to be decided tbh  */}
         <Route path="/register" element={<Register/>} />
         {/* simple modern register page  */}
-        <Route path="/chat" element={<div> Chat</div>} />
+        <Route path="/chat" element={<Chat/>} />
         {/* this is the chat/group chat, think of discord like, might not get done tbh  */}
         <Route path="/videofeed" element={<div> Video Feed</div>} />  
         {/* this is the video add sort of thing  */}
@@ -59,7 +63,7 @@ const route = createBrowserRouter(
 
           <Route path="/notification/:id" element={<Notifications/>} />
 
-          <Route path="/chat/:id" element={<Chat/>} />
+          <Route path="/chat/:id" element={<ChatId/>} />
 
 
           
@@ -82,9 +86,9 @@ function App() {
 
 
   return (
-    // this is much cleaner than before, with all this mess being not encapsulated
-    <RouterProvider router={route} />
-
+    <ChatContextProvider>
+      <RouterProvider router={route} />
+    </ChatContextProvider>
   );
 }
 
