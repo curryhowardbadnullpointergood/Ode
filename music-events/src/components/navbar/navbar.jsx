@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import "./navBar.scss"
-
+import {useContext} from "react";
 
 import hahn from "../../assets/Hahn.jpg"
+import AuthContext from "../../authentication/AuthContext";
 
 // literally the basic navbar example for the documentation, should really change in the future 
 
@@ -18,6 +19,7 @@ import { BiSolidMessageSquare } from "react-icons/bi"; // this is for messages i
 // for now the name of the app is Ode, sounds allright as a name and is catchy 
 
 function Navbar() {
+  const {auth} = useContext(AuthContext);
   return (
     <div className="navBar"> 
 
@@ -44,7 +46,9 @@ function Navbar() {
         <BiSolidMessageSquare /> 
         <IoMdNotifications />
         <div className="user">
-          <img src={hahn} alt="" />
+          <Link to={"/profile/" + auth.token }>
+            <img src={hahn} alt="" />
+          </Link>
           {/* <span> Dummy User</span> */}
         </div>
       </div>

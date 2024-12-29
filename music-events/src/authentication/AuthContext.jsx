@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
       loading: true
     });
 
-    const [userData, setUserData] = useState({
+    const [userData, setUserData] = useState({  // storing the data of the logged in user
       username : "",
       name: "",
       profile_picture: "",
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       friends : []
     })
   
-    useEffect(() => {
+    useEffect(() => {  // handle side effect of stored information by browser to ensure user won't log off when refreshing their screen
       const token = sessionStorage.getItem("authToken");
       if (token) {
         setAuth({ isLoggedIn: true, token: token,loading: false  });
@@ -29,17 +29,17 @@ export const AuthProvider = ({ children }) => {
       }
     }, []);
   
-    const login_auth = (token) => {
+    const login_auth = (token) => { // log in authentication method
       sessionStorage.setItem("authToken", token);
       setAuth({ isLoggedIn: true, token , loading: false });
     };
   
-    const logout_auth = () => {
+    const logout_auth = () => { // remove authentication state when log out
       sessionStorage.removeItem("authToken");
       setAuth({ isLoggedIn: false, token: null , loading: false });
     };
 
-    const set_user_detail = (data) =>{
+    const set_user_detail = (data) =>{ // saving user information
       const data_to_write = { 
         username : data["username"] , 
         name: data["name"], 

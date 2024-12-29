@@ -18,6 +18,8 @@ import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromE
 import MainLayout from "./components/layouts/MainLayout";
 import Home from "./pages/home/home";
 
+import UpdateProfile from "./pages/profile/UpdateProfile";
+
 
 
 
@@ -57,6 +59,8 @@ const route = createBrowserRouter(
         <Route path="/profile/:id" element= {<Profile/>} /> 
         {/* Allright so this basically makes suer that the components are like children of the main layout, we might need more layouts in the future but again that would increase complexity 
         and so we should try and avoid that, well I should anyway, if you realise that we for some reason need a new layout style, let me know */}
+        
+        <Route path="/update_profile" element= {<ProtectedRoute><UpdateProfile/></ProtectedRoute>} /> {/*the update page for profile*/}
 
         <Route path="/notification/:id" element={<Notifications/>} />
 
