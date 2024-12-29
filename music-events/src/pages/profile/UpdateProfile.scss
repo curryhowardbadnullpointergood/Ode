@@ -1,0 +1,39 @@
+.update_profile{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100vmax;
+    height: 100vmax;
+    background-color: rgb(164, 247, 219);
+
+    form{
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        span{
+            font-weight: bolder;
+            font-size: larger;
+            
+        }
+        p{
+            padding: 10px 20%;
+            font-size: 16px;
+        }
+        .addingImage{
+            border-radius: 20px;
+            border-color: black;
+            background-color: aliceblue;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+    }
+    .interests_choice{
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+}

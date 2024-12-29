@@ -1,9 +1,10 @@
 import "./profile.scss";
 import { useLoaderData, useParams, withRouter } from "react-router";
-import {useState} from "react";
+import { Link } from "react-router-dom"
+import {useState, useContext} from "react";
 import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
 import Friend_list from "./popup_screen/Friend_list";
-
+import AuthContext from "../../authentication/AuthContext";
 
 // this should be linked back to the profile of the person in question 
 // background image and profile pic 
@@ -20,10 +21,12 @@ const Profile = (props) => {
 	const [userData, setUserData] = useState({});
     let exist = true;
     const response = HandleUserInfo(params.id,setUserData);
+    const {auth} = useContext(AuthContext);
 
     // the following is the variable controlling the showing. 
     // Can be removed once everything is tested but for simpicity we just connecting the info from api to them first: Lucas
     let interests = ["test1","test2","test3"];
+    let events_interested = ["event1","event2","event3"];
     let friends = ["friend1", "friend2", "friend3", "friend4", "friend5" ];
     let name = "name";
     let nickname = "nickname";
@@ -33,14 +36,23 @@ const Profile = (props) => {
     // the data retrieved from api will have time delay that making userData empty here. Should have a loading screen before it arrives
     if (userData === "User not found" || userData.name === undefined){ // user not found or the data hasn't arrived yet
         exist = false;
-        console.log("undefined");
     }
     else{ // data arrives
-        console.log(userData);
-        console.log("userData[\"interests\"]: ",userData["interests"]);
+        //console.log(userData);
+        //console.log("userData[\"interests\"]: ",userData["interests"]);
         interests.push(...userData["interests"]);
         bio = userData["bio"];
+        nickname = userData["name"];
 
+    }
+    const LoginUserProfile = () =>  {
+        if (params.id ===auth.token ){
+            return (
+                <Link to = '/update_profile'>
+                    <button>Update Profile</button>
+                </Link>
+        )
+        }
     }
 
 
@@ -63,13 +75,22 @@ const Profile = (props) => {
         </div>
         <div className="personalinformation">
             <h1>{userData.username}</h1> {/*displaying username*/}
-            <span> {name}</span>  {/*displaying name*/}
-            <Friend_list list = {friends} />
+            <span> {nickname}</span>  {/*displaying name*/}
+            {LoginUserProfile()}
+            <Friend_list list = {friends} /> {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
             <div className="bio">
                 <p>
                 {bio}
                 </p>
             </div>
+
+            <span>Events interested</span> {/*The part showing the interested event of this player. Need styling */}
+            <ul>
+                {interests.map((fav) => (
+                    <li key={fav}>{fav}</li>
+                ))}
+            </ul>
+
             <span>Interests</span> {/*The part showing the interest of this player. Need styling */}
             <ul>
                 {interests.map((fav) => (
