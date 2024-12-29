@@ -2,13 +2,17 @@ import React from "react";
 
 // pages 
 
-import Login from "./pages/login/Login";
+import Login from "./pages/login/login";
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/profile"
 import Notifications from "./pages/notification/notification"
 import Organisation from "./pages/organisation/organisation"
+
+
+import ChatId from "./pages/messages/messages"
 import Chat from "./pages/messages/messages"
 import ProtectedRoute from "./authentication/ProtectedRoute "
+
 
 import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 // do not remove router, else thinfs in here break, for some reason?? really bizare what is going on here ? 
@@ -18,7 +22,11 @@ import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromE
 import MainLayout from "./components/layouts/MainLayout";
 import Home from "./pages/home/home";
 
+
+import { ChatContextProvider } from "./context/ChatContext";
+
 import UpdateProfile from "./pages/profile/UpdateProfile";
+
 
 
 
@@ -41,7 +49,7 @@ const route = createBrowserRouter(
         {/* sort of like a facebook home page, maybe? to be decided tbh  */}
         <Route path="/register" element={<Register/>} />
         {/* simple modern register page  */}
-        <Route path="/chat" element={<div> Chat</div>} />
+        <Route path="/chat" element={<Chat/>} />
         {/* this is the chat/group chat, think of discord like, might not get done tbh  */}
         <Route path="/videofeed" element={<div> Video Feed</div>} />  
         {/* this is the video add sort of thing  */}
@@ -50,7 +58,7 @@ const route = createBrowserRouter(
 
         <Route path="/organisation/:id" element={<Organisation/>} />  
 
-
+        <Route path="/chat/:id" element={<ChatId/>} />
 
         <Route path="/" element={<MainLayout/>}>
 
@@ -63,9 +71,6 @@ const route = createBrowserRouter(
         <Route path="/update_profile" element= {<ProtectedRoute><UpdateProfile/></ProtectedRoute>} /> {/*the update page for profile*/}
 
         <Route path="/notification/:id" element={<Notifications/>} />
-
-        <Route path="/chat/:id" element={<Chat/>} />
-
 
         
 
@@ -89,9 +94,9 @@ function App() {
 
 
   return (
-    // this is much cleaner than before, with all this mess being not encapsulated
-    <RouterProvider router={route} />
-
+    <ChatContextProvider>
+      <RouterProvider router={route} />
+    </ChatContextProvider>
   );
 }
 
