@@ -1,0 +1,21 @@
+[debug] [2024-12-27T21:09:51.089Z] ----------------------------------------------------------------------
+[debug] [2024-12-27T21:09:51.091Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Lucas\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2024-12-27T21:09:51.091Z] CLI Version:   13.29.1
+[debug] [2024-12-27T21:09:51.091Z] Platform:      win32
+[debug] [2024-12-27T21:09:51.091Z] Node Version:  v22.12.0
+[debug] [2024-12-27T21:09:51.091Z] Time:          Fri Dec 27 2024 21:09:51 GMT+0000 (Greenwich Mean Time)
+[debug] [2024-12-27T21:09:51.091Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-12-27T21:09:51.096Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-12-27T21:09:51.096Z] > authorizing via signed-in user (lucastai0601@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Lucas\Music-Event-App-1
+

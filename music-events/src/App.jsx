@@ -2,13 +2,17 @@ import React from "react";
 
 // pages 
 
-import Login from "./pages/login/login";
+import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/profile"
 import Notifications from "./pages/notification/notification"
 import Organisation from "./pages/organisation/organisation"
-import Chat from "./pages/messages/chattest"
+
+
 import ChatId from "./pages/messages/messages"
+import Chat from "./pages/messages/messages"
+import ProtectedRoute from "./authentication/ProtectedRoute "
+
 
 import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 // do not remove router, else thinfs in here break, for some reason?? really bizare what is going on here ? 
@@ -18,8 +22,11 @@ import { BrowserRouter as Router,  Route, createBrowserRouter, createRoutesFromE
 import MainLayout from "./components/layouts/MainLayout";
 import Home from "./pages/home/home";
 
-//ChatContextProvider
+
 import { ChatContextProvider } from "./context/ChatContext";
+
+import UpdateProfile from "./pages/profile/UpdateProfile";
+
 
 
 
@@ -36,7 +43,7 @@ const route = createBrowserRouter(
   createRoutesFromElements(
     <Route>
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/profile" element={<div> Profile</div>} />  this needs to be dynamic, so need to have id on here, and be inside the layout*/}
+        {/* <Route path="/profile" element={<div> Profile</div>} />  //this needs to be dynamic, so need to have id on here, and be inside the layout*/}
         {/* think og like a instagram like profile page  */}
         
         {/* sort of like a facebook home page, maybe? to be decided tbh  */}
@@ -55,18 +62,22 @@ const route = createBrowserRouter(
 
         <Route path="/" element={<MainLayout/>}>
 
-          <Route path="/home" element={<Home/>} />
+        <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} /> {/* not sure if home should be secure from outsiders  */}
 
-          <Route path="/profile/:id" element= {<Profile/>} /> 
-          {/* Allright so this basically makes suer that the components are like children of the main layout, we might need more layouts in the future but again that would increase complexity 
-          and so we should try and avoid that, well I should anyway, if you realise that we for some reason need a new layout style, let me know */}
+        <Route path="/profile/:id" element= {<Profile/>} /> 
+        {/* Allright so this basically makes suer that the components are like children of the main layout, we might need more layouts in the future but again that would increase complexity 
+        and so we should try and avoid that, well I should anyway, if you realise that we for some reason need a new layout style, let me know */}
+        
+        <Route path="/update_profile" element= {<ProtectedRoute><UpdateProfile/></ProtectedRoute>} /> {/*the update page for profile*/}
 
-          <Route path="/notification/:id" element={<Notifications/>} />
+        <Route path="/notification/:id" element={<Notifications/>} />
 
-          <Route path="/chat/:id" element={<ChatId/>} />
+        <Route path="/chat/:id" element={<ChatId/>} />
 
 
-          
+
+
+        
 
         </Route>
 
@@ -78,7 +89,9 @@ const route = createBrowserRouter(
 function App() {
 
   // this is for the integration, making that easier to think about, 
+
   const isUser = false; 
+  
   // turn this flag to true for the autentication, we can protect the routes this way by prohibiting, ore redirecting the user 
   // to the login page, or the register page, of course, can take this a couple steps further, but don't think that is necessary for this 
   // coursework, who know though, if we have time, can try to do a partial load of the page, which requires some dynamic routing, 

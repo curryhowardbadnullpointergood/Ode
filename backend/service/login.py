@@ -7,22 +7,24 @@ def login_user(request, container):
     password = request_json.get('password')
 
     if not username or not password:
-        return jsonify({"error": "Username and password are required"}), 400
+        return jsonify({"error": "Username and password are required"}), 200
 
     user_list = container.where(field_path='username', op_string='==', value=username).stream()
     user = next(user_list, None)
     if not user:
-        return jsonify({"error": "Invalid username or password"}), 401
+        return jsonify({"error": "Invalid username or password"}), 200
 
     user_data = user.to_dict()
     hash_password = hashlib.sha256(password.encode()).hexdigest()
     if user_data['password'] != hash_password:
-        return jsonify({"error": "Invalid username or password"}), 401
+        return jsonify({"error": "Invalid username or password"}), 200
 
     response = {
         "status": "success",
         "message": "Login successful",
-        "data": {"user_id": user.id}
+        "user_id": user.id,
+        "data" : user_data
     }
 
     return jsonify(response), 200
+

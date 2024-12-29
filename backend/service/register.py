@@ -12,14 +12,14 @@ def register_user(request, container):
     email = request_json.get("email_address")
 
     if password != confirmed_password:
-        return jsonify({"error": "Passwords do not match"}), 401
+        return jsonify({"error": "Passwords do not match"}), 200
 
     if not username or not password or not email:
-        return jsonify({"error": "Username, password and email address are required"}), 400
+        return jsonify({"error": "Username, password and email address are required"}), 200
 
     user_list = container.where(field_path='username', op_string='==', value=username).stream()
     if any(user.id for user in user_list):
-        return jsonify({"error": "Username already exists"}), 400
+        return jsonify({"error": "Username already exists"}), 200
 
     user_id = str(uuid.uuid4())
     new_user = container.document(user_id)

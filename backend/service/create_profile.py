@@ -5,7 +5,12 @@ def create_profile(request, container):
     request_json = request.get_json()
     username = request_json.get("username")
     name = request_json.get("name")
-    profile_picture = request_json.get("profile_picture")  
+    profile_picture = request_json.get("profile_picture")
+    interests = request_json.get("interests", [])
+
+    INTERESTS = ["rock", "pop", "jazz", "classical", "electronic", "hip-hop", "metal", "indie", "folk",
+                 "r&b", "opera", "piano", "musical theatre", "strings", "guitar", "drums", "bass", "vocals",
+                 "production", "composition"]
 
 
     if not username or not name or not profile_picture:
@@ -20,6 +25,7 @@ def create_profile(request, container):
     profile_data = {
         "name": name,
         "profile_picture": profile_picture,  # Store Base64-encoded string
+        "interests": list(set(interests) & set(INTERESTS)),
         "profile_created_time": datetime.datetime.utcnow().isoformat(),
     }
     container.document(user_doc.id).update(profile_data)
@@ -32,6 +38,40 @@ def create_profile(request, container):
             "name": name,
             "profile_picture": "Uploaded",
             "profile_created_time": profile_data["profile_created_time"],
+            "interests": interests
         },
     }
     return jsonify(response), 201
+
+
+def view_interests(request, container):
+    request_json = request.get_json()
+    username = request_json.get("username")
+
+    user = next(container.where("username", "==", username).stream(), None)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    user_data = user.to_dict()
+    interests = user_data.get('interests', [])
+
+    return jsonify({
+        "status": "success",
+        "data": {"interests": interests}
+    }), 200
+
+def view_user(request, container):
+    request_json = request.get_json()
+    username = request_json.get("username")
+
+    user = next(container.where("username", "==", username).stream(), None)
+    if not user:
+        return jsonify({"error": "User not found"}), 200
+
+    user_data = user.to_dict()
+    interests = user_data.get('interests', [])
+
+    return jsonify({
+        "status": "success",
+        "data": user_data
+    }), 200
