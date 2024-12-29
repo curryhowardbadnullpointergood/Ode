@@ -2,7 +2,7 @@ import React from "react";
 
 // pages 
 
-import Login from "./pages/login/Login";
+import Login from "./pages/login/login";
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/profile"
 import Notifications from "./pages/notification/notification"
