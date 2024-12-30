@@ -4,6 +4,7 @@ export default async function HandleProfileUpdate(e,username, settingMethod,type
         // Prevent the browser from reloading the page
         let userData = {};
         const path = 'http://localhost:8080/user/create_profile';
+        const path_image_upload = 'http://localhost:8080/user/image';
         e.preventDefault();
         //console.log("handleProfileUpdate was called!");
         let data = {"username" : username};
@@ -14,7 +15,7 @@ export default async function HandleProfileUpdate(e,username, settingMethod,type
             const formData = new FormData(form);    
             //console.log("username: ",username);
             for (var [key, value] of formData.entries()) { 
-                console.log(key, value);
+                //console.log(key, value);
                 data[key] = value;
             }
             //console.log(JSON.stringify(data));
@@ -26,6 +27,15 @@ export default async function HandleProfileUpdate(e,username, settingMethod,type
         
 
         try{
+            if (type === "pic"){
+                const upload_img = await axios.post(path_image_upload,data["profile_picture"] );
+                if (response.data.status === "success"){
+                    console.log("image upload success");
+                }
+                else{
+                    console.log("image upload failed");
+                }
+            }
             const response = await axios.post(path,data );
             //console.log("response: ", response);
             if (response.data.status === "success"){

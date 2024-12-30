@@ -5,7 +5,7 @@ from firebase_admin import firestore, credentials, storage
 import os
 from dotenv import load_dotenv
 import firebase_admin
-from service.register import register_user
+from service.register import register_user, register_admin
 from service.edit import edit_user
 from service.login import login_user
 from service.logout import logout_user
@@ -72,8 +72,10 @@ def chat_controller(action):
 def user_process(action, container):
     method = request.method
     # Call different functions based on the path
-    if action == "register" and method == 'POST':
+    if action == "register_user" and method == 'POST':
         return register_user(request, container)
+    elif action == "register_admin" and method == 'POST':
+        return register_admin(request, container)
     elif action == "login" and method == 'POST':
         return login_user(request, container)
     elif action == "logout" and method == 'POST':

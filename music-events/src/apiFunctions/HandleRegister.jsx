@@ -4,7 +4,7 @@ export default async function HandleRegister(e,navigate) {
         // Prevent the browser from reloading the page
 
         let flag = true;
-        const path = 'http://localhost:8080/user/register';
+        const path = 'http://localhost:8080/user/register_user';
         e.preventDefault();
         console.log("handleRegister was called!");
         
