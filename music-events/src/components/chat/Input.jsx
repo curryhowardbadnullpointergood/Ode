@@ -6,78 +6,107 @@ import { ChatContext } from "../../context/ChatContext";
 const Input = ({ currentUser }) => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
+  const [preview, setPreview] = useState(null); 
 
   const { data } = useContext(ChatContext);
 
+ 
   const sendMessage = () => {
     const uri = "http://localhost:8080/chat/create";
     const sb = {
-        sender: currentUser,
-        receiver: data.user,
-        message: text,
+      sender: currentUser,
+      receiver: data.user,
+      message: text,
     };
 
     fetch(uri, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sb),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(sb),
     })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log("Message sent successfully:", data);
-        })
-        .catch((error) => {
-            console.error("Error sending message:", error);
-        });
-    };
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Message sent successfully:", data);
+      })
+      .catch((error) => {
+        console.error("Error sending message:", error);
+      });
+  };
 
-    const sendImageMessage = async () => {
-        const uri = "http://localhost:8080/chat/image"; // 替换为后端地址
-        const formData = new FormData(); // 使用 FormData 处理图片和文本
-      
-        // 添加字段到表单数据
-        formData.append("sender", currentUser);
-        formData.append("receiver", data.user);
-        formData.append("file", img);  // 添加图片文件
-      
-        try {
-          const response = await fetch(uri, {
-            method: "POST",
-            body: formData, // FormData 自动设置合适的请求头
-          });
-      
-          const result = await response.json();
-          if (result.status === "success") {
-            console.log("Image sent successfully:", result);
-          } else {
-            console.error("Failed to send image:", result.message);
-          }
-        } catch (error) {
-          console.error("Error sending image:", error);
-        }
-    };
+ 
+  const sendImageMessage = async () => {
+    const uri = "http://localhost:8080/chat/image";
+    const formData = new FormData();
 
+    
+    formData.append("sender", currentUser);
+    formData.append("receiver", data.user);
+    formData.append("file", img);
+
+    try {
+      const response = await fetch(uri, {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (result.status === "success") {
+        console.log("Image sent successfully:", result);
+      } else {
+        console.error("Failed to send image:", result.message);
+      }
+    } catch (error) {
+      console.error("Error sending image:", error);
+    }
+  };
+
+ 
   const handleSend = async () => {
     if (img) {
-        await sendImageMessage();
+      await sendImageMessage();
     } else {
-        sendMessage();
+      sendMessage();
     }
 
     setText("");
     setImg(null);
+    setPreview(null); 
+  };
+
+ 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImg(file);
+
+     
+      const reader = new FileReader();
+      reader.onload = () => setPreview(reader.result);
+      reader.readAsDataURL(file);
+
+      e.target.value = null;
+    }
   };
 
   return (
     <div className="input">
-      <input
-        type="text"
-        placeholder="Type something..."
-        onChange={(e) => setText(e.target.value)}
-        value={text}
-      />
+      <div className="input-wrapper">
+        {/* show the image */}
+        <div className="input-content">
+          {preview ? (
+            <img src={preview} alt="preview" className="image-preview" />
+          ) : (
+            <input
+              type="text"
+              placeholder="Type something..."
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+            />
+          )}
+        </div>
+      </div>
 
       <div className="send">
         <img src={Attach} alt="" />
@@ -85,7 +114,7 @@ const Input = ({ currentUser }) => {
           type="file"
           style={{ display: "none" }}
           id="file"
-          onChange={(e) => setImg(e.target.files[0])}
+          onChange={handleImageChange}
         />
         <label htmlFor="file">
           <img src={Img} alt="" />
