@@ -2,6 +2,7 @@ from flask import jsonify
 import uuid
 
 
+
 def create_event(request, container, user_container):
     request_json = request.get_json()
     admin = request_json.get('admin')

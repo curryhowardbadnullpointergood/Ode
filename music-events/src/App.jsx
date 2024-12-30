@@ -2,7 +2,7 @@ import React from "react";
 
 // pages 
 
-import Login from "./pages/login/login"; //Anna - changed Login to login
+import Login from "./pages/login/login"; //Anna - changed Login to login (changed it back before pushing)
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/profile"
 import Notifications from "./pages/notification/notification"
@@ -51,7 +51,7 @@ const route = createBrowserRouter(
         <Route path="/register" element={<Register/>} />
         {/* simple modern register page  */}
 
-        <Route path="/register-admin" element={<AdminRegister/>} /> //Anna
+        <Route path="/register-admin" element={<AdminRegister/>} /> {/*Anna*/}
 
 
         <Route path="/chat" element={<Chat/>} />
