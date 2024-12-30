@@ -3,6 +3,23 @@ import "./register.scss";
 import {Link,useNavigate} from "react-router-dom";
 import handleRegister from "../../apiFunctions/HandleRegister";
 function Register() {
+    // function handleSubmit(e) {
+    //     // Prevent the browser from reloading the page
+    //     e.preventDefault();
+    
+    //     // Read the form data
+    //     const form = e.target;
+    //     const formData = new FormData(form);
+    
+    //     // pass data back to backend
+    //     fetch('/some-api', { method: form.method, body: formData });
+    
+    //     // Or you can work with it as a plain object:
+    //     const formJson = Object.fromEntries(formData.entries());
+    //     console.log(formJson);
+    //   }
+    // const [userName, setUserName] = useState('');
+    // const [password, setPassword] = useState('');
     const navigate = useNavigate(); // Hook for navigation
 
   return (

@@ -32,7 +32,6 @@ const Login = () => {
                 {/* in  the future it goes without saying this wording needs to be better optimised, for the profs*/}
             </form>
         </div>
-
         </div>
         </div>
     )
