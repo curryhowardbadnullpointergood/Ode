@@ -320,6 +320,27 @@
             cursor: pointer;
           }
         }
+        
+        .input-wrapper {
+          display: flex;
+          align-items: center;
+          width: 100%;
+        }
+        
+        .input-content {
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+        }
+        
+        .image-preview {
+          max-height: 40px;
+          max-width: 60px;
+          border-radius: 5px;
+          margin-right: 10px;
+          object-fit: cover;
+        }
+        
       }
     }
   }
