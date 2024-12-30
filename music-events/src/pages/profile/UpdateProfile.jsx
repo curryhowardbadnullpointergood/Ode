@@ -42,7 +42,9 @@ export default function UpdateProfile(){
 
     const handleChange_imageFile= (e) => {
         console.log(e.target.files);
-        setFile(URL.createObjectURL(e.target.files[0]));
+        let k = URL.createObjectURL(e.target.files[0])
+        setFile(k);
+        console.log("src: ", URL.createObjectURL(e.target.files[0]));
     }
     
     return(  // for simplicity in functionality development, I use br/ for simple styling. Should be change later : Lucas
@@ -58,7 +60,7 @@ export default function UpdateProfile(){
                 <br/>
                 <button type="submit">Confirm update</button>
             </form>
-            <form onSubmit={e => HandleProfileUpdate(e, auth.token,setFormProfile_picture,"pic" )}>
+            <form onSubmit={e => HandleProfileUpdate(e, auth.token,file,"pic" )}>
                 <div className="addingImage">
                     <h4>Add Image:</h4>
                     <input type="file" onChange={handleChange_imageFile}  name="profile_picture" value={formProfile_picture.profile_picture}/>
