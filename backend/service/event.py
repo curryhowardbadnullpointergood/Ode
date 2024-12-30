@@ -2,12 +2,14 @@ from flask import jsonify
 import uuid
 
 
+
 def create_event(request, container, user_container):
     request_json = request.get_json()
     admin = request_json.get('admin')
     users = request_json.get('users')
     information = request_json.get('information')
     picture = request_json.get('picture')
+    genres = request_json.get('genres', [])
 
     user_list = user_container.where(field_path='username', op_string='==', value=admin).stream()
     user = next(user_list, None)
@@ -22,6 +24,7 @@ def create_event(request, container, user_container):
         'users': users,
         'information': information,
         'picture': picture,
+        'genres': genres
     }
     new_event.set(data)
     response = {
@@ -106,6 +109,7 @@ def block_user(request, database):
 
     return jsonify(response), 200
 
+
 def view_event(request, container):
     request_json = request.get_json()
     event_id = request_json.get('event_id')
@@ -127,3 +131,19 @@ def view_event(request, container):
     }
 
     return jsonify(response), 200
+
+
+def filter_by_genre(request, container):
+    request_json = request.get_json()
+    genre = request_json.get('genre')
+
+    if not genre:
+        return jsonify({"error": "Genre is required"}), 400
+
+    events = container.where('genres', 'array_contains', genre).stream()
+    filtered_events = [event.to_dict() for event in events]
+
+    return jsonify({
+        "status": "success",
+        "data": filtered_events
+    }), 200

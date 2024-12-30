@@ -5,15 +5,15 @@ from firebase_admin import firestore, credentials, storage
 import os
 from dotenv import load_dotenv
 import firebase_admin
-from service.register import register_user
+from service.register import register_user, register_admin
 from service.edit import edit_user
 from service.login import login_user
 from service.logout import logout_user
 from service.delete import delete_user
-from service.create_profile import create_profile
-from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event
+from service.create_profile import create_profile, view_interests, view_user
+from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre
 from service.utils import store_image
-from service.chat import store_message, store_messages
+from service.newchat import store_message, store_messages, store_images
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
 from service.generate_notification import generate_notification
 
@@ -54,22 +54,28 @@ def event_controller(action):
         return report_user(request, database)
     elif action == "view" and method == 'POST':
         return view_event(request, event_container)
+    elif action == "filter_genre" and method == 'POST':
+        return filter_by_genre(request, event_container)
 
 
 @app.route('/chat/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def chat_controller(action):
     method = request.method
     if action == "create" and method == 'POST':
-        return store_message(request, message_container)
+        return store_message(request, firestore)
     if action == "group_chat" and method == 'POST':
-        return store_messages(request, message_container)
+        return store_messages(request, firestore)
+    if action == "image" and method == 'POST':
+        return store_images(request, firestore, bucket)
 
 
 def user_process(action, container):
     method = request.method
     # Call different functions based on the path
-    if action == "register" and method == 'POST':
+    if action == "register_user" and method == 'POST':
         return register_user(request, container)
+    elif action == "register_admin" and method == 'POST':
+        return register_admin(request, container)
     elif action == "login" and method == 'POST':
         return login_user(request, container)
     elif action == "logout" and method == 'POST':
@@ -82,6 +88,10 @@ def user_process(action, container):
         return create_profile(request, container)
     elif action == "image" and method == 'POST':
         return store_image(request, bucket)
+    elif action == "view_interests" and method == 'GET':
+        return view_interests(request, container)
+    elif action == "view_user" and method == "POST":
+        return view_user(request, container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
 

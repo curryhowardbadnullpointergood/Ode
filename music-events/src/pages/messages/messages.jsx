@@ -1,16 +1,27 @@
 import "./messages.scss"
+import Sidebar from '../../components/chat/Sidebar'
+import Chat from '../../components/chat/Chat'
+import AuthContext from "../../authentication/AuthContext";
+import { useContext } from "react";
 
-/*
-Allright this is the last page from me 
-*/
+const Messages = () => {
 
+  const{userData} = useContext(AuthContext);
 
-const messages = () => {
+  console.log( userData );
 
+  const currentUser = userData.username;
+
+  console.log( currentUser );
 
   return (
-    <div className='messages'>messages</div>
+    <div className='chatMain'>
+      <div className="chatContainer">
+        <Sidebar/>
+        <Chat/>
+      </div>
+    </div>
   )
 }
 
-export default messages
+export default Messages;

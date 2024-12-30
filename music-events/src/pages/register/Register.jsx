@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./register.scss";
-import {Link } from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
+import handleRegister from "../../apiFunctions/HandleRegister";
 function Register() {
     // function handleSubmit(e) {
     //     // Prevent the browser from reloading the page
@@ -19,6 +20,7 @@ function Register() {
     //   }
     // const [userName, setUserName] = useState('');
     // const [password, setPassword] = useState('');
+    const navigate = useNavigate(); // Hook for navigation
 
   return (
     <div className="grad">
@@ -26,14 +28,12 @@ function Register() {
             <div className='reigsterPage'>
                 <div className='regBlock'>
                     <h1>Register</h1>
-                    <form method="post" onSubmit={handleSubmit} className="regForm">
-                        <input type='username' onChange={e => setUserName(e.target.value)}
-                            name="myInput" placeholder="Enter Username:" />
-                        <input type='username' onChange={e => setUserName(e.target.value)}
-                            name="myInput" placeholder="Enter Email:" />
-                        <input type='password'  onChange={e => setPassword(e.target.value)}
-                            name="myInput" placeholder="Enter Password:" />
-                        <button  type="submit">Confirm</button>
+                    <form method="post" onSubmit={e => handleRegister(e,navigate)} className="regForm">
+                        <input type='username' name="username" placeholder="Enter Username:" />
+                        <input type='email' name="email_address" placeholder="Enter Email:" />
+                        <input type='password' name="password" placeholder="Enter Password:" />
+                        <input type='password' name="confirmed_password" placeholder="Confirm Password:" />
+                        <button  type="submit" >Confirm</button>
                     </form>
                 </div>
             </div>
@@ -45,6 +45,13 @@ function Register() {
                     <Link to="/login">
                         <button>Login</button>
                     </Link>
+
+                    {/* Anna new start */}
+                    <h4>Representing an organisation?</h4>
+                    <Link to="/register-admin">
+                        <button>Register Organisation</button>
+                    </Link>
+                    {/* Anna new end */}
                     
                 </div>
             </div>
