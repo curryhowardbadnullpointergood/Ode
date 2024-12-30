@@ -2,11 +2,12 @@ import React from "react";
 
 // pages 
 
-import Login from "./pages/login/Login";
+import Login from "./pages/login/login"; //Anna - changed Login to login
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/profile"
 import Notifications from "./pages/notification/notification"
 import Organisation from "./pages/organisation/organisation"
+import AdminRegister from "./pages/register/AdminRegister" //Anna
 
 
 import ChatId from "./pages/messages/messages"
@@ -49,6 +50,10 @@ const route = createBrowserRouter(
         {/* sort of like a facebook home page, maybe? to be decided tbh  */}
         <Route path="/register" element={<Register/>} />
         {/* simple modern register page  */}
+
+        <Route path="/register-admin" element={<AdminRegister/>} /> //Anna
+
+
         <Route path="/chat" element={<Chat/>} />
         {/* this is the chat/group chat, think of discord like, might not get done tbh  */}
         <Route path="/videofeed" element={<div> Video Feed</div>} />  

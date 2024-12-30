@@ -28,6 +28,13 @@ function Register() {
                     <Link to="/login">
                         <button>Login</button>
                     </Link>
+
+                    {/* Anna new start */}
+                    <h4>Representing an organisation?</h4>
+                    <Link to="/register-admin">
+                        <button>Register Organisation</button>
+                    </Link>
+                    {/* Anna new end */}
                     
                 </div>
             </div>
