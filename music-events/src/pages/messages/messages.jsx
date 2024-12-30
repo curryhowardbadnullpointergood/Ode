@@ -4,9 +4,6 @@ import Chat from '../../components/chat/Chat'
 import AuthContext from "../../authentication/AuthContext";
 import { useContext } from "react";
 
-    
-
-
 const Messages = () => {
 
   const{userData} = useContext(AuthContext);
@@ -20,8 +17,8 @@ const Messages = () => {
   return (
     <div className='chatMain'>
       <div className="chatContainer">
-        <Sidebar currentUser={currentUser}/>
-        <Chat currentUser={currentUser}/>
+        <Sidebar/>
+        <Chat/>
       </div>
     </div>
   )
