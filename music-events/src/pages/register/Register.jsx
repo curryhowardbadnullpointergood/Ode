@@ -2,23 +2,23 @@ import { useState } from "react";
 import "./register.scss";
 import {Link } from "react-router-dom";
 function Register() {
-    function handleSubmit(e) {
-        // Prevent the browser from reloading the page
-        e.preventDefault();
+    // function handleSubmit(e) {
+    //     // Prevent the browser from reloading the page
+    //     e.preventDefault();
     
-        // Read the form data
-        const form = e.target;
-        const formData = new FormData(form);
+    //     // Read the form data
+    //     const form = e.target;
+    //     const formData = new FormData(form);
     
-        // pass data back to backend
-        fetch('/some-api', { method: form.method, body: formData });
+    //     // pass data back to backend
+    //     fetch('/some-api', { method: form.method, body: formData });
     
-        // Or you can work with it as a plain object:
-        const formJson = Object.fromEntries(formData.entries());
-        console.log(formJson);
-      }
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+    //     // Or you can work with it as a plain object:
+    //     const formJson = Object.fromEntries(formData.entries());
+    //     console.log(formJson);
+    //   }
+    // const [userName, setUserName] = useState('');
+    // const [password, setPassword] = useState('');
 
   return (
     <div className="grad">
