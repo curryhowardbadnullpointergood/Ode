@@ -4,7 +4,7 @@ import "./Friend_list.scss";
 const Friend_list = ({list}) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false); // Manage popup visibility
   const friends = list; // List of friends
-  console.log("friends: ", friends);
+  //console.log("friends: ", friends);
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen); // Toggle popup visibility
   };

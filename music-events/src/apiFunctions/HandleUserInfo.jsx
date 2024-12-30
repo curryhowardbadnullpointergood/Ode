@@ -1,6 +1,8 @@
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
+import AuthContext from "../authentication/AuthContext";
 export default async function HandleUserInfo(id, setUserData) {
+    const {auth, userData,set_user_detail } = useContext(AuthContext);
     const path = 'http://localhost:8080/user/view_user';
     const reply = {  
         username : "",
@@ -25,8 +27,9 @@ export default async function HandleUserInfo(id, setUserData) {
                             reply[key] = dataObject[key];
                         }
                     }
+                    console.log(reply);
                     setUserData(reply);
-                   
+                    set_user_detail(reply);
                 }
                 else{
                     setUserData(response.data.error);

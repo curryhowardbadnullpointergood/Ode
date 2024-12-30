@@ -16,7 +16,8 @@ export const AuthProvider = ({ children }) => {
       profile_picture: "",
       interests: [],
       events_interested : [],
-      friends : []
+      friends : [],
+      bio : ""
     })
   
     useEffect(() => {  // handle side effect of stored information by browser to ensure user won't log off when refreshing their screen
@@ -46,9 +47,11 @@ export const AuthProvider = ({ children }) => {
         profile_picture: data["profile_picture"], 
         interests : data["interests"]  , 
         events_interested : data["events_interested"] , 
-        friends : data["friends"]
+        friends : data["friends"],
+        bio : data["bio"]
       }
       setUserData(data_to_write);
+      //console.log("userData: ",userData);
     }
   
     return (
