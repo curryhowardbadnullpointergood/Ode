@@ -43,7 +43,9 @@ function Navbar() {
 
 
       <div className="right"> 
-        <BiSolidMessageSquare /> 
+        <Link to="/chat">
+          <BiSolidMessageSquare /> 
+        </Link>
         <IoMdNotifications />
         <div className="user">
           <Link to={"/profile/" + auth.token }>

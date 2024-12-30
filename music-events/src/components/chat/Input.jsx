@@ -2,13 +2,17 @@ import React, { useContext, useState } from "react";
 import Img from "../../img/img.png";
 import Attach from "../../img/attach.png";
 import { ChatContext } from "../../context/ChatContext";
+import AuthContext from "../../authentication/AuthContext";
 
-const Input = ({ currentUser }) => {
+const Input = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
   const [preview, setPreview] = useState(null); 
 
   const { data } = useContext(ChatContext);
+
+  const{userData} = useContext(AuthContext);
+  const currentUser = userData.username;
 
  
   const sendMessage = () => {

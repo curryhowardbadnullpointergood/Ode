@@ -1,11 +1,11 @@
 import React from "react";
 import Chats from "./Chats"
 
-const Sidebar = ({ currentUser }) => {
+const Sidebar = () => {
   
   return (
     <div className="sidebar">
-      <Chats currentUser={currentUser}/>
+      <Chats/>
     </div>
   );
 };

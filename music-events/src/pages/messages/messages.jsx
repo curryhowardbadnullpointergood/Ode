@@ -1,20 +1,21 @@
 import "./messages.scss"
 import Sidebar from '../../components/chat/Sidebar'
 import Chat from '../../components/chat/Chat'
-import React, { useState, useEffect } from "react"; 
-import { useParams } from "react-router-dom";      
+import AuthContext from "../../authentication/AuthContext";
+import { useContext } from "react";
+
+    
 
 
 const Messages = () => {
 
-  const { id } = useParams();
-  const [currentUser, setCurrentUser] = useState('');
+  const{userData} = useContext(AuthContext);
 
-  useEffect(() => {
-      if (id) {
-          setCurrentUser(id); 
-      }
-  }, [id]);
+  console.log( userData );
+
+  const currentUser = userData.username;
+
+  console.log( currentUser );
 
   return (
     <div className='chatMain'>
