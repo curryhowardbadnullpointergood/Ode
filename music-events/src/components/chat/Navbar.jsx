@@ -8,8 +8,9 @@ const Navbar = () => {
 
   return (
     <div className='navbar'>
-      <span className="logo">Lama Chat</span>
+      <span className="logo">Chat</span>
       <div className="user">
+        <img src={userData.profile_picture} alt="" />
         <span>{currentUser}</span>
       </div>
     </div>
