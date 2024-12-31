@@ -2,10 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, useChatContext } from 'stream-chat-react';
 
 import { InviteIcon } from '../../assets';
-import { db } from "./firebase";
-
-import { collection, getDocs } from 'firebase/firestore';
-
 
 const ListContainer = ({ children }) => {
     return (
@@ -24,9 +20,9 @@ const UserItem = ({ user, setSelectedUsers }) => {
 
     const handleSelect = () => {
         if(selected) {
-            setSelectedUsers((prevUsers) => prevUsers.filter((prevUser) => prevUser !== user.username))
+            setSelectedUsers((prevUsers) => prevUsers.filter((prevUser) => prevUser !== user.id))
         } else {
-            setSelectedUsers((prevUsers) => [...prevUsers, user.username])
+            setSelectedUsers((prevUsers) => [...prevUsers, user.id])
         }
 
         setSelected((prevSelected) => !prevSelected)
@@ -35,8 +31,8 @@ const UserItem = ({ user, setSelectedUsers }) => {
     return (
         <div className="user-item__wrapper" onClick={handleSelect}>
             <div className="user-item__name-wrapper">
-                <Avatar image={user.profile_picture} name={user.username} size={32} />
-                <p className="user-item__name">{user.username}</p>
+                <Avatar image={user.image} name={user.fullName || user.id} size={32} />
+                <p className="user-item__name">{user.fullName || user.id}</p>
             </div>
             {selected ? <InviteIcon /> : <div className="user-item__invite-empty" />}
         </div>
@@ -58,21 +54,17 @@ const UserList = ({ setSelectedUsers }) => {
             setLoading(true);
             
             try {
-                const querySnapshot = await getDocs(collection(db, 'users'));
+                const response = await client.queryUsers(
+                    { id: { $ne: client.userID } },
+                    { id: 1 },
+                    { limit: 8 } 
+                );
 
-                const fetchedUsers = querySnapshot.docs
-                .map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }))
-                .filter(user => user.username !== client.userID);
-
-                if (fetchedUsers.length) {
-                    setUsers(fetchedUsers); 
+                if(response.users.length) {
+                    setUsers(response.users);
                 } else {
-                    setListEmpty(true); 
+                    setListEmpty(true);
                 }
-
             } catch (error) {
                setError(true);
             }
@@ -80,7 +72,6 @@ const UserList = ({ setSelectedUsers }) => {
         }
 
         if(client) getUsers()
-        
     }, []);
 
     if(error) {
@@ -109,7 +100,7 @@ const UserList = ({ setSelectedUsers }) => {
                 Loading users...
             </div> : (
                 users?.map((user, i) => (
-                  <UserItem index={i} key={user.username} user={user} setSelectedUsers={setSelectedUsers} />  
+                  <UserItem index={i} key={user.id} user={user} setSelectedUsers={setSelectedUsers} />  
                 ))
             )}
         </ListContainer>

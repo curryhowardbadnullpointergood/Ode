@@ -42,7 +42,7 @@ const ChannelInner = ({ setIsEditing }) => {
   );
 };
 
-const TeamChannelHeader = ({ setIsEditing }) => {
+const TeamChannelHeader = () => {
     const { channel, watcher_count } = useChannelStateContext();
     const { client } = useChatContext();
   
@@ -50,7 +50,7 @@ const TeamChannelHeader = ({ setIsEditing }) => {
       const members = Object.values(channel.state.members).filter(({ user }) => user.id !== client.userID);
       const additionalMembers = members.length - 3;
   
-      if(channel.type === 'messaging') {
+      
         return (
           <div className='team-channel-header__name-wrapper'>
             {members.map(({ user }, i) => (
@@ -63,16 +63,6 @@ const TeamChannelHeader = ({ setIsEditing }) => {
             {additionalMembers > 0 && <p className='team-channel-header__name user'>and {additionalMembers} more</p>}
           </div>
         );
-      }
-  
-      return (
-        <div className='team-channel-header__channel-wrapper'>
-          <p className='team-channel-header__name'># {channel.data.name}</p>
-          <span style={{ display: 'flex' }} onClick={() => setIsEditing(true)}>
-            <ChannelInfo />
-          </span>
-        </div>
-      );
     };
   
     const getWatcherText = (watchers) => {

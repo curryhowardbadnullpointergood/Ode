@@ -3,7 +3,6 @@ import { Avatar, useChatContext } from 'stream-chat-react';
 
 const channelByUser = async ({ client, setActiveChannel, channel, setChannel }) => {
   const filters = {
-    type: 'messaging',
     member_count: 2,
     members: { $eq: [client.user.id, client.userID] },
   };
@@ -19,25 +18,8 @@ const channelByUser = async ({ client, setActiveChannel, channel, setChannel }) 
   return setActiveChannel(newChannel);
 };
 
-const SearchResult = ({ channel, focusedId, type, setChannel, setToggleContainer }) => {
+const SearchResult = ({ channel, focusedId, setChannel, setToggleContainer }) => {
   const { client, setActiveChannel } = useChatContext();
-
-  if (type === 'channel') {
-    return (
-      <div
-        onClick={() => {
-          setChannel(channel)
-          if(setToggleContainer) {
-            setToggleContainer((prevState) => !prevState)   
-          }
-        }}
-        className={focusedId === channel.id ? 'channel-search__result-container__focused' : 'channel-search__result-container' }
-      >
-        <div className='result-hashtag'>#</div>
-        <p className='channel-search__result-text'>{channel.data.name}</p>
-      </div>
-    );
-  }
 
   return (
     <div
@@ -57,32 +39,10 @@ const SearchResult = ({ channel, focusedId, type, setChannel, setToggleContainer
   );
 };
 
-const ResultsDropdown = ({ teamChannels, directChannels, focusedId, loading, setChannel, setToggleContainer }) => {
+const ResultsDropdown = ({ directChannels, focusedId, loading, setChannel, setToggleContainer }) => {
 
   return (
     <div className='channel-search__results'>
-      <p className='channel-search__results-header'>Channels</p>
-      {loading && !teamChannels.length && (
-        <p className='channel-search__results-header'>
-          <i>Loading...</i>
-        </p>
-      )}
-      {!loading && !teamChannels.length ? (
-        <p className='channel-search__results-header'>
-          <i>No channels found</i>
-        </p>
-      ) : (
-        teamChannels?.map((channel, i) => (
-          <SearchResult
-            channel={channel}
-            focusedId={focusedId}
-            key={i}
-            setChannel={setChannel}
-            type='channel'
-            setToggleContainer={setToggleContainer}
-          />
-        ))
-      )}
       <p className='channel-search__results-header'>Users</p>
       {loading && !directChannels.length && (
         <p className='channel-search__results-header'>

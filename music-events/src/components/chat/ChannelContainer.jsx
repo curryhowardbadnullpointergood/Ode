@@ -3,11 +3,11 @@ import { Channel, MessageTeam } from 'stream-chat-react';
 
 import { ChannelInner, CreateChannel, EditChannel } from './';
 
-const ChannelContainer = ({ isCreating, setIsCreating, isEditing, setIsEditing, createType }) => {
+const ChannelContainer = ({ isCreating, setIsCreating, isEditing, setIsEditing }) => {
     if(isCreating) {
         return (
             <div className="channel__container">
-                <CreateChannel createType={createType} setIsCreating={setIsCreating} />
+                <CreateChannel setIsCreating={setIsCreating} />
             </div>
         )
     }
