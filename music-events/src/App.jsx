@@ -2,7 +2,7 @@ import React from "react";
 
 // pages 
 
-import Login from "./pages/login/Login"; //Anna - changed Login to login (changed it back before pushing)
+import Login from "./pages/login/login"; //Anna - changed Login to login (changed it back before pushing)
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/profile"
 import Notifications from "./pages/notification/notification"
