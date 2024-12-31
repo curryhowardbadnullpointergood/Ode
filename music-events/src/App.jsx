@@ -11,7 +11,7 @@ import AdminRegister from "./pages/register/AdminRegister" //Anna
 
 
 import ChatId from "./pages/messages/messages"
-import Chat from "./pages/messages/messages"
+import Chat from "./pages/messages/chat"
 import ProtectedRoute from "./authentication/ProtectedRoute "
 
 
