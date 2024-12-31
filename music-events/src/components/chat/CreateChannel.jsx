@@ -1,0 +1,45 @@
+import React, { useState } from 'react';
+import { useChatContext } from 'stream-chat-react';
+
+import { UserList } from './';
+import { CloseCreateChannel } from '../../assets';
+
+const CreateChannel = ({ setIsCreating }) => {
+    const { client, setActiveChannel } = useChatContext();
+    const [selectedUsers, setSelectedUsers] = useState([client.userID || ''])
+    const [channelName, setChannelName] = useState('');
+
+    const createChannel = async (e) => {
+        e.preventDefault();
+
+        try {
+            const newChannel = await client.channel( 'messaging', channelName, {
+                name: channelName, members: selectedUsers
+            });
+
+            await newChannel.watch();
+
+            setChannelName('');
+            setIsCreating(false);
+            setSelectedUsers([client.userID]);
+            setActiveChannel(newChannel);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    return (
+        <div className="create-channel__container">
+            <div className="create-channel__header">
+                <p>{'Send a Message'}</p>
+                <CloseCreateChannel setIsCreating={setIsCreating} />
+            </div>
+            <UserList setSelectedUsers={setSelectedUsers} />
+            <div className="create-channel__button-wrapper" onClick={createChannel}>
+                <p>{'Create A Chat'}</p>
+            </div>
+        </div>
+    )
+}
+
+export default CreateChannel

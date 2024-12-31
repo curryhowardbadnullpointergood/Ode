@@ -39,7 +39,7 @@ def store_images(request, firestore, bucket):
     group_id = None
     timestamp = datetime.utcnow()
 
-    # 上传文件到 Firebase Storage
+
     filename = f"{uuid.uuid4()}.{file.filename.split('.')[-1]}"
     blob = bucket.blob(filename)
     blob.upload_from_file(file)

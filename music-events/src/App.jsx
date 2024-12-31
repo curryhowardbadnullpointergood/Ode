@@ -9,9 +9,7 @@ import Notifications from "./pages/notification/notification"
 import Organisation from "./pages/organisation/organisation"
 import AdminRegister from "./pages/register/AdminRegister" //Anna
 
-
-import ChatId from "./pages/messages/messages"
-import Chat from "./pages/messages/messages"
+import Chat from "./pages/messages/chat"
 import ProtectedRoute from "./authentication/ProtectedRoute "
 
 
@@ -62,8 +60,6 @@ const route = createBrowserRouter(
         {/* this is to prank the slackers when they try run npm start and see the front end not exist lol  */}
 
         <Route path="/organisation/:id" element={<Organisation/>} />  
-
-        <Route path="/chat/:id" element={<ChatId/>} />
 
         <Route path="/" element={<MainLayout/>}>
 
