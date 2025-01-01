@@ -26,29 +26,45 @@ export default async function HandleProfileUpdate(e,username, settingMethod,type
 
         
 
-        try{
-            if (type === "pic"){
-                const upload_img = await axios.post(path_image_upload,data["profile_picture"] );
-                if (response.data.status === "success"){
-                    console.log("image upload success");
-                }
-                else{
-                    console.log("image upload failed");
+        try {
+            if (type === "pic") {
+                const formData = new FormData();
+                formData.append("profile_picture", e.target.files[0]);
+                formData.append("username", username);
+    
+                const response = await axios.post(path_image_upload, formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                });
+    
+                if (response.data.status === "success") {
+                    alert("Profile picture updated!");
+                    return;
+                } else {
+                    alert("Image upload failed. Please try again.");
+                    return;
                 }
             }
-            const response = await axios.post(path,data );
-            //console.log("response: ", response);
-            if (response.data.status === "success"){
-                alert("update success!");
+    
+            if (interest === null) {
+                const form = e.target;
+                const formData = new FormData(form);
+    
+                for (const [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
             }
-            else{
+    
+            const response = await axios.post(path, data);
+    
+            if (response.data.status === "success") {
+                alert("Update successful!");
+            } else {
                 alert(response.data.error);
             }
-        }
-        catch(error){
+        } catch (error) {
             console.error("Error: ", error.message);
+            alert("An error occurred. Please try again.");
         }
-    
-
-        
-      }
+    }
