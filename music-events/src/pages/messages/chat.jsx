@@ -9,7 +9,9 @@ import { ChannelListContainer, ChannelContainer } from '../../components/chat';
 
 import { db } from "../../components/chat/firebase";
 
-import 'stream-chat-react/dist/css/index.css';
+
+import 'stream-chat-react/dist/css/v2/index.css';
+
 import './chat.scss';
 
 const App = () => {
