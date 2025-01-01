@@ -13,6 +13,7 @@
     "react-scripts": "^5.0.1",
     "stream-chat": "^8.46.1",
     "stream-chat-react": "^12.8.1"
+
   },
   "scripts": {
     "start": "react-scripts start src/Main.jsx",

@@ -16,10 +16,30 @@ import { IoMdNotifications } from "react-icons/io"; // this is for the notificat
 import { BiSolidMessageSquare } from "react-icons/bi"; // this is for messages in the group chats/ direct messages between users etc 
 
 
+const User_profile = (token1) =>{
+  console.log("user_profile function called");
+  console.log("token: ", token1.token);
+  if (token1.token !== null){
+    return(
+      <Link to={"/profile/" + token1.token }>
+              <img src={hahn} alt="" />
+      </Link>
+    )
+  }
+  else{
+    return(
+      <Link to={"/login" }>
+        <img src={hahn} alt="" />
+      </Link>
+    )
+  }
+}
+
 // for now the name of the app is Ode, sounds allright as a name and is catchy 
 
 function Navbar() {
   const {auth} = useContext(AuthContext);
+  console.log("auth.token: ", auth.token);
   return (
     <div className="navBar"> 
 
@@ -48,9 +68,7 @@ function Navbar() {
         </Link>
         <IoMdNotifications />
         <div className="user">
-          <Link to={"/profile/" + auth.token }>
-            <img src={hahn} alt="" />
-          </Link>
+        <User_profile token={auth.token}/>
           {/* <span> Dummy User</span> */}
         </div>
       </div>
