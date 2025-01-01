@@ -1,5 +1,5 @@
 import "./profile.scss";
-import { useLoaderData, useParams, withRouter } from "react-router";
+import { useLoaderData, useParams, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom"
 import {useState, useContext} from "react";
 import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
