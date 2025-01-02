@@ -49,29 +49,20 @@ const Profile = (props) => {
         }
 
     }
-    const LoginUserProfile = () =>  {
+    const LoginUserProfile = () =>  {  // list of buttons made available solely for login user
         if (params.id ===auth.token ){
             return (
                 <div>
-                    <Link to = '/update_profile'>
+                    <Link to = '/update_profile'>  {/* update profile */}
                         <button>Update Profile</button>
                     </Link>
-                    <Link to = '/login'>
+                    <Link to = '/login'> {/* logout */}
                         <button onClick={logout_auth}>logout</button>
                     </Link>
                 </div>
         )
         }
     }
-
-
-    function User_exist({ name, exist }) {
-        if (!exist) {
-          return null;
-        }
-       
-        return <li className="item">{name + "hi"}</li>;
-      }
 
     return(
         

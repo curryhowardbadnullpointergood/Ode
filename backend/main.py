@@ -114,6 +114,13 @@ def friend_request_controller(action):
 def notification_controller():
     return generate_notifications(request, event_container)
 
+@app.route('/search', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def search_controller(action):
+    method = request.method
+    
+    return 0
+
+
 @socketio.on('connect')
 def handle_connect():
     print(f'Client connected with socket ID: {request.sid}')
