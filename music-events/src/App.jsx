@@ -51,8 +51,6 @@ const route = createBrowserRouter(
 
         <Route path="/register-admin" element={<AdminRegister/>} /> {/*Anna*/}
 
-
-        <Route path="/chat" element={<Chat/>} />
         {/* this is the chat/group chat, think of discord like, might not get done tbh  */}
         <Route path="/videofeed" element={<div> Video Feed</div>} />  
         {/* this is the video add sort of thing  */}
@@ -63,7 +61,11 @@ const route = createBrowserRouter(
 
         <Route path="/" element={<MainLayout/>}>
 
-          <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} /> {/* not sure if home should be secure from outsiders  */}
+
+        <Route path="/chat" element={<Chat/>} />
+
+        <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} /> {/* not sure if home should be secure from outsiders  */}
+
 
           <Route path="/profile/:id" element= {<Profile/>} /> 
           {/* Allright so this basically makes suer that the components are like children of the main layout, we might need more layouts in the future but again that would increase complexity 

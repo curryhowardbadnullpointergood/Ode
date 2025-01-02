@@ -18,7 +18,6 @@ const ChannelListContent = ({ isCreating, setIsCreating, setIsEditing, setToggle
         <>
             <div className="channel-list__list__wrapper">
                 <CompanyHeader />
-                <ChannelSearch setToggleContainer={setToggleContainer} />
                 <ChannelList 
                     filters={filters}
                     List={(listProps) => (
@@ -57,7 +56,7 @@ const ChannelListContainer = ({ setIsCreating, setIsEditing }) => {
             </div>
 
             <div className="channel-list__container-responsive"
-                style={{ left: toggleContainer ? "0%" : "-89%", backgroundColor: "#005fff"}}
+                style={{ left: toggleContainer ? "0%" : "-89%" }}
             >
                 <div className="channel-list__container-toggle" onClick={() => setToggleContainer((prevToggleContainer) => !prevToggleContainer)}>
                 </div>
