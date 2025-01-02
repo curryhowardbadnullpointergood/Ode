@@ -2,19 +2,19 @@ import axios from "axios";
 import {storage} from "../firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-export default async function HandleProfileUpdate(e,username,type, {interest, file}) {
+export default async function HandleProfileUpdate(e,username,type, {interest, file}={}) {
         // Prevent the browser from reloading the page
         let userData = {};
         const path = 'http://localhost:8080/user/create_profile';
         const path_image_upload = 'http://localhost:8080/user/image';
         // for the download url
-        console.log("file: ",file);
+        let imgURL = "";
         e.preventDefault();
         //console.log("handleProfileUpdate was called!");
         let data = {"username" : username};
         // Read the form data, the following have two different way of handling data as the selection of interests 
         // is different from using form input so we have to handle it differently : Lucas
-        if (interest === null){ // perform form data handling
+        if (type === "name" || type === "bio"){ // perform form data handling
             const form = e.target;
             const formData = new FormData(form);    
             for (var [key, value] of formData.entries()) { 
@@ -22,13 +22,14 @@ export default async function HandleProfileUpdate(e,username,type, {interest, fi
             }
         }
         else{ // perform the interest button thing
-
+            console.log("interest: ",interest);
+            data["interests"] = interest;
         }
         try {
             if (type === "pic") {
-                console.log("pic");
-                const file_to_api = {"file_path" : file};
-                const storageRef = ref(storage, `image/hi.jpg`);
+                //console.log("pic");
+                const filename = 'profile_pic/' + username + "-"+ file.name ;
+                const storageRef = ref(storage, filename);
                 const uploadTask = uploadBytesResumable(storageRef, file);
 
                 uploadTask.on(
@@ -45,46 +46,36 @@ export default async function HandleProfileUpdate(e,username,type, {interest, fi
                     async () => {
                         // Get download URL
                         const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                        console.log("downloadURL: ", downloadURL);
-                        //setDownloadURL(downloadURL);
-                        alert("Upload successful!");
+                        //console.log("downloadURL: ", downloadURL);
+                        imgURL = downloadURL;
+                        data["profile_picture"] = imgURL;
+                        // api call through axios to update firestore
+                        //console.log("data to api: ", data);
+                        const response = await axios.post(path, data);
+                        if (response.data.status === "success") {
+                            //console.log(response.data);
+                            alert("Update successful!");
+                        } else {
+                            alert(response.data.error);
+                        }
                     }
                 );
 
-
-
-
-                // api call via axios to firebase storage
-            //    const formData = new FormData();
-            //    console.log("FormData");
-            //    // Update the formData object
-            //    formData.append('imageFile', file );
-            //    console.log();
-            //    const response = await axios.post(path_image_upload, formData, {
-            //        headers: {
-            //            'Content-Type': 'multipart/form-data'
-            //        }
-            //    });
-
-            //    if (response.data.status === "success") {
-            //        alert("Profile picture updated!");
-            //        return;
-            //   } else {
-            //        alert("Image upload failed. Please try again.");
-            //        return;
-            //    }
             }
-        
-            // api call through axios to update firestore
-            console.log("data to api: ", data);
-            const response = await axios.post(path, data);
+            else{
+                // api call through axios to update firestore
+                console.log("data to api: ", data);
+
+                const response = await axios.post(path, data);
+                
+                if (response.data.status === "success") {
+                    console.log(response.data);
+                    alert("Update successful!");
+                } else {
+                    alert(response.data.error);
+                }
+            }
             
-            if (response.data.status === "success") {
-                console.log(response.data);
-                alert("Update successful!");
-            } else {
-                alert(response.data.error);
-            }
         } catch (error) {
             console.error("Error: ", error.message);
             alert("An error occurred. Please try again.");

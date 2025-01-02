@@ -16,7 +16,7 @@ export default async function HandleUserInfo(id, setUserData) {
     useEffect (() => {
         const fetchData = async() => {
             try{ 
-                const response = await axios.post(path,{"username" : id} );
+                const response = await axios.post(path,{username : id} );
                 //console.log("response: ", response);
                 //console.log("response.data.data: ", response.data.data);
                 const dataObject = response.data.data;
@@ -29,7 +29,10 @@ export default async function HandleUserInfo(id, setUserData) {
                     }
                     console.log(reply);
                     setUserData(reply);
-                    set_user_detail(reply);
+                    if (auth.token === id){
+                        set_user_detail(reply); // change the login user info once the id (username) is the same
+                    }
+                    
                 }
                 else{
                     setUserData(response.data.error);
@@ -37,7 +40,7 @@ export default async function HandleUserInfo(id, setUserData) {
                 }
             }
             catch(error){
-                console.error("Error: ", error.message);
+                //console.error("Error: ", error.message);
             }
         }
         fetchData();

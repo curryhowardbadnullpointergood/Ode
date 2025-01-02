@@ -31,6 +31,8 @@ users_container = database.collection('users')
 organiser_container = database.collection('organisers')
 event_container = database.collection('events')
 message_container = database.collection('messages')
+block_container = database.collection('block')
+report_container = database.collection('report')
 
 
 @app.route('/user/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -57,7 +59,7 @@ def event_controller(action):
     elif action == "filter_genre" and method == 'POST':
         return filter_by_genre(request, event_container)
     elif action == "follow" and method == 'POST':
-        return subscribing_event(request, event_container)
+        return subscribing_event(request, database)
 
 
 @app.route('/chat/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -111,6 +113,13 @@ def friend_request_controller(action):
 @app.route('/generate_notification/', methods=['POST'])
 def notification_controller():
     return generate_notifications(request, event_container)
+
+@app.route('/search', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def search_controller(action):
+    method = request.method
+    
+    return 0
+
 
 @socketio.on('connect')
 def handle_connect():

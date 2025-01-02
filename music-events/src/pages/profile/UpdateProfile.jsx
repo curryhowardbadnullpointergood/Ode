@@ -9,8 +9,8 @@ export default function UpdateProfile(){
 
 
     const [file, setFile] = useState(); // storing the file
-    //const [file_url, setFile_url] = useState(); // storing the file
-    const [favorites, setFavorites] = useState([]); // State to store selected favorites
+    const [file_url, setFile_url] = useState(); // storing the file
+    const [favorites, setFavorites] = useState(userData.interests); // State to store selected favorites
     const interests = ["rock", "pop", "jazz", "classical", "electronic", "hip-hop", "metal", "indie", "folk",
         "r&b", "opera", "piano", "musical theatre", "strings", "guitar", "drums", "bass", "vocals",
         "production", "composition"] // the choice of interests or genre
@@ -18,8 +18,6 @@ export default function UpdateProfile(){
     // hook controlling forms
     const [formName, setFormName] = useState({name: userData.name });
     const [formBio, setFormBio] = useState({bio: userData.bio});
-    //const [formProfile_pic, setFormProfile_pic] = useState({profile_picture: userData.profile_picture});
-    //const [formInterest, setFormInterest] = useState({interests: userData.interests});
     
     const toggleFavorite = (item) => { // function to add the favourite genre 
         setFavorites((prevFavorites) =>
@@ -44,17 +42,17 @@ export default function UpdateProfile(){
         let kk = URL.createObjectURL(e.target.files[0]);
         let k = e.target.files[0];
         setFile(k);
-        //setFile_url(kk);
+        setFile_url(kk);
     }
     
     return(  // for simplicity in functionality development, I use br/ for simple styling. Should be change later : Lucas
         <div className="update_profile">
-           <form onSubmit={e => HandleProfileUpdate(e, auth.token, "name" )}>
+            <form onSubmit={e => HandleProfileUpdate(e, auth.token, "name" )}>
                 <input type="text" placeholder="Enter your name here" name="name" onChange={e => handleChange(e,"name")} value={formName.name}></input>
                 <br/>
                 <button type="submit">Confirm update</button>
-           </form>
-           <form onSubmit={e => HandleProfileUpdate(e, auth.token,"bio" )}>
+            </form>
+            <form onSubmit={e => HandleProfileUpdate(e, auth.token,"bio" )}>
                 <textarea id="w3review" name="bio" rows="4" cols="100" onChange={e => handleChange(e,"bio")}  value={formBio.bio}
                     placeholder="Type your bio here to describe yourself!" ></textarea>
                 <br/>
@@ -66,15 +64,15 @@ export default function UpdateProfile(){
                 <div className="addingImage">
                     <h4>Add Image:</h4>
                     <input type="file" onChange={handleImgFile}  name="profile_picture" />
-                    <img src={file} />
+                    <img src={file_url} />
                 </div>
                 <br/>
                 <button type="submit">Confirm update</button>
             </form>
 
             
-            <div className="interests_choice" 
-                onSubmit={e => HandleProfileUpdate(e, auth.token, "interest", { favorites : favorites} )}> {/*need amendment later */}
+            <form className="interests_choice" 
+                onSubmit={e => HandleProfileUpdate(e, auth.token, "interest", { interest : favorites} )}> {/*need amendment later */}
                 <label>Please select at least three genre of music you love below</label> 
                 <br/>
                 {interests.map((item) => (
@@ -90,7 +88,7 @@ export default function UpdateProfile(){
                 </ul>
                 
                 <button type="submit">Confirm update</button>
-           </div>
+           </form>
         </div>
     )
 }

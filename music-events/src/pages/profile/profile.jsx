@@ -15,17 +15,18 @@ import AuthContext from "../../authentication/AuthContext";
 
 import back from "../../assets/profile_background.jpg"
 import Sophie from "../../assets/anne-sophie-mutter_profile.jpg"
+import placeholder from "../../assets/placeholder.jpg"
 
 const Profile = (props) => {
     const params = useParams();
 	const [userData, setUserData] = useState({});
     let exist = true;
     const response = HandleUserInfo(params.id,setUserData);
-    const {auth} = useContext(AuthContext);
+    const {auth, logout_auth} = useContext(AuthContext);
 
     // the following is the variable controlling the showing. 
     // Can be removed once everything is tested but for simpicity we just connecting the info from api to them first: Lucas
-    let interests = ["test1","test2","test3"];
+    let interests = [];
     let events_interested = ["event1","event2","event3"];
     let friends = ["friend1", "friend2", "friend3", "friend4", "friend5" ];
     let name = "name";
@@ -43,26 +44,25 @@ const Profile = (props) => {
         interests.push(...userData["interests"]);
         bio = userData["bio"];
         nickname = userData["name"];
+        if (userData["profile_picture"] === "" || userData["profile_picture"] === null){
+            userData["profile_picture"] = placeholder;
+        }
 
     }
-    const LoginUserProfile = () =>  {
+    const LoginUserProfile = () =>  {  // list of buttons made available solely for login user
         if (params.id ===auth.token ){
             return (
-                <Link to = '/update_profile'>
-                    <button>Update Profile</button>
-                </Link>
+                <div>
+                    <Link to = '/update_profile'>  {/* update profile */}
+                        <button>Update Profile</button>
+                    </Link>
+                    <Link to = '/login'> {/* logout */}
+                        <button onClick={logout_auth}>logout</button>
+                    </Link>
+                </div>
         )
         }
     }
-
-
-    function User_exist({ name, exist }) {
-        if (!exist) {
-          return null;
-        }
-       
-        return <li className="item">{name + "hi"}</li>;
-      }
 
     return(
         
@@ -71,7 +71,7 @@ const Profile = (props) => {
         <div className="profileimages">
             
             <img src={back} alt="" className="background" />
-            <img src={Sophie} alt="" className="profile" />
+            <img src={userData["profile_picture"]} alt="" className="profile" />
         </div>
         <div className="personalinformation">
             <h1>{userData.username}</h1> {/*displaying username*/}
@@ -85,14 +85,14 @@ const Profile = (props) => {
             </div>
 
             <span>Events interested</span> {/*The part showing the interested event of this player. Need styling */}
-            <ul>
-                {interests.map((fav) => (
+            <ul className="interest">
+                {events_interested.map((fav) => (
                     <li key={fav}>{fav}</li>
                 ))}
             </ul>
 
             <span>Interests</span> {/*The part showing the interest of this player. Need styling */}
-            <ul>
+            <ul className="interest">
                 {interests.map((fav) => (
                     <li key={fav}>{fav}</li>
                 ))}
