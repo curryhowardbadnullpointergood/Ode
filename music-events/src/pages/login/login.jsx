@@ -10,7 +10,7 @@ const Login = () => {
 
     const {auth, login_auth, userData, set_user_detail} = useContext(AuthContext); // authentication with AuthContext
     const navigate = useNavigate(); // Hook for navigation
-    console.log(auth.isLoggedIn);
+    //console.log(auth.isLoggedIn);
     return(
         <div className="login"> 
         <div className="box">

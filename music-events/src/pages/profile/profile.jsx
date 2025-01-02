@@ -15,6 +15,7 @@ import AuthContext from "../../authentication/AuthContext";
 
 import back from "../../assets/profile_background.jpg"
 import Sophie from "../../assets/anne-sophie-mutter_profile.jpg"
+import placeholder from "../../assets/placeholder.jpg"
 
 const Profile = (props) => {
     const params = useParams();
@@ -43,6 +44,9 @@ const Profile = (props) => {
         interests.push(...userData["interests"]);
         bio = userData["bio"];
         nickname = userData["name"];
+        if (userData["profile_picture"] === "" || userData["profile_picture"] === null){
+            userData["profile_picture"] = placeholder;
+        }
 
     }
     const LoginUserProfile = () =>  {
@@ -71,7 +75,7 @@ const Profile = (props) => {
         <div className="profileimages">
             
             <img src={back} alt="" className="background" />
-            <img src={Sophie} alt="" className="profile" />
+            <img src={userData["profile_picture"]} alt="" className="profile" />
         </div>
         <div className="personalinformation">
             <h1>{userData.username}</h1> {/*displaying username*/}

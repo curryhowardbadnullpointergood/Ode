@@ -14,17 +14,17 @@ export default async function HandleLogin(e,navigate,login_auth, set_user_detail
         const formData = new FormData(form);
         let data = {};
         for (var [key, value] of formData.entries()) { 
-            console.log(key, value);
             data[key] = value;
         }
-        console.log(JSON.stringify(data));
 
         try{
             const response = await axios.post(path,data );
-            console.log("response: ", response);
+            //console.log("response: ", response);
             if (response.data.status === "success"){
                 login_auth(data["username"]);
-                set_user_detail(response.data.user_id, response.data.data);
+                //set_user_detail(response.data.data, response.data.user_id);
+                //console.log("response.data.data: ",response.data.data);
+                set_user_detail(response.data.data);
                 alert("success!");
                 navigate("/home");
             }
