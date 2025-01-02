@@ -17,7 +17,7 @@ def generate_notifications(request, container):
     # Generate a notification for each event
     events = []
     for event_id in event_ids:
-        event_notification = generate_notification(event_id, container)
+        event_notification = generate_notification(user_id, event_id, container)
         # If generate_notification returns None or something unexpected, handle it
         if not event_notification:
             continue

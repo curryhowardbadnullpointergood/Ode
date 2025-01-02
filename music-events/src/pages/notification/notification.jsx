@@ -2,6 +2,7 @@ import "./notification.scss"
 import Organisation_Image from "../../assets/org_image.jpg"
 import {useContext, useEffect, useState} from "react";
 import AuthContext from "../../authentication/AuthContext";
+import axios from "axios";
 
 // id her is the id of the user, and we get the notifications of the user 
 // from the database 
@@ -31,36 +32,24 @@ const Notification = () => {
     }, []);
 
     const generateNotification = async (userId) => {
-        const uri = "http://localhost:8080/generate_notification";
+        const uri = "http://localhost:8080/generate_notification/";
 
         const requestBody = {
             id: userId
         };
 
         try {
-            const response = await fetch(uri, {
-                method: "POST",
+            const response = await axios.post(uri, requestBody, {
                 headers: {
                     "Content-Type": "application/json",
-                },
-                body: JSON.stringify(requestBody),
+                }
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error("Server error:", errorData);
-                return;
-            }
-
-            const data = await response.json();
+            const data = response.data;
             console.log("Server response:", data);
 
-            // data.notifications could be an array of notifications
-            // if your backend returns them differently, adjust accordingly
             const fetchedNotifications = data.events || [];
 
-            // set them in state (this will replace any existing notifications)
-            // or you might want to append them if that makes sense
             setNotifications(fetchedNotifications);
         } catch (error) {
             console.error("Error fetching notification:", error);
@@ -81,7 +70,6 @@ const Notification = () => {
                     </div>
                 </div>
             ))}
-
         </div>
     )
 }
