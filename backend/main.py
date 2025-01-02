@@ -15,7 +15,7 @@ from service.event import report_user, block_user, create_event, get_users_by_ev
 from service.utils import store_image
 from service.newchat import store_message, store_messages, store_images
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
-from service.generate_notification import generate_notification
+from service.generate_notification import generate_notifications
 
 
 load_dotenv()
@@ -108,7 +108,7 @@ def friend_request_controller(action):
 
 @app.route('/generate_notification/', methods=['POST'])
 def notification_controller():
-    return generate_notification(request)
+    return generate_notifications(request, event_container)
 
 @socketio.on('connect')
 def handle_connect():

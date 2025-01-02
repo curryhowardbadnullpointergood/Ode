@@ -24,7 +24,7 @@ export default async function HandleLogin(e,navigate,login_auth, set_user_detail
             console.log("response: ", response);
             if (response.data.status === "success"){
                 login_auth(data["username"]);
-                set_user_detail(response.data.data);
+                set_user_detail(response.data.user_id, response.data.data);
                 alert("success!");
                 navigate("/home");
             }
