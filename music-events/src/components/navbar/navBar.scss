@@ -5,6 +5,7 @@
     // middle icons are not centered, don't know how to center them 
     
     display: flex;
+    z-index: 9999;
     align-items: center;
     justify-content: space-between;
     padding: 10px 25px;

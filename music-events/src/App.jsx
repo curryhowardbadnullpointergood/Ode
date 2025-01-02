@@ -51,8 +51,6 @@ const route = createBrowserRouter(
 
         <Route path="/register-admin" element={<AdminRegister/>} /> {/*Anna*/}
 
-
-        <Route path="/chat" element={<Chat/>} />
         {/* this is the chat/group chat, think of discord like, might not get done tbh  */}
         <Route path="/videofeed" element={<div> Video Feed</div>} />  
         {/* this is the video add sort of thing  */}
@@ -62,6 +60,8 @@ const route = createBrowserRouter(
         <Route path="/organisation/:id" element={<Organisation/>} />  
 
         <Route path="/" element={<MainLayout/>}>
+
+        <Route path="/chat" element={<Chat/>} />
 
         <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} /> {/* not sure if home should be secure from outsiders  */}
 

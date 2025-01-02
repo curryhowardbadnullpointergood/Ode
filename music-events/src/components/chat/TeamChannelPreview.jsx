@@ -9,16 +9,33 @@ const TeamChannelPreview = ({ setActiveChannel, setIsCreating, setIsEditing, set
     
         console.log(members[0]);
 
-        return (
-            <div className="channel-preview__item single">
-                <Avatar 
-                    image={members[0]?.user?.image}
-                    name={members[0]?.user?.fullName || members[0]?.user?.id}
-                    size={24}
-                />
-                <p>{members[0]?.user?.fullName || members[0]?.user?.id}</p>
-            </div>
-        )
+        if (members.length === 1) {
+            return (
+                <div className="channel-preview__item single">
+                    <Avatar image={members[0]?.user?.image} name={members[0].user?.id} size={30} />
+                    <p>{members[0]?.user?.fullName || members[0]?.user?.id}</p>
+                </div>
+            );
+          }
+        
+          if (members.length === 2) {
+            return (
+                <div className="channel-preview__item single">
+                    <Avatar image={members[0]?.user?.image} name={members[0].user?.id} size={30} />
+                    <p>{members[0]?.user?.fullName || members[0]?.user?.id} + {members[1]?.user?.fullName || members[1]?.user?.id}</p>
+                </div>
+            );
+          }
+
+          if (members.length > 2) {
+            return (
+                <div className="channel-preview__item single">
+                    <Avatar image={members[0]?.user?.image} name={members[0].user?.id} size={30} />
+                    <p>{members[0]?.user?.fullName || members[0]?.user?.id} + {members[1]?.user?.fullName || members[1]?.user?.id} + ...</p>
+                </div>
+            );
+          }
+        
     }
 
     return (
