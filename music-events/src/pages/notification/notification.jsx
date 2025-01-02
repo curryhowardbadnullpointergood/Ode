@@ -8,7 +8,7 @@ import AuthContext from "../../authentication/AuthContext";
 // make changes as needed to get this to work, I can't spell out how to code evey function figure it out make it work 
 
 
-const notification = () => {
+const Notification = () => {
 
     const { userData } = useContext(AuthContext);
 
@@ -86,4 +86,4 @@ const notification = () => {
     )
 }
 
-export default notification
+export default Notification
