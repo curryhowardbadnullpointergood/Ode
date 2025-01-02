@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChannelList, useChatContext } from 'stream-chat-react';
-import { ChannelSearch, TeamChannelList, TeamChannelPreview } from './';
+import { TeamChannelList, TeamChannelPreview } from './';
 
 
 const CompanyHeader = () => (
