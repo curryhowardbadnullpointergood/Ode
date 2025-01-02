@@ -52,6 +52,15 @@ export const AuthProvider = ({children}) => {
     const logout_auth = () => { // remove authentication state when log out
         sessionStorage.removeItem("authToken");
         setAuth({isLoggedIn: false, token: null, loading: false});
+        setUserData({
+            username: "",
+            name: "",
+            profile_picture: "",
+            interests: [],
+            events_interested: [],
+            friends: [],
+            bio: ""
+        });
     };
 
     const set_user_detail = (data) => { // saving user information
