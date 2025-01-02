@@ -1,27 +1,45 @@
 from flask import jsonify
-import openai
+from backend.service.event import get_event_by_event_id
+from backend.service.event import get_event_ids_by_user_id
 
-openai.api_key = "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"
-def generate_notification(request):
 
+def generate_notifications(request, container):
     request_json = request.get_json()
+    user_id = request_json.get("id")
+    if not user_id:
+        return jsonify({"status": "error", "message": "User id is required!"}), 400
 
-    event_description = request_json.get('description')
+    # Get event IDs for this user
+    event_ids = get_event_ids_by_user_id(user_id, container)
+    if not event_ids:
+        return jsonify({"status": "success", "events": []}), 200
 
-    if not event_description:
-        return jsonify({"error": "Event description is required"}), 400
+    # Generate a notification for each event
+    events = []
+    for event_id in event_ids:
+        event_notification = generate_notification(event_id, container)
+        # If generate_notification returns None or something unexpected, handle it
+        if not event_notification:
+            continue
+        events.append(event_notification)
 
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo", 
-            messages=[
-                {"role": "user", "content": f"Generate a concise notification for the following event: {event_description}"}
-            ]
-        )
+    return jsonify({"status": "success", "events": events}), 200
 
-        notification = response['choices'][0]['message']['content']
 
-        return jsonify({"status": "success", "notification": notification}), 200
+def generate_notification(user_id, event_id, container):
+    # get_event_by_event_id should return a dict or None
+    event_data = get_event_by_event_id(event_id, container)
+    if not event_data:
+        # Could raise an exception or return None to indicate "not found"
+        raise ValueError(f"No event found for ID: {event_id}")
 
-    except Exception as e:
-        return jsonify({"error": f"Failed to generate notification: {str(e)}"}), 500
+    admin = event_data.get("admin")
+    description = event_data.get("information")
+    picture = event_data.get("picture")
+
+    return {
+        "id": user_id,
+        "name": admin,
+        "image": picture,
+        "notification": description
+    }

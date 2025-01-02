@@ -3,6 +3,9 @@ import "./login.scss"
 import AuthContext from "../../authentication/AuthContext";
 import HandleLogin from "../../apiFunctions/HandleLogin";
 import {useContext} from "react";
+
+
+
 const Login = () => {
 
     const {auth, login_auth, userData, set_user_detail} = useContext(AuthContext); // authentication with AuthContext
@@ -11,6 +14,8 @@ const Login = () => {
     return(
         <div className="login"> 
         <div className="box">
+
+
             
         <div className="left">
             <h1> Welcome! </h1>

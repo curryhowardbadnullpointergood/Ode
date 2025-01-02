@@ -11,11 +11,11 @@ from service.login import login_user
 from service.logout import logout_user
 from service.delete import delete_user
 from service.create_profile import create_profile, view_interests, view_user
-from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre
+from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre, subscribing_event
 from service.utils import store_image
 from service.newchat import store_message, store_messages, store_images
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
-from service.generate_notification import generate_notification
+from service.generate_notification import generate_notifications
 
 
 load_dotenv()
@@ -56,6 +56,8 @@ def event_controller(action):
         return view_event(request, event_container)
     elif action == "filter_genre" and method == 'POST':
         return filter_by_genre(request, event_container)
+    elif action == "follow" and method == 'POST':
+        return subscribing_event(request, event_container)
 
 
 @app.route('/chat/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -108,7 +110,7 @@ def friend_request_controller(action):
 
 @app.route('/generate_notification/', methods=['POST'])
 def notification_controller():
-    return generate_notification(request)
+    return generate_notifications(request, event_container)
 
 @socketio.on('connect')
 def handle_connect():

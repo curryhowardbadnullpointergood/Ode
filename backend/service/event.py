@@ -1,6 +1,6 @@
 from flask import jsonify
 import uuid
-
+import openai
 
 
 def create_event(request, container, user_container):
@@ -16,13 +16,15 @@ def create_event(request, container, user_container):
     if not user:
         return jsonify({"error": "Invalid user"}), 401
 
+    description = get_description(information)
+
     event_id = str(uuid.uuid4())
     new_event = container.document(event_id)
     data = {
         'id': event_id,
         'admin': admin,
         'users': users,
-        'information': information,
+        'information': description,
         'picture': picture,
         'genres': genres
     }
@@ -45,6 +47,25 @@ def get_users_by_event_id(event_id, container):
     event_data = event.to_dict()
     user_list = event_data.get('users')
     return user_list
+
+
+def get_events_by_user_id(user_id, container):
+    events_query = container.where('users', 'array_contains', user_id).stream()
+    return events_query
+
+
+def get_event_ids_by_user_id(user_id, container):
+    events_query = get_events_by_user_id(user_id, container)
+    events_data = []
+    event_ids = []
+    for doc in events_query:
+        data = doc.to_dict()
+        events_data.append(data)
+
+        # Extract the 'id' field from each event (if it exists)
+        if "id" in data:
+            event_ids.append(data["id"])
+    return event_ids
 
 
 def report_user(request, database):
@@ -117,12 +138,9 @@ def view_event(request, container):
     if not event_id:
         return jsonify({"error": "Need an event id"}), 400
 
-    event_list = container.where(field_path='id', op_string='==', value=event_id).stream()
-    event = next(event_list, None)
-
-    if not event:
+    event_data = get_event_by_event_id(event_id, container)
+    if not event_data:
         return jsonify({"error": "No event found"}), 404
-    event_data = event.to_dict()
 
     response = {
         "status": "success",
@@ -131,6 +149,15 @@ def view_event(request, container):
     }
 
     return jsonify(response), 200
+
+
+def get_event_by_event_id(event_id, container):
+    event_list = container.where(field_path='id', op_string='==', value=event_id).stream()
+    event = next(event_list, None)
+    if not event:
+        return None
+    event_data = event.to_dict()
+    return event_data
 
 
 def filter_by_genre(request, container):
@@ -147,3 +174,51 @@ def filter_by_genre(request, container):
         "status": "success",
         "data": filtered_events
     }), 200
+
+
+def subscribing_event(request, container):
+    request_json = request.get_json()
+    user_id = request_json.get('user_id')
+    event_id = request_json.get('event_id')
+
+    # TODO: Checking Block Container
+
+    # Get event data
+    event = get_event_by_event_id(event_id, container)
+    if not event:
+        return jsonify({"error": "No event found"}), 404
+
+    # get
+    user_list = get_users_by_event_id(event_id, container)
+    if user_id not in user_list:
+        user_list.append(user_id)
+
+        container.document(event_id).set({'users': user_list})
+
+    # return the latest version to frontend
+    updated_event = get_event_by_event_id(event_id, container)
+
+    response = {
+        "status": "success",
+        "message": "User subscribed to event successfully",
+        "data": updated_event
+    }
+    return jsonify(response), 200
+
+
+
+openai.api_key = "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"
+
+
+def get_description(event_description):
+    # Example using OpenAI ChatCompletion
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+                "role": "user",
+                "content": f"Generate a concise notification for the following event: {event_description}"
+            }
+        ]
+    )
+    return response["choices"][0]["message"]["content"]
