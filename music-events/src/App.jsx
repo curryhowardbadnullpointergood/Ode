@@ -73,7 +73,7 @@ const route = createBrowserRouter(
           
           <Route path="/update_profile" element= {<ProtectedRoute><UpdateProfile/></ProtectedRoute>} /> {/*the update page for profile*/}
 
-          <Route path="/notification/:id" element={<Notifications/>} />
+          <Route path="/notification" element={<Notifications/>} />
 
         
 
