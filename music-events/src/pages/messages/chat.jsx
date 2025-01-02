@@ -9,7 +9,6 @@ import { ChannelListContainer, ChannelContainer } from '../../components/chat';
 
 import { db } from "../../components/chat/firebase";
 
-
 import 'stream-chat-react/dist/css/v2/index.css';
 
 import './chat.scss';
@@ -18,8 +17,7 @@ const App = () => {
     const [isCreating, setIsCreating] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
 
-    const apiKey = 'h7328t4djfyz';
-
+    const apiKey = 'khmcwws8htv6';
 
     const { userData } = useContext(AuthContext);
     const currentUser = userData.username;
@@ -37,8 +35,10 @@ const App = () => {
 
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
+                console.log('User data:', data);
+                console.log(data.username);
 
-                const id = data.username.toLowerCase().replace(/\s+/g, '');
+                const id = data.username.replace(/[^a-z0-9@_\-]/gi, '');
 
                 users.push({
                     id: id, 
@@ -63,12 +63,12 @@ const App = () => {
 
     const devToken = client.devToken(currentUser);
 
-    const currentId = currentUser.toLowerCase().replace(/\s+/g, '');
+    const currentId = currentUser.replace(/[^a-z0-9@_\-]/gi, '');
 
     client.connectUser(
         {
             id: currentId,
-            name: currentUser,
+            fullName: currentUser,
             image: userData.profile_picture
         },
         devToken 

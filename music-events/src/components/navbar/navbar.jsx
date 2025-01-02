@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import "./navBar.scss"
 import {useContext} from "react";
 
@@ -43,42 +43,43 @@ function Navbar() {
   return (
     <div className="navBar"> 
 
-      <div className="left"> 
-        <Link to="/home" style={{ textDecoration: "none"}}> 
-        <span> Ode</span>
-        </Link>
+            <div className="left">
+                <Link to="/home" style={{textDecoration: "none"}}>
+                    <span> Ode</span>
+                </Link>
 
-        <div className="search" > 
-          <FaSearch />
-          <input type="text" placeholder="Search..." />
+                <div className="search">
+                    <FaSearch/>
+                    <input type="text" placeholder="Search..."/>
+                </div>
+            </div>
+
+
+            <div className="middle">
+                <IoHomeSharp/>
+                <IoMusicalNote/>
+                {/* this is for the events page  */}
+            </div>
+
+
+            <div className="right">
+                <Link to="/chat">
+                    <BiSolidMessageSquare/>
+                </Link>
+                <Link to="/notification">
+                    <IoMdNotifications/>
+                </Link>
+                <div className="user">
+                    <User_profile token={auth.token}/>
+                    {/* <span> Dummy User</span> */}
+                </div>
+            </div>
+
+
         </div>
-      </div>
 
-
-      <div className="middle"> 
-        <IoHomeSharp />
-        <IoMusicalNote /> 
-        {/* this is for the events page  */}
-      </div>
-
-
-      <div className="right"> 
-        <Link to="/chat">
-          <BiSolidMessageSquare /> 
-        </Link>
-        <IoMdNotifications />
-        <div className="user">
-        <User_profile token={auth.token}/>
-          {/* <span> Dummy User</span> */}
-        </div>
-      </div>
-
-
-    </div>
-  
-  );
+    );
 }
-
 
 
 export default Navbar;

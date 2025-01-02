@@ -4,13 +4,13 @@ import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB1anHKurd8uwdcyFrnpAxVzptJUENjhoo",
-    authDomain: "music-network-e75a1.firebaseapp.com",
-    projectId: "music-network-e75a1",
-    storageBucket: "music-network-e75a1.firebasestorage.app",
-    messagingSenderId: "1074001803261",
-    appId: "1:1074001803261:web:3fa4fc230390b54ab98b94",
-    measurementId: "G-4XR8D51BNR"
+    apiKey: "AIzaSyA3LSf3sYRzfcWXycl_ivRCu_UJ7kV0NCU",
+    authDomain: "music-event-app-442810.firebaseapp.com",
+    projectId: "music-event-app-442810",
+    storageBucket: "music-event-app-442810.firebasestorage.app",
+    messagingSenderId: "568353778562",
+    appId: "1:568353778562:web:a26e1e897848d3052a7d9b",
+    measurementId: "G-FHXQXYSKWJ"
 };
 
 // Initialize Firebase
