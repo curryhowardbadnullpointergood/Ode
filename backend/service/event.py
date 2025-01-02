@@ -176,6 +176,37 @@ def filter_by_genre(request, container):
     }), 200
 
 
+def subscribing_event(request, container):
+    request_json = request.get_json()
+    user_id = request_json.get('user_id')
+    event_id = request_json.get('event_id')
+
+    # TODO: Checking Block Container
+
+    # Get event data
+    event = get_event_by_event_id(event_id, container)
+    if not event:
+        return jsonify({"error": "No event found"}), 404
+
+    # get
+    user_list = get_users_by_event_id(event_id, container)
+    if user_id not in user_list:
+        user_list.append(user_id)
+
+        container.document(event_id).set({'users': user_list})
+
+    # return the latest version to frontend
+    updated_event = get_event_by_event_id(event_id, container)
+
+    response = {
+        "status": "success",
+        "message": "User subscribed to event successfully",
+        "data": updated_event
+    }
+    return jsonify(response), 200
+
+
+
 openai.api_key = "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"
 
 
