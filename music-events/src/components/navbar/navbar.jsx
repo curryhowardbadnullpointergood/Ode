@@ -17,8 +17,8 @@ import { BiSolidMessageSquare } from "react-icons/bi"; // this is for messages i
 
 
 const User_profile = (token1) =>{
-  console.log("user_profile function called");
-  console.log("token: ", token1.token);
+  //console.log("user_profile function called");
+  //console.log("token: ", token1.token);
   if (token1.token !== null){
     return(
       <Link to={"/profile/" + token1.token }>
@@ -39,7 +39,7 @@ const User_profile = (token1) =>{
 
 function Navbar() {
   const {auth} = useContext(AuthContext);
-  console.log("auth.token: ", auth.token);
+  //console.log("auth.token: ", auth.token);
   return (
     <div className="navBar"> 
 
