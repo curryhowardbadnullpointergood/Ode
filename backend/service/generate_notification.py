@@ -1,6 +1,6 @@
 from flask import jsonify
-from backend.service.event import get_event_by_event_id
-from backend.service.event import get_event_ids_by_user_id
+from service.event import get_event_by_event_id
+from service.event import get_event_ids_by_user_id
 
 
 def generate_notifications(request, container):
