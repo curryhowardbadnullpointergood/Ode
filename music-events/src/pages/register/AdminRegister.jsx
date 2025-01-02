@@ -13,7 +13,7 @@ function AdminRegister() {
                     <div className='regBlock'>
                         <h1>Register Organisation</h1>
                         <form method="post" onSubmit={e => handleAdminRegister(e, navigate)} className="regForm">
-                            <input type='text' name="organisation" placeholder="Enter Organisation Name:" />
+                            <input type='text' name="admin_name" placeholder="Enter Organisation Name:" />
                             <input type='email' name="email_address" placeholder="Enter Email:" />
                             <input type='password' name="password" placeholder="Enter Password:" />
                             <input type='password' name="confirmed_password" placeholder="Confirm Password:" />
