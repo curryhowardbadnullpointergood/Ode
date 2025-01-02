@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 export default async function HandleLogin(e,navigate,login_auth, set_user_detail ) {
-        // Prevent the browser from reloading the page
+        
 
         let userData = {};
         const path = 'http://localhost:8080/user/login';
+        // Prevent the browser from reloading the page
         e.preventDefault();
         console.log("handleRegister was called!");
         
