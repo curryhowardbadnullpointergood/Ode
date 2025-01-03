@@ -13,7 +13,6 @@ from service.delete import delete_user
 from service.create_profile import create_profile, view_interests, view_user
 from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre, subscribing_event, get_all_events
 from service.utils import store_image
-from service.newchat import store_message, store_messages, store_images
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
 from service.generate_notification import generate_notifications
 
@@ -61,18 +60,6 @@ def event_controller(action):
         return subscribing_event(request, database)
     elif action == "all" and method == 'GET':
         return get_all_events(event_container)
-
-
-@app.route('/chat/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def chat_controller(action):
-    method = request.method
-    if action == "create" and method == 'POST':
-        return store_message(request, firestore)
-    if action == "group_chat" and method == 'POST':
-        return store_messages(request, firestore)
-    if action == "image" and method == 'POST':
-        return store_images(request, firestore, bucket)
-
 
 def user_process(action, container):
     method = request.method
