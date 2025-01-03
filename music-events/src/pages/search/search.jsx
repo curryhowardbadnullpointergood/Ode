@@ -13,7 +13,7 @@ const Search = (props) => {
     //const response = HandleUserInfo(params.id,setUserData);
     //const {auth, logout_auth} = useContext(AuthContext);
 
-    function search_entity(){ // display of search entity 
+    function search_entity(e){ // display of search entity 
         return (
             <div>
 
@@ -21,7 +21,7 @@ const Search = (props) => {
         )
     }
 
-    return(
+    return( // main return function
         <div>
 
         </div>
