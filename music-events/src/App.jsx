@@ -25,6 +25,7 @@ import Home from "./pages/home/home";
 import { ChatContextProvider } from "./context/ChatContext";
 
 import UpdateProfile from "./pages/profile/UpdateProfile";
+import Search from "./pages/search/search";
 
 
 
@@ -63,6 +64,8 @@ const route = createBrowserRouter(
 
 
         <Route path="/chat" element={<Chat/>} />
+
+        <Route path="/search" element={<Search/>}/> {/* Search page path */}
 
         <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} /> {/* not sure if home should be secure from outsiders  */}
 

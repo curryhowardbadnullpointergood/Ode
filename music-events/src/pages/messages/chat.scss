@@ -1832,6 +1832,7 @@ div.rta__autocomplete.str-chat__emojisearch {
 
 .str-chat.team.light.str-chat__channel-list.str-chat__channel-list-react {
   background-color: blue;
+  
 }
 
 .user-list__content {
@@ -1850,3 +1851,13 @@ div.rta__autocomplete.str-chat__emojisearch {
 .str-chat__avatar.str-chat__avatar--one-letter {
   color: blue;
 }
+
+.str-chat__avatar .str-chat__avatar-image {
+  border-radius: 50%; /* 强制圆形 */
+  height: 32px;
+  width: 32px;
+}
+
+
+
+
