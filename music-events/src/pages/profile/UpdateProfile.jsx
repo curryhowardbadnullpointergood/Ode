@@ -10,7 +10,7 @@ export default function UpdateProfile(){
 
     const [file, setFile] = useState(); // storing the file
     const [file_url, setFile_url] = useState(); // storing the file
-    const [favorites, setFavorites] = useState([]); // State to store selected favorites
+    const [favorites, setFavorites] = useState(userData.interests); // State to store selected favorites
     const interests = ["rock", "pop", "jazz", "classical", "electronic", "hip-hop", "metal", "indie", "folk",
         "r&b", "opera", "piano", "musical theatre", "strings", "guitar", "drums", "bass", "vocals",
         "production", "composition"] // the choice of interests or genre
@@ -18,8 +18,6 @@ export default function UpdateProfile(){
     // hook controlling forms
     const [formName, setFormName] = useState({name: userData.name });
     const [formBio, setFormBio] = useState({bio: userData.bio});
-    //const [formProfile_pic, setFormProfile_pic] = useState({profile_picture: userData.profile_picture});
-    //const [formInterest, setFormInterest] = useState({interests: userData.interests});
     
     const toggleFavorite = (item) => { // function to add the favourite genre 
         setFavorites((prevFavorites) =>

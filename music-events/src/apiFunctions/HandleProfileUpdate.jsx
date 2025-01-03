@@ -2,7 +2,7 @@ import axios from "axios";
 import {storage} from "../firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-export default async function HandleProfileUpdate(e,username,type, {interest, file}) {
+export default async function HandleProfileUpdate(e,username,type, {interest, file}={}) {
         // Prevent the browser from reloading the page
         let userData = {};
         const path = 'http://localhost:8080/user/create_profile';
@@ -14,7 +14,7 @@ export default async function HandleProfileUpdate(e,username,type, {interest, fi
         let data = {"username" : username};
         // Read the form data, the following have two different way of handling data as the selection of interests 
         // is different from using form input so we have to handle it differently : Lucas
-        if (interest === null){ // perform form data handling
+        if (type === "name" || type === "bio"){ // perform form data handling
             const form = e.target;
             const formData = new FormData(form);    
             for (var [key, value] of formData.entries()) { 

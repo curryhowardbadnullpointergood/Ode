@@ -22,11 +22,11 @@ const Profile = (props) => {
 	const [userData, setUserData] = useState({});
     let exist = true;
     const response = HandleUserInfo(params.id,setUserData);
-    const {auth} = useContext(AuthContext);
+    const {auth, logout_auth} = useContext(AuthContext);
 
     // the following is the variable controlling the showing. 
     // Can be removed once everything is tested but for simpicity we just connecting the info from api to them first: Lucas
-    let interests = ["test1","test2","test3"];
+    let interests = [];
     let events_interested = ["event1","event2","event3"];
     let friends = ["friend1", "friend2", "friend3", "friend4", "friend5" ];
     let name = "name";
@@ -49,24 +49,20 @@ const Profile = (props) => {
         }
 
     }
-    const LoginUserProfile = () =>  {
+    const LoginUserProfile = () =>  {  // list of buttons made available solely for login user
         if (params.id ===auth.token ){
             return (
-                <Link to = '/update_profile'>
-                    <button>Update Profile</button>
-                </Link>
+                <div>
+                    <Link to = '/update_profile'>  {/* update profile */}
+                        <button>Update Profile</button>
+                    </Link>
+                    <Link to = '/login'> {/* logout */}
+                        <button onClick={logout_auth}>logout</button>
+                    </Link>
+                </div>
         )
         }
     }
-
-
-    function User_exist({ name, exist }) {
-        if (!exist) {
-          return null;
-        }
-       
-        return <li className="item">{name + "hi"}</li>;
-      }
 
     return(
         
@@ -89,14 +85,14 @@ const Profile = (props) => {
             </div>
 
             <span>Events interested</span> {/*The part showing the interested event of this player. Need styling */}
-            <ul>
-                {interests.map((fav) => (
+            <ul className="interest">
+                {events_interested.map((fav) => (
                     <li key={fav}>{fav}</li>
                 ))}
             </ul>
 
             <span>Interests</span> {/*The part showing the interest of this player. Need styling */}
-            <ul>
+            <ul className="interest">
                 {interests.map((fav) => (
                     <li key={fav}>{fav}</li>
                 ))}

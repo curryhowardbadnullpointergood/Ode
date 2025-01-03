@@ -34,8 +34,8 @@ const UserItem = ({ user, setSelectedUsers }) => {
     return (
         <div className="user-item__wrapper" onClick={handleSelect}>
             <div className="channel-preview__item single">
-                <Avatar image={user.image} name={user.fullName || user.id} size={40} />
-                <p className="user-item__name"> {user.fullName || user.id}</p>
+                <Avatar image={user.image} name={user.id} size={32} />
+                <p> {user.fullName || user.id}</p>
             </div>
             {selected ? <InviteIcon /> : <div className="user-item__invite-empty" />}
         </div>
