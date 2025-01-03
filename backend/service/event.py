@@ -1,7 +1,7 @@
 from flask import jsonify
 import uuid
 import openai
-from backend.service.user import get_user_by_user_id
+from service.user import get_user_by_user_id
 
 
 def create_event(request, container, user_container):
@@ -232,3 +232,11 @@ def get_description(event_description):
         ]
     )
     return response["choices"][0]["message"]["content"]
+
+
+def get_all_events(event_container):
+    events = [doc.to_dict() for doc in event_container.stream()]
+    return jsonify({
+        "status": "success",
+        "data": events
+    }), 200
