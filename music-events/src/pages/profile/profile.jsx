@@ -75,13 +75,18 @@ const Profile = (props) => {
         if (params.id !==auth.token && auth.token!== null ){
             return (
                 <div>
-                    <button onClick={HandleFollowUser(userData["username"], userData["friends"], auth.token)}>
+                    <button onClick={handleFollow}>
                         {followed}
                     </button>
                 </div>
             )
         }
     }
+
+    const handleFollow = () => {
+        console.log("Button clicked!");
+        HandleFollowUser(userData["username"], userData["friends"], auth.token);
+      };
 
     return(
         

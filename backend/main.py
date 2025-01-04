@@ -2,6 +2,9 @@ from flask_socketio import SocketIO
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from firebase_admin import firestore, credentials, storage
+from algoliasearch.search.client import SearchClient 
+
+
 import os
 from dotenv import load_dotenv
 import firebase_admin

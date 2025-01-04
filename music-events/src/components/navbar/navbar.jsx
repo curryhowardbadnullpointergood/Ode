@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link,useNavigate } from "react-router-dom";
 import "./navBar.scss"
 import {useContext} from "react";
 
@@ -19,7 +19,8 @@ import { BiSolidMessageSquare } from "react-icons/bi"; // this is for messages i
 // for now the name of the app is Ode, sounds allright as a name and is catchy 
 
 function Navbar() {
-  const {auth, userData} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const {auth, userData, searchQuery, setSearchQuery} = useContext(AuthContext);
   const User_profile = (token1) =>{
     if (token1.token !== null){
       //console.log("token1: ", token1);
@@ -39,6 +40,15 @@ function Navbar() {
     }
   }
 
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value); // Update the search query state
+  }
+
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    navigate("/search");
+  }
+
 
   return (
     <div className="navBar"> 
@@ -50,7 +60,10 @@ function Navbar() {
 
                 <div className="search">
                     <FaSearch/>
-                    <input type="text" placeholder="Search..."/>
+                    <form onSubmit={handleSubmit}>
+                      <input type="text" value={searchQuery}
+                        onChange={handleSearch} placeholder="Search..."/>
+                    </form>
                 </div>
             </div>
 

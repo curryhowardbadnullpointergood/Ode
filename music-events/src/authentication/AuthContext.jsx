@@ -24,6 +24,8 @@ export const AuthProvider = ({children}) => {
         // event_created
     })
 
+    const [searchQuery, setSearchQuery] = useState("");
+
     useEffect(() => {  // handle side effect of stored information by browser to ensure user won't log off when refreshing their screen
         const token = sessionStorage.getItem("authToken");
         const user_data = sessionStorage.getItem("user_data");
@@ -97,7 +99,7 @@ export const AuthProvider = ({children}) => {
 
 
     return (
-        <AuthContext.Provider value={{auth, userData, login_auth, logout_auth, set_user_detail}}>
+        <AuthContext.Provider value={{auth, userData, login_auth, logout_auth, set_user_detail, searchQuery, setSearchQuery}}>
             {children}
         </AuthContext.Provider>
     );

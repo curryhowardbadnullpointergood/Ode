@@ -21,7 +21,7 @@ export default async function HandleFollowUser(username,friend_list, user_to_add
             const response = await axios.post(path,data );
             console.log("response: ", response);
             if (response.data.status === "success"){
-                alert("success!");
+                alert("successfully followed!");
             }
             else{
                 alert(response.data.error);
