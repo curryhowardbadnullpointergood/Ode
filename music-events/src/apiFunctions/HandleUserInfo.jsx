@@ -44,5 +44,5 @@ export default async function HandleUserInfo(id, setUserData) {
             }
         }
         fetchData();
-    },[])
+    },[id])
 }

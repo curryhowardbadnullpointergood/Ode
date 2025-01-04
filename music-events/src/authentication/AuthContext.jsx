@@ -19,6 +19,8 @@ export const AuthProvider = ({children}) => {
         events_interested: [],
         friends: [],
         bio: ""
+        // organisation
+        // event_created
     })
 
     useEffect(() => {  // handle side effect of stored information by browser to ensure user won't log off when refreshing their screen
@@ -77,6 +79,19 @@ export const AuthProvider = ({children}) => {
         setUserData(data_to_write);
         //console.log("userData: ",userData);
     }
+    const set_admin_detail = (data) => { // saving user information
+        const data_to_write = {
+            name: data["name"],
+            profile_picture: data["profile_picture"],
+            organisation : data["organisation"],
+            events_created : data["events_created"]
+        }
+        sessionStorage.setItem("user_data", JSON.stringify(data_to_write));
+        setUserData(data_to_write);
+        //console.log("userData: ",userData);
+    }
+
+
 
     return (
         <AuthContext.Provider value={{auth, userData, login_auth, logout_auth, set_user_detail}}>

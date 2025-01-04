@@ -73,6 +73,14 @@ def chat_controller(action):
         return store_images(request, firestore, bucket)
 
 
+@app.route('/event/all', methods=['GET'])
+def get_all_events():
+    events = [doc.to_dict() for doc in event_container.stream()]
+    return jsonify({
+        "status": "success",
+        "data": events
+    }), 200
+
 def user_process(action, container):
     method = request.method
     # Call different functions based on the path

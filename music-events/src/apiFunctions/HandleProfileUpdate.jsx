@@ -65,7 +65,6 @@ export default async function HandleProfileUpdate(e,username,type, {interest, fi
             else{
                 // api call through axios to update firestore
                 console.log("data to api: ", data);
-
                 const response = await axios.post(path, data);
                 
                 if (response.data.status === "success") {

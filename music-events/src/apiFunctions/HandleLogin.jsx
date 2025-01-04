@@ -28,17 +28,20 @@ export default async function HandleLogin(e,navigate,login_auth, set_user_detail
                 alert("success!");
                 navigate("/home");
             }
-            //anna - added admin login
-            else{
-                const adminResponse = await axios.post('http://localhost:8080/admins/login', data);
-                if (adminResponse.data.status === "success") {
-                    login_auth(data["admin_name"]);
-                    set_user_detail({...adminResponse.data.data, isAdmin: true});
-                    alert("Admin login successful!");
-                } else {
-                    alert(response.data.error);
-                }
+            else {
+                alert(response.data.error);
             }
+            //anna - added admin login
+            //else{
+              //  const adminResponse = await axios.post('http://localhost:8080/admins/login', data);
+              //  if (adminResponse.data.status === "success") {
+               //     login_auth(data["admin_name"]);
+               //     set_user_detail({...adminResponse.data.data, isAdmin: true});
+              //      alert("Admin login successful!");
+              //  } else {
+              //      alert(response.data.error);
+              //  }
+            //}
         }
         catch(error){
             console.error("Error: ", error.message);
