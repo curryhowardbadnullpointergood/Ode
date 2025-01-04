@@ -232,3 +232,11 @@ def get_description(event_description):
         ]
     )
     return response["choices"][0]["message"]["content"]
+
+
+def get_all_events(event_container):
+    events = [doc.to_dict() for doc in event_container.stream()]
+    return jsonify({
+        "status": "success",
+        "data": events
+    }), 200

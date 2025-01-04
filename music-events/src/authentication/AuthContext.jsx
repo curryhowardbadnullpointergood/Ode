@@ -12,6 +12,7 @@ export const AuthProvider = ({children}) => {
     });
 
     const [userData, setUserData] = useState({  // storing the data of the logged in user
+        id: "",
         username: "",
         name: "",
         profile_picture: "",
@@ -25,18 +26,18 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {  // handle side effect of stored information by browser to ensure user won't log off when refreshing their screen
         const token = sessionStorage.getItem("authToken");
-        const user_data = sessionStorage.getItem("user_data"); 
+        const user_data = sessionStorage.getItem("user_data");
         let parsedData = null;
         if (user_data) {
             try {
-              parsedData = JSON.parse(user_data);
-              console.log(parsedData); 
+                parsedData = JSON.parse(user_data);
+                console.log(parsedData);
             } catch (error) {
-              console.error("Error parsing JSON:", error);
+                console.error("Error parsing JSON:", error);
             }
-          } else {
+        } else {
             console.log("No data found in sessionStorage");
-          }
+        }
         console.log("user_data from sessionStorage: ", parsedData);
         if (token) {
             setAuth({isLoggedIn: true, token: token, loading: false});
@@ -55,6 +56,7 @@ export const AuthProvider = ({children}) => {
         sessionStorage.removeItem("authToken");
         setAuth({isLoggedIn: false, token: null, loading: false});
         setUserData({
+            id: "",
             username: "",
             name: "",
             profile_picture: "",
@@ -65,8 +67,9 @@ export const AuthProvider = ({children}) => {
         });
     };
 
-    const set_user_detail = (data) => { // saving user information
+    const set_user_detail = (userId,data) => { // saving user information
         const data_to_write = {
+            id: userId,
             username: data["username"],
             name: data["name"],
             profile_picture: data["profile_picture"],

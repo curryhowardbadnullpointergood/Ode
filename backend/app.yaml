@@ -1,4 +1,3 @@
-# Use Python on flexible app engine
 runtime: python
 env: flex
 
@@ -15,3 +14,6 @@ resources:
   cpu: 1
   memory_gb: 0.5
   disk_size_gb: 10
+
+# Define entrypoint to start the app
+entrypoint: gunicorn -b :$PORT main:app

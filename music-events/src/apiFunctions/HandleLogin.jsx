@@ -24,7 +24,7 @@ export default async function HandleLogin(e,navigate,login_auth, set_user_detail
                 login_auth(data["username"]);
                 //set_user_detail(response.data.data, response.data.user_id);
                 //console.log("response.data.data: ",response.data.data);
-                set_user_detail(response.data.data);
+                set_user_detail(response.data.id, response.data.data);
                 alert("success!");
                 navigate("/home");
             }
