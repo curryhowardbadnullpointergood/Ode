@@ -2,8 +2,7 @@ from flask_socketio import SocketIO
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from firebase_admin import firestore, credentials, storage
-from algoliasearch.search.client import SearchClient 
-
+from algoliasearch.search.client import SearchClient
 
 import os
 from dotenv import load_dotenv
@@ -15,7 +14,6 @@ from service.logout import logout_user
 from service.delete import delete_user
 from service.create_profile import create_profile, view_interests, view_user
 from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre, subscribing_event, get_all_events
-from service.utils import store_image
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
 from service.generate_notification import generate_notifications
 
@@ -27,7 +25,6 @@ cred = credentials.Certificate(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
 firebase_admin.initialize_app(cred)
 print("Firebase initialized successfully")
 database = firestore.client()
-bucket = storage.bucket(os.environ.get('FIREBASE_BUCKET'))
 users_container = database.collection('users')
 organiser_container = database.collection('organisers')
 event_container = database.collection('events')
@@ -64,13 +61,6 @@ def event_controller(action):
     elif action == "all" and method == 'GET':
         return get_all_events(event_container)
 
-@app.route('/event/all', methods=['GET'])
-def get_all_events():
-    events = [doc.to_dict() for doc in event_container.stream()]
-    return jsonify({
-        "status": "success",
-        "data": events
-    }), 200
 
 def user_process(action, container):
     method = request.method
@@ -89,14 +79,13 @@ def user_process(action, container):
         return delete_user(request, container)
     elif action == "create_profile" and method == 'POST':
         return create_profile(request, container)
-    elif action == "image" and method == 'POST':
-        return store_image(request, bucket)
     elif action == "view_interests" and method == 'GET':
         return view_interests(request, container)
     elif action == "view_user" and method == "POST":
         return view_user(request, container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
+
 
 @app.route('/friendRequest/<path:action>', methods=['GET', 'POST', 'PUT'])
 def friend_request_controller(action):
@@ -109,14 +98,16 @@ def friend_request_controller(action):
         return view_friend_requests(request, database)
     return jsonify({"error": f"Unknown action: {action}"}), 404
 
+
 @app.route('/generate_notification/', methods=['POST'])
 def notification_controller():
     return generate_notifications(request, event_container)
 
+
 @app.route('/search', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def search_controller(action):
     method = request.method
-    
+
     return 0
 
 
