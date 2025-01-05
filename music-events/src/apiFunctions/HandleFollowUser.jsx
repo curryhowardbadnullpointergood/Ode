@@ -4,7 +4,7 @@ export default async function HandleFollowUser(username,friend_list, user_to_add
         // Prevent the browser from reloading the page
 
         let flag = true;
-        const path = 'http://localhost:8080/user/create_profile';
+        const path = process.env.BACKEND_ENDPOINT+'user/create_profile';
         console.log("HandleFollowUser was called!");
         console.log("username: ", username);
         console.log("friend_list: ", friend_list);

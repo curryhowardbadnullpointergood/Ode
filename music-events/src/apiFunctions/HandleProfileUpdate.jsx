@@ -5,8 +5,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 export default async function HandleProfileUpdate(e,username,type, {interest, file}={}) {
         // Prevent the browser from reloading the page
         let userData = {};
-        const path = 'http://localhost:8080/user/create_profile';
-        const path_image_upload = 'http://localhost:8080/user/image';
+        const path = process.env.BACKEND_ENDPOINT+'user/create_profile';
+        const path_image_upload = process.env.BACKEND_ENDPOINT+'user/image';
         // for the download url
         let imgURL = "";
         e.preventDefault();

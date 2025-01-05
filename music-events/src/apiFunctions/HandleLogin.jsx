@@ -4,7 +4,7 @@ export default async function HandleLogin(e,navigate,login_auth, set_user_detail
         
 
         let userData = {};
-        const path = 'http://localhost:8080/user/login';
+        const path = process.env.BACKEND_ENDPOINT+'user/login';
         // Prevent the browser from reloading the page
         e.preventDefault();
         console.log("handleRegister was called!");

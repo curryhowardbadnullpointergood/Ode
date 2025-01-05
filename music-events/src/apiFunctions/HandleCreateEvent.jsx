@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function HandleCreateEvent(e, navigate) {
     e.preventDefault();
-    const path = 'http://localhost:8080/event/create';
+    const path = process.env.BACKEND_ENDPOINT+'event/create';
     console.log("handleCreateEvent was called!");
 
     const form = e.target;

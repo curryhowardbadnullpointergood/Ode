@@ -32,7 +32,7 @@ const Notification = () => {
     }, []);
 
     const generateNotification = async (userId) => {
-        const uri = "http://localhost:8080/generate_notification/";
+        const uri = process.env.BACKEND_ENDPOINT+"generate_notification/";
 
         const requestBody = {
             id: userId
