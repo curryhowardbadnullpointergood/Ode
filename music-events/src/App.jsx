@@ -8,6 +8,8 @@ import Profile from "./pages/profile/profile"
 import Notifications from "./pages/notification/notification"
 import Organisation from "./pages/organisation/organisation"
 import AdminRegister from "./pages/register/AdminRegister" //Anna
+import Translator from "./pages/translator/translator"; //Danny
+
 
 import Chat from "./pages/messages/chat"
 import ProtectedRoute from "./authentication/ProtectedRoute "
@@ -77,6 +79,8 @@ const route = createBrowserRouter(
           <Route path="/update_profile" element= {<ProtectedRoute><UpdateProfile/></ProtectedRoute>} /> {/*the update page for profile*/}
 
           <Route path="/notification" element={<Notifications/>} />
+
+          <Route path="/translate" element={<Translator />} /> {/*Danny*/}
 
         
 
