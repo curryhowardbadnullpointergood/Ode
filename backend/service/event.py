@@ -4,14 +4,14 @@ import openai
 from service.user import get_user_by_user_id
 
 
-def create_event(request, container, user_container):
+def create_event(request, container, admin_container):
     request_json = request.get_json()
     admin = request_json.get('admin')
     information = request_json.get('information')
     picture = request_json.get('picture')
     genres = request_json.get('genres', [])
 
-    user_list = user_container.where(field_path='username', op_string='==', value=admin).stream()
+    user_list = admin_container.where(field_path='admin_name', op_string='==', value=admin).stream()
     user = next(user_list, None)
     if not user:
         return jsonify({"error": "Invalid user"}), 401
@@ -24,7 +24,8 @@ def create_event(request, container, user_container):
         'id': event_id,
         'admin': admin,
         'users': [],
-        'information': description,
+        'information': information,
+        'description': description,
         'picture': picture,
         'genres': genres
     }

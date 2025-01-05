@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function HandleAdminRegister(e, navigate) {
     e.preventDefault();
-    const path = process.env.BACKEND_ENDPOINT+'user/register_admin';
+    const path = process.env.REACT_APP_BACKEND_ENDPOINT+'user/register_admin';
 
     const form = e.target;
     const formData = new FormData(form);

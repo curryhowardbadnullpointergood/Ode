@@ -32,7 +32,7 @@ const Notification = () => {
     }, []);
 
     const generateNotification = async (userId) => {
-        const uri = process.env.BACKEND_ENDPOINT+"generate_notification/";
+        const uri = process.env.REACT_APP_BACKEND_ENDPOINT+"generate_notification/";
 
         const requestBody = {
             id: userId

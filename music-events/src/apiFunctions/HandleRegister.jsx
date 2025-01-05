@@ -4,7 +4,7 @@ export default async function HandleRegister(e,navigate) {
         // Prevent the browser from reloading the page
 
         let flag = true;
-        const path = process.env.BACKEND_ENDPOINT+'user/register_user';
+        const path = process.env.REACT_APP_BACKEND_ENDPOINT+'user/register_user';
         e.preventDefault();
         console.log("handleRegister was called!");
         

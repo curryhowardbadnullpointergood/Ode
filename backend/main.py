@@ -26,7 +26,7 @@ firebase_admin.initialize_app(cred)
 print("Firebase initialized successfully")
 database = firestore.client()
 users_container = database.collection('users')
-organiser_container = database.collection('organisers')
+organiser_container = database.collection('admins')
 event_container = database.collection('events')
 message_container = database.collection('messages')
 block_container = database.collection('block')
@@ -47,7 +47,7 @@ def organiser_controller(action):
 def event_controller(action):
     method = request.method
     if action == "create" and method == 'POST':
-        return create_event(request, event_container, users_container)
+        return create_event(request, event_container, organiser_container)
     elif action == "block" and method == 'POST':
         return block_user(request, database)
     elif action == "report" and method == 'POST':
