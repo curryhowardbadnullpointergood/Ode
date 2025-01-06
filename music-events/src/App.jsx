@@ -28,7 +28,7 @@ import { ChatContextProvider } from "./context/ChatContext";
 
 import UpdateProfile from "./pages/profile/UpdateProfile";
 import Search from "./pages/search/search";
-
+import GeolocationComponent from "./components/map/GeolocationComponent"
 
 
 
@@ -64,7 +64,7 @@ const route = createBrowserRouter(
 
         <Route path="/" element={<MainLayout/>}>
 
-
+        <Route path="/map_testing" element={<GeolocationComponent />} />
         <Route path="/chat" element={<Chat/>} />
 
         <Route path="/search" element={<Search/>}/> {/* Search page path */}
