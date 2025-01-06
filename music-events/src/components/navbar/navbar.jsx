@@ -6,6 +6,8 @@ import hahn from "../../assets/Hahn.jpg";
 import placeholder from "../../assets/placeholder.jpg"
 import AuthContext from "../../authentication/AuthContext";
 
+import { MdEventAvailable } from "react-icons/md";//Anna
+
 // literally the basic navbar example for the documentation, should really change in the future 
 
 // importing the icons, maybe in the future we can have someone redo the icon design in illustrator
@@ -22,7 +24,12 @@ import { FaEarthAfrica } from "react-icons/fa6";// this is for translation of th
 function Navbar() {
   const navigate = useNavigate();
   const {auth, userData, searchQuery, setSearchQuery} = useContext(AuthContext);
-  const User_profile = (token1) =>{
+  //Anna
+  //const isAdmin = userData?.isAdmin || false;
+  console.log("userData:", userData);
+  //console.log("isAdmin:", isAdmin);
+
+    const User_profile = (token1) =>{
     if (token1.token !== null){
       //console.log("token1: ", token1);
       //console.log("userData: " ,userData);
@@ -76,7 +83,15 @@ function Navbar() {
             <div className="middle">
                 <IoHomeSharp/>
                 <IoMusicalNote/>
-                {/* this is for the events page  */}
+                {/* Anna - adding icon for creating events */}
+                {/* {isAdmin && (
+                    <Link to={`/organisation/${userData.id}`}>
+                        <MdEventAvailable className="admin-icon" title="Create Event"/>
+                    </Link>
+                )} */}
+                <Link to={`/organisation/${userData.id}`}>
+                    <MdEventAvailable className="admin-icon" title="Create Event"/>
+                </Link>
             </div>
 
 

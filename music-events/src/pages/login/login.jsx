@@ -19,7 +19,7 @@ const Login = () => {
             
         <div className="left">
             <h1> Welcome! </h1>
-            <p> A bit about our app! Something like oh this is a music app about events, needs to be catchy and short, but informative and formal.</p>
+            <p> Welcome to Ode! Here you can find interesting events to go to and meet people with similar interests as yours. Just create an account and your musical adventure can begin!</p>
             <span> Click here to register! </span>
             <Link to = '/register'>
                 <button>Register</button>
