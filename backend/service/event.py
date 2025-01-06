@@ -9,24 +9,34 @@ def create_event(request, container, admin_container):
     admin = request_json.get('admin')
     information = request_json.get('information')
     picture = request_json.get('picture')
+    location = request_json.get('location')
     genres = request_json.get('genres', [])
 
-    user_list = admin_container.where(field_path='admin_name', op_string='==', value=admin).stream()
-    user = next(user_list, None)
-    if not user:
-        return jsonify({"error": "Invalid user"}), 401
+    #user_list = admin_container.where(field_path='admin_name', op_string='==', value=admin).stream()
+    #user = next(user_list, None)
+    #if not user:
+    #    return jsonify({"error": "Invalid user"}), 401
 
-    description = get_description(information)
+    # Ensure genres is a list
+    if isinstance(genres, str):
+        genres = [genres.strip()]
+
+    try:
+        description = get_description(information)
+    except Exception as e:
+        print(f"Description generation failed: {e}")
+        description = information  # Fallback to original text
 
     event_id = str(uuid.uuid4())
     new_event = container.document(event_id)
     data = {
         'id': event_id,
-        'admin': admin,
+        #'admin': admin,
         'users': [],
         'information': information,
         'description': description,
         'picture': picture,
+        'location': location,
         'genres': genres
     }
     new_event.set(data)
@@ -37,7 +47,6 @@ def create_event(request, container, admin_container):
     }
 
     return jsonify(response), 201
-
 
 def get_users_by_event_id(event_id, container):
     event_list = container.where(field_path='id', op_string='==', value=event_id).stream()
