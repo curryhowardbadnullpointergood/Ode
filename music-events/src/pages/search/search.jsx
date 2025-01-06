@@ -6,7 +6,7 @@ import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
 import AuthContext from "../../authentication/AuthContext";
 import placeholder from "../../assets/placeholder.jpg";
 import React from "react";
-import algoliasearch from 'algoliasearch/lite';
+import { liteClient as algoliasearch } from 'algoliasearch/lite';
 import {
     InstantSearch,
     SearchBox,
