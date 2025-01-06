@@ -17,7 +17,7 @@ import { IoMusicalNote } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io"; // this is for the notifications of the event and if someone tagged the user or well discord tag / instagram at 
 import { BiSolidMessageSquare } from "react-icons/bi"; // this is for messages in the group chats/ direct messages between users etc 
-import { IoEarth } from "react-icons/io5"; // this is for translation of the page 
+import { FaEarthAfrica } from "react-icons/fa6";// this is for translation of the page 
 
 // for now the name of the app is Ode, sounds allright as a name and is catchy 
 
@@ -106,7 +106,7 @@ function Navbar() {
                     <User_profile token={auth.token}/>
                     {/* <span> Dummy User</span> */}
                 </div>
-                <IoEarth onClick={handleTranslate} /> {/* Translate Icon */}
+                < FaEarthAfrica onClick={handleTranslate} /> {/* Translate Icon */}
             </div>
 
 
