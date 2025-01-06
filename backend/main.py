@@ -16,7 +16,7 @@ from service.create_profile import create_profile, view_interests, view_user
 from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre, subscribing_event, get_all_events
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
 from service.generate_notification import generate_notifications
-from service.translator import translate_texts
+# from service.translator import translate_texts
 
 load_dotenv()
 app = Flask(__name__)
