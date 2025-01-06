@@ -1,0 +1,49 @@
+.container{
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: rgb(179,138,184);
+
+    height: 100vmax;
+    width: 100vmax;
+
+    gap: 20px;
+
+    h1{
+        font-size: 40px;
+        color: aliceblue;
+    }
+
+    .language{
+
+        label{
+            font-size: 20px;
+            color: aliceblue;
+        }
+
+        select{
+            width: 100px;
+            height: 30px;
+            border: solid black 2px ;
+            background-color: aliceblue;
+            color: rgb(179,138,184);
+
+        }
+
+        
+    }
+
+    button{
+        background-color: aliceblue;
+        color: rgb(179,138,184);
+        width: 100px;
+        height: 30px;
+        border: solid black 2px; 
+    }
+
+    
+
+
+}

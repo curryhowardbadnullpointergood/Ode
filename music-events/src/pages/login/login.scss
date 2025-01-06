@@ -40,11 +40,11 @@ justify-content: center;
 
 
 
-        animation: float 3s ease-in-out infinite;
+        // animation: float 3s ease-in-out infinite;
 
-        &:hover {
-            animation: none;  
-        }
+        // &:hover {
+        //     animation: none;  
+        // }
 
         
 
@@ -137,14 +137,14 @@ justify-content: center;
 }
 
 
-@keyframes float {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-20px); 
-    }
-    100% {
-        transform: translateY(0); 
-    }
-}
+// @keyframes float {
+//     0% {
+//         transform: translateY(0);
+//     }
+//     50% {
+//         transform: translateY(-20px); 
+//     }
+//     100% {
+//         transform: translateY(0); 
+//     }
+// }

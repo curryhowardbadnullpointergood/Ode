@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./translator.scss"
 
 function Translator() {
   const [language, setLanguage] = useState("es"); // Set initial language as Spanish
@@ -24,9 +25,9 @@ function Translator() {
   };
 
   return (
-    <div className="translator-page">
+    <div className="container">
       <h1>Translate Page</h1>
-      <div>
+      <div className="language">
         <label htmlFor="language">Select Language: </label>
         <select
           id="language"
