@@ -38,6 +38,9 @@ report_container = database.collection('report')
 def user_controller(action):
     return user_process(action, users_container)
 
+@app.route('/admin/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def admin_controller(action):
+    return user_process(action, database.collection('admins'))
 
 @app.route('/organiser/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def organiser_controller(action):
@@ -71,7 +74,9 @@ def user_process(action, container):
     elif action == "register_admin" and method == 'POST':
         return register_admin(request, container)
     elif action == "login" and method == 'POST':
-        return login_user(request, container)
+        if container == organiser_container:
+            return login_user(request, organiser_container)
+        return login_user(request, users_container)
     elif action == "logout" and method == 'POST':
         return logout_user()
     elif action == "edit" and method == 'PUT':

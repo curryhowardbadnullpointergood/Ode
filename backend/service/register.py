@@ -82,7 +82,7 @@ def register_admin(request, container):
 
     response = {
         "status": "success",
-        "message": "User registered successfully",
+        "message": "Admin registered successfully",
         "data": {"user_id": admin_id, "create_time": time, "edit_time": time}
     }
     return jsonify(response), 201

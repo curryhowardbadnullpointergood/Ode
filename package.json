@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "algoliasearch": "^4.24.0",
+    "classnames": "^2.5.1",
+    "react-instantsearch-dom": "^6.40.4",
     "stream-chat": "^8.49.0",
     "stream-chat-react": "^12.8.1"
   }

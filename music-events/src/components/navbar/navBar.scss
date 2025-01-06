@@ -78,6 +78,18 @@
                 
             }
         }
+
+        //Anna
+        .admin-icon {
+            font-size: 24px;
+            color: inherit;
+            cursor: pointer;
+            transition: color 0.2s;
+
+            &:hover {
+                color: #007bff;
+            }
+        }
     }
 
 }
