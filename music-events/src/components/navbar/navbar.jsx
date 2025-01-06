@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link,useNavigate } from "react-router-dom";
 import "./navBar.scss"
 import {useContext} from "react";
 
@@ -15,11 +15,13 @@ import { IoMusicalNote } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io"; // this is for the notifications of the event and if someone tagged the user or well discord tag / instagram at 
 import { BiSolidMessageSquare } from "react-icons/bi"; // this is for messages in the group chats/ direct messages between users etc 
+import { IoEarth } from "react-icons/io5"; // this is for translation of the page 
 
 // for now the name of the app is Ode, sounds allright as a name and is catchy 
 
 function Navbar() {
-  const {auth, userData} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const {auth, userData, searchQuery, setSearchQuery} = useContext(AuthContext);
   const User_profile = (token1) =>{
     if (token1.token !== null){
       //console.log("token1: ", token1);
@@ -39,6 +41,19 @@ function Navbar() {
     }
   }
 
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value); // Update the search query state
+  }
+
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    navigate("/search");
+  }
+
+  const handleTranslate = () => {
+    navigate("/translate");
+  };
+
 
   return (
     <div className="navBar"> 
@@ -50,7 +65,10 @@ function Navbar() {
 
                 <div className="search">
                     <FaSearch/>
-                    <input type="text" placeholder="Search..."/>
+                    <form onSubmit={handleSubmit}>
+                      <input type="text" value={searchQuery}
+                        onChange={handleSearch} placeholder="Search..."/>
+                    </form>
                 </div>
             </div>
 
@@ -73,6 +91,7 @@ function Navbar() {
                     <User_profile token={auth.token}/>
                     {/* <span> Dummy User</span> */}
                 </div>
+                <IoEarth onClick={handleTranslate} /> {/* Translate Icon */}
             </div>
 
 

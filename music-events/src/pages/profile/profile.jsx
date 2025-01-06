@@ -1,10 +1,11 @@
 import "./profile.scss";
 import { useLoaderData, useParams, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom"
-import {useState, useContext} from "react";
+import {useState, useContext, useEffect} from "react";
 import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
 import Friend_list from "./popup_screen/Friend_list";
 import AuthContext from "../../authentication/AuthContext";
+import HandleFollowUser from "../../apiFunctions/HandleFollowUser"
 
 // this should be linked back to the profile of the person in question 
 // background image and profile pic 
@@ -20,9 +21,13 @@ import placeholder from "../../assets/placeholder.jpg"
 const Profile = (props) => {
     const params = useParams();
 	const [userData, setUserData] = useState({});
+    const [followed, setFollowed] = useState("Click to Follow!");
     let exist = true;
     const response = HandleUserInfo(params.id,setUserData);
+    console.log("userData: ",userData);
+    console.log("follow: ", followed);
     const {auth, logout_auth} = useContext(AuthContext);
+    
 
     // the following is the variable controlling the showing. 
     // Can be removed once everything is tested but for simpicity we just connecting the info from api to them first: Lucas
@@ -47,7 +52,9 @@ const Profile = (props) => {
         if (userData["profile_picture"] === "" || userData["profile_picture"] === null){
             userData["profile_picture"] = placeholder;
         }
+        if(!(auth.token in userData.friends)){
 
+        }
     }
     const LoginUserProfile = () =>  {  // list of buttons made available solely for login user
         if (params.id ===auth.token ){
@@ -64,6 +71,23 @@ const Profile = (props) => {
         }
     }
 
+    const follow_option = () => {
+        if (params.id !==auth.token && auth.token!== null ){
+            return (
+                <div>
+                    <button onClick={handleFollow}>
+                        {followed}
+                    </button>
+                </div>
+            )
+        }
+    }
+
+    const handleFollow = () => {
+        console.log("Button clicked!");
+        HandleFollowUser(userData["username"], userData["friends"], auth.token);
+      };
+
     return(
         
         exist &&   // if user exist, display the following
@@ -77,6 +101,7 @@ const Profile = (props) => {
             <h1>{userData.username}</h1> {/*displaying username*/}
             <span> {nickname}</span>  {/*displaying name*/}
             {LoginUserProfile()}
+            {follow_option()}
             <Friend_list list = {friends} /> {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
             <div className="bio">
                 <p>

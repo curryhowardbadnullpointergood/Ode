@@ -2,6 +2,8 @@ from flask_socketio import SocketIO
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from firebase_admin import firestore, credentials, storage
+from algoliasearch.search.client import SearchClient
+
 import os
 from dotenv import load_dotenv
 import firebase_admin
@@ -11,12 +13,10 @@ from service.login import login_user
 from service.logout import logout_user
 from service.delete import delete_user
 from service.create_profile import create_profile, view_interests, view_user
-from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre, subscribing_event
-from service.utils import store_image
-from service.newchat import store_message, store_messages, store_images
+from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre, subscribing_event, get_all_events
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
 from service.generate_notification import generate_notifications
-
+from service.translator import translate_texts
 
 load_dotenv()
 app = Flask(__name__)
@@ -26,9 +26,8 @@ cred = credentials.Certificate(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
 firebase_admin.initialize_app(cred)
 print("Firebase initialized successfully")
 database = firestore.client()
-bucket = storage.bucket(os.environ.get('FIREBASE_BUCKET'))
 users_container = database.collection('users')
-organiser_container = database.collection('organisers')
+organiser_container = database.collection('admins')
 event_container = database.collection('events')
 message_container = database.collection('messages')
 block_container = database.collection('block')
@@ -49,7 +48,7 @@ def organiser_controller(action):
 def event_controller(action):
     method = request.method
     if action == "create" and method == 'POST':
-        return create_event(request, event_container, users_container)
+        return create_event(request, event_container, organiser_container)
     elif action == "block" and method == 'POST':
         return block_user(request, database)
     elif action == "report" and method == 'POST':
@@ -60,17 +59,8 @@ def event_controller(action):
         return filter_by_genre(request, event_container)
     elif action == "follow" and method == 'POST':
         return subscribing_event(request, database)
-
-
-@app.route('/chat/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def chat_controller(action):
-    method = request.method
-    if action == "create" and method == 'POST':
-        return store_message(request, firestore)
-    if action == "group_chat" and method == 'POST':
-        return store_messages(request, firestore)
-    if action == "image" and method == 'POST':
-        return store_images(request, firestore, bucket)
+    elif action == "all" and method == 'GET':
+        return get_all_events(event_container)
 
 
 def user_process(action, container):
@@ -90,14 +80,13 @@ def user_process(action, container):
         return delete_user(request, container)
     elif action == "create_profile" and method == 'POST':
         return create_profile(request, container)
-    elif action == "image" and method == 'POST':
-        return store_image(request, bucket)
     elif action == "view_interests" and method == 'GET':
         return view_interests(request, container)
     elif action == "view_user" and method == "POST":
         return view_user(request, container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
+
 
 @app.route('/friendRequest/<path:action>', methods=['GET', 'POST', 'PUT'])
 def friend_request_controller(action):
@@ -110,14 +99,26 @@ def friend_request_controller(action):
         return view_friend_requests(request, database)
     return jsonify({"error": f"Unknown action: {action}"}), 404
 
+
 @app.route('/generate_notification/', methods=['POST'])
 def notification_controller():
     return generate_notifications(request, event_container)
 
+@app.route('/translate', methods=['POST'])
+def translate_controller():
+    try:
+        data = request.get_json()
+        texts = data.get('texts')
+        target_language = data.get('target_language')
+        return translate_texts(texts, target_language)
+    except Exception as e:
+        return jsonify({"error": f"Failed to translate: {str(e)}"}), 500
+
+
 @app.route('/search', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def search_controller(action):
     method = request.method
-    
+
     return 0
 
 

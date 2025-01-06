@@ -5,8 +5,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 export default async function HandleProfileUpdate(e,username,type, {interest, file}={}) {
         // Prevent the browser from reloading the page
         let userData = {};
-        const path = 'http://localhost:8080/user/create_profile';
-        const path_image_upload = 'http://localhost:8080/user/image';
+        const path = process.env.REACT_APP_BACKEND_ENDPOINT+'user/create_profile';
+        const path_image_upload = process.env.REACT_APP_BACKEND_ENDPOINT+'user/image';
         // for the download url
         let imgURL = "";
         e.preventDefault();
@@ -65,7 +65,6 @@ export default async function HandleProfileUpdate(e,username,type, {interest, fi
             else{
                 // api call through axios to update firestore
                 console.log("data to api: ", data);
-
                 const response = await axios.post(path, data);
                 
                 if (response.data.status === "success") {

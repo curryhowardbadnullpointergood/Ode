@@ -34,7 +34,7 @@ def generate_notification(user_id, event_id, container):
         raise ValueError(f"No event found for ID: {event_id}")
 
     admin = event_data.get("admin")
-    description = event_data.get("information")
+    description = event_data.get("description")
     picture = event_data.get("picture")
 
     return {

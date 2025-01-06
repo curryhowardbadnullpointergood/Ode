@@ -8,6 +8,7 @@ def create_profile(request, container):
     bio = request_json.get("bio")
     profile_picture = request_json.get("profile_picture")
     interests = request_json.get("interests", [])
+    friends = request_json.get("friends", [])
 
     INTERESTS = ["rock", "pop", "jazz", "classical", "electronic", "hip-hop", "metal", "indie", "folk",
                  "r&b", "opera", "piano", "musical theatre", "strings", "guitar", "drums", "bass", "vocals",
@@ -32,7 +33,9 @@ def create_profile(request, container):
     profile_data_1["name"] = user_data["name"] if name is None else name
     profile_data_1["profile_picture"] = user_data["profile_picture"] if profile_picture is None else profile_picture # Store Base64-encoded string
     profile_data_1["interests"] = user_data["interests"] if interests is None else list(set(interests) & set(INTERESTS))
+    profile_data_1["friends"] = user_data["friends"] if friends is None else friends
     profile_data_1["profile_created_time"] = datetime.datetime.utcnow().isoformat()
+   
 
 
     #profile_data = {

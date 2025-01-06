@@ -3,7 +3,7 @@ import {useEffect, useState, useContext} from "react";
 import AuthContext from "../authentication/AuthContext";
 export default async function HandleUserInfo(id, setUserData) {
     const {auth, userData,set_user_detail } = useContext(AuthContext);
-    const path = 'http://localhost:8080/user/view_user';
+    const path = process.env.REACT_APP_BACKEND_ENDPOINT+'user/view_user';
     const reply = {  
         username : "",
         name: "",
@@ -44,5 +44,5 @@ export default async function HandleUserInfo(id, setUserData) {
             }
         }
         fetchData();
-    },[])
+    },[id])
 }

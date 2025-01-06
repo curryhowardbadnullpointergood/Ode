@@ -4,7 +4,7 @@ export default async function HandleLogin(e,navigate,login_auth, set_user_detail
         
 
         let userData = {};
-        const path = 'http://localhost:8080/user/login';
+        const path = process.env.REACT_APP_BACKEND_ENDPOINT+'user/login';
         // Prevent the browser from reloading the page
         e.preventDefault();
         console.log("handleRegister was called!");
@@ -24,21 +24,24 @@ export default async function HandleLogin(e,navigate,login_auth, set_user_detail
                 login_auth(data["username"]);
                 //set_user_detail(response.data.data, response.data.user_id);
                 //console.log("response.data.data: ",response.data.data);
-                set_user_detail(response.data.data);
+                set_user_detail(response.data.user_id, response.data.data);
                 alert("success!");
                 navigate("/home");
             }
-            //anna - added admin login
-            else{
-                const adminResponse = await axios.post('http://localhost:8080/admins/login', data);
-                if (adminResponse.data.status === "success") {
-                    login_auth(data["admin_name"]);
-                    set_user_detail({...adminResponse.data.data, isAdmin: true});
-                    alert("Admin login successful!");
-                } else {
-                    alert(response.data.error);
-                }
+            else {
+                alert(response.data.error);
             }
+            //anna - added admin login
+            //else{
+              //  const adminResponse = await axios.post('http://localhost:8080/admins/login', data);
+              //  if (adminResponse.data.status === "success") {
+               //     login_auth(data["admin_name"]);
+               //     set_user_detail({...adminResponse.data.data, isAdmin: true});
+              //      alert("Admin login successful!");
+              //  } else {
+              //      alert(response.data.error);
+              //  }
+            //}
         }
         catch(error){
             console.error("Error: ", error.message);
