@@ -170,6 +170,9 @@ def create_event_in_calendar(creds, calendar_id, name, location, description, st
                 {'method': 'popup', 'minutes': 10},
             ],
         },
+        'guestsCanModify': False,  # guest cannot modify
+        'guestsCanInviteOthers': False,  # guest cannot invite others
+        'remindOnRespondedEventsOnly': False
     }
 
     event = service.events().insert(

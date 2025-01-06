@@ -12,7 +12,9 @@ def login_user(request, container, admin_container):
 
     user_list = container.where(field_path='username', op_string='==', value=username).stream()
     user = next(user_list, None)
-    admin_list = admin_container.where(field_path='organization', op_string='==', value=username).stream()
+    if not user:
+        admin_list = admin_container.where(field_path='organisation', op_string='==', value=username).stream()
+        user = next(admin_list, None)
     if not user:
         return jsonify({"error": "Invalid username or password"}), 200
 

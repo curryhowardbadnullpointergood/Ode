@@ -35,18 +35,17 @@ def register_user(request, container):
     # if not flag:
     #     return jsonify({"error": "Email address does not match the authorized Google account."}), 202
 
-
     new_user.set({
         'username': username,
         'password': hash_password,
         'email_address': email,
-        'bio' : "",
-        'name' : "",
-        'friends' : [],
-        'profile_picture' : "",
-        'interests' : [],
-        'events_interested' : [],
-        'google_calendar_credentials': creds.to_json(),
+        'bio': "",
+        'name': "",
+        'friends': [],
+        'profile_picture': "",
+        'interests': [],
+        'events_interested': [],
+        'google_calendar_credentials': "",  # creds.to_json()
         'created_time': time,
         'edit_time': time
     })
@@ -97,7 +96,7 @@ def register_admin(request, container):
         'name': "",
         'profile_picture': "",
         'events_created': [],
-        'google_calendar_credentials': creds.to_json(),
+        'google_calendar_credentials': "",  # creds.to_json()
         'created_time': time,
         'edit_time': time
     })

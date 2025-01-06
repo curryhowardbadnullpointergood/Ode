@@ -80,7 +80,7 @@ def user_process(action, container):
     elif action == "register_admin" and method == 'POST':
         return register_admin(request, organiser_container)
     elif action == "login" and method == 'POST':
-        return login_user(request, container, )
+        return login_user(request, container, organiser_container)
     elif action == "logout" and method == 'POST':
         return logout_user()
     elif action == "edit" and method == 'PUT':
