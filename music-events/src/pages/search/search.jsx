@@ -6,17 +6,15 @@ import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
 import AuthContext from "../../authentication/AuthContext";
 import placeholder from "../../assets/placeholder.jpg";
 import React from "react";
-
 import { liteClient as algoliasearch } from 'algoliasearch/lite';
 import {
-  InstantSearch,
-  SearchBox,
-  Hits,
-  Highlight,
-  Pagination,
-  Configure
-} from "react-instantsearch";
-
+    InstantSearch,
+    SearchBox,
+    Hits,
+    Highlight,
+    Pagination,
+    Configure
+} from "react-instantsearch-dom";
 
 export default function Search(props) {
     // Initialize Algolia client

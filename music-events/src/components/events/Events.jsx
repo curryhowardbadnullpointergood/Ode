@@ -8,70 +8,54 @@ import Vilde from "../../assets/Vilde_Frang.jpg"
 import Joshua from "../../assets/Joshua_Bell.jpg"
 import Nikola from "../../assets/Nicola.jpg"
 
-// going to hard code this in for now, but API should be able to handle this in the future 
+// going to hard code this in for now, but API should be able to handle this in the future
 
-
-// Anna- commenting out the old code in case we need it again
 const Events = () => {
+    // temporary dummy data, link this up to the API
+    // it goes without saying, that if we do not have 5 event videos, or the filtering doens't have that
+    // make this dynamic and show them less events stories
+    // maybe add buttons to swiping so right swipe = more about the event, left is not interested
 
-// temporary dummy data, link this up to the API
-// it goes without saying, that if we do not have 5 event videos, or the filtering doens't have that
-// make this dynamic and show them less events stories
-// maybe add buttons to swiping so right swipe = more about the event, left is not interested
+    const events = [
+        {
+            id: 1, // unique id for organiser
+            username: "Hilary Hahn", // name of the event organiser or company
+            img: Hahn,
+        },
+        {
+            id: 2, // unique id for player
+            username: "Janine Jansen",
+            img: Janine,
+        },
+        {
+            id: 3, // unique id for player
+            username: "Vilde Frang",
+            img: Vilde,
+        },
+        {
+            id: 4, // unique id for player
+            username: "Joshua Bell",
+            img: Joshua,
+        },
+        {
+            id: 5, // unique id for player
+            username: "Nikola",
+            img: Nikola,
+        },
+    ];
 
+    return (
+        <div className="Events">
+            {events.map(event =>(
+                <div className="event" key={event.id}>
+                    <img src={event.img} alt="" />
+                    <span>{event.username}</span>
+                </div>
+            ))}
+        </div>
+    );
+};
 
-
-
-const events = [
-    {
-        id: 1, // unique id for organiser
-        username: "Hilary Hahn", // name of the event organiser or company
-        img: Hahn,
-
-    },
-    {
-        id: 2, // unique id for player
-        username: "Janine Jansen",
-        img: Janine,
-
-    },
-    {
-        id: 3, // unique id for player
-        username: "Vilde Frang",
-        img: Vilde,
-
-    },
-    {
-        id: 4, // unique id for player
-        username: "Joshua Bell",
-        img: Joshua,
-
-    },
-    {
-        id: 5, // unique id for player
-        username: "Nikola",
-        img: Nikola,
-
-    },
-
-]
-
-
-
-return (
-    <div className="Events">
-        {events.map(event =>(
-            <div className="event" key={event.id}>
-                <img src={event.img} alt="" />
-                <span>{event.username}</span>
-
-            </div>
-        ))}
-    </div>
-) 
-
-
-}
 //Anna new start
 //needs better styling
 //if a user doesnt have a profile it kinda breaks but I will try to fix that later on
@@ -150,7 +134,5 @@ return (
 //         </div>
 //     );
 // };
-
-//Anna new end
 
 export default Events;
