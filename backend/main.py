@@ -2,7 +2,15 @@ from flask_socketio import SocketIO
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from firebase_admin import firestore, credentials, storage
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 from algoliasearch.search.client import SearchClient
+from google_auth_oauthlib.flow import InstalledAppFlow
+import pickle
+import datetime
 
 import os
 from dotenv import load_dotenv
@@ -16,6 +24,7 @@ from service.create_profile import create_profile, view_interests, view_user
 from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre, subscribing_event, get_all_events
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
 from service.generate_notification import generate_notifications
+
 # from service.translator import translate_texts
 
 load_dotenv()
@@ -69,9 +78,9 @@ def user_process(action, container):
     if action == "register_user" and method == 'POST':
         return register_user(request, container)
     elif action == "register_admin" and method == 'POST':
-        return register_admin(request, container)
+        return register_admin(request, organiser_container)
     elif action == "login" and method == 'POST':
-        return login_user(request, container)
+        return login_user(request, container, )
     elif action == "logout" and method == 'POST':
         return logout_user()
     elif action == "edit" and method == 'PUT':
@@ -103,6 +112,7 @@ def friend_request_controller(action):
 @app.route('/generate_notification/', methods=['POST'])
 def notification_controller():
     return generate_notifications(request, event_container)
+
 
 @app.route('/translate', methods=['POST'])
 def translate_controller():

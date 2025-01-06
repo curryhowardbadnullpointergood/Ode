@@ -2,28 +2,39 @@ from flask import jsonify
 import uuid
 import openai
 from service.user import get_user_by_user_id
+from service.calendar import create_event_in_calendar, add_attendee_to_event
 
 
 def create_event(request, container, admin_container):
     request_json = request.get_json()
     admin = request_json.get('admin')
     information = request_json.get('information')
+    event_name = request_json.get('name')
+    location = request_json.get('location')
+    start_time = request_json.get('start_time')
+    end_time = request_json.get('end_time')
     picture = request_json.get('picture')
     genres = request_json.get('genres', [])
 
-    user_list = admin_container.where(field_path='admin_name', op_string='==', value=admin).stream()
+    user_list = admin_container.where(field_path='organisation', op_string='==', value=admin).stream()
     user = next(user_list, None)
     if not user:
         return jsonify({"error": "Invalid user"}), 401
 
+    user_data = user.to_dict()
     description = get_description(information)
 
-    event_id = str(uuid.uuid4())
+    event_id = create_event_in_calendar(user_data['google_calendar_credentials'], user_data['email_address'],
+                                        event_name, location, information, start_time, end_time)
     new_event = container.document(event_id)
     data = {
         'id': event_id,
+        'name': event_name,
         'admin': admin,
         'users': [],
+        'location': location,
+        'start_time': start_time,
+        'end_time': end_time,
         'information': information,
         'description': description,
         'picture': picture,
@@ -177,6 +188,7 @@ def subscribing_event(request, database):
     event_id = request_json.get('event_id')
     event_container = database.collection('events')
     user_container = database.collection('users')
+    admin_container = database.collection('admins')
 
     # Get event data
     event = get_event_by_event_id(event_id, event_container)
@@ -200,12 +212,15 @@ def subscribing_event(request, database):
     if blocked_doc:
         return jsonify({"error": "You are blocked from this event"}), 403
 
-    # get
+    # get user list
     user_list = get_users_by_event_id(event_id, event_container)
+    admin_data = next(admin_container.where(field_path='organisation', op_string='==', value=admin).stream(), None)
+    admin_creds = admin_data.get('google_calendar_credentials')
+    admin_email = admin_data.get('email_address')
     if user_id not in user_list:
         user_list.append(user_id)
-
         event_container.document(event_id).update({'users': user_list})
+        add_attendee_to_event(admin_creds, admin_email, event_id, user_data['email_address'])
 
     # return the latest version to frontend
     updated_event = get_event_by_event_id(event_id, event_container)
