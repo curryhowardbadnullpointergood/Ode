@@ -6,16 +6,22 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import './testing.css'
 import {useContext} from "react";
 import AuthContext from "../../authentication/AuthContext";
+import HandleFriendData from "../../apiFunctions/HandleFriendData"
+import HandleFriendLocation from "../../apiFunctions/HandleFriendLocation"
+import placeholder from "../../assets/placeholder.jpg"
 
 function GeolocationComponent() {
 
   const mapRef = useRef()
   const mapContainerRef = useRef()
   const [location, setLocation] = useState(null);
+  const [profilePics,setProfilePics] = useState([]);
+  const [position_friends,setPosition_friends] = useState([]);
   const [error, setError] = useState(null);
   const {auth, login_auth, userData, set_user_detail} = useContext(AuthContext); 
-
-
+  let friends_data = []
+  let profile_pic_me = userData["profile_picture"];
+// get user location and friends location
   const getLocation = async () => {
   try {
     if (!navigator.geolocation) {
@@ -31,14 +37,30 @@ function GeolocationComponent() {
     setLocation({ latitude, longitude });
     if (auth.token!== null){
       await saveLocationToFirestore(latitude, longitude); // Assuming saveLocationToFirestore is async
+      //console.log(userData["friends"]);
+      let friends_pic = await HandleFriendData(auth.token, userData["friends"], "profile_picture"  ,setProfilePics);
+      let friends_pos  = await HandleFriendLocation(userData["friends"], setPosition_friends);
+      // merge the two thing above:
+      for (let i = 0 ; i < userData["friends"].length; i++){
+        if (friends_pic[i]["username"] === friends_pos[i]["username"] && !friends_data.some(obj => obj.username === friends_pos[i]["username"])){
+          friends_data.push({
+            "username" : friends_pic[i]["username"],
+            "profile_picture" : friends_pic[i]["field_data"],
+            "latitude" : friends_pos[i]["latitude"],
+            "longitude" : friends_pos[i]["longitude"]
+          });
+        }
+      }
+      //console.log("friends_data", friends_data);
     }
     
     return { latitude, longitude };
   } catch (err) {
     setError(err.message);
+    console.log(err.message);
   }
 };
-
+// save the data to firestore
   const saveLocationToFirestore = async (latitude, longitude) => {
     try {
       const userId = auth.token; // Replace with actual user ID (e.g., from Firebase Auth)
@@ -53,18 +75,37 @@ function GeolocationComponent() {
     }
   };
 
-  
 
+  const createCustomMarker = (imageUrl, size = 50) => {
+    const markerElement = document.createElement('div');
+    markerElement.className = 'custom-marker';
+    markerElement.style.width = `${size}px`;
+    markerElement.style.height = `${size}px`;
+    markerElement.style.borderRadius = '50%'; // Makes the image circular
+    markerElement.style.overflow = 'hidden';
+    markerElement.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    if (imageUrl === "" || imageUrl === null){
+      img.src = placeholder;
+    }
+    img.alt = 'Friend Profile Picture';
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'cover'; // Ensures the image fills the container
+    markerElement.appendChild(img);
+
+    return markerElement;
+  };
+
+
+
+// map create and adding pins
   useEffect(() => {
     const init = async() =>{ 
-
-      const addPin = (longitude, latitude) => {
-        new mapboxgl.Marker()
-          .setLngLat([longitude, latitude]) // Set the marker's position
-          .addTo(mapRef.current); // Add the marker to the map
-      };
-
-      let pos  = await getLocation();
+      try{
+      let pos = await getLocation();
       mapboxgl.accessToken = 'pk.eyJ1IjoibHVjYXN0MDYwMSIsImEiOiJjbTVreWVnNHYxcGJ2MmlzN3ZwY3cwb3g3In0.qk6JCU_FvvVC5QGmam0wvQ'
       let map = {};
       map = {
@@ -74,103 +115,73 @@ function GeolocationComponent() {
         zoom: 15.12}
 
       mapRef.current = new mapboxgl.Map(map);
-      //addPin(-1.3973829489668161, 50.93338242200269);  // long, lat
-      //addPin(pos.longitude, pos.latitude); 
-
-      let locations = [
-        { id: 1, longitude: -1.3973829489668161, latitude: 50.93338242200269, text: "Location 1: A cool place" },
-        { id: 2, longitude: pos.longitude, latitude: pos.latitude, text: "Location 2: Another cool spot" }
-      ]
 
       mapRef.current.on('load', () => {
-        mapRef.current.addSource('places', {
-          type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: [
-              {
-                type: 'Feature',
-                properties: {
-                  description:
-                    '<strong>Make it Mount Pleasant</strong><p>Make it Mount Pleasant is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>'
-                },
-                geometry: {
-                  type: 'Point',
-                  coordinates: [-1.3973829489668161, 50.93338242200269]
-                }
-              },
-              {
-                type: 'Feature',
-                properties: {
-                  description:
-                    '<strong>Mad Men Season Five Finale Watch Party</strong><p>Head to Lounge 201 (201 Massachusetts Avenue NE) Sunday for a Mad Men Season Five Finale Watch Party, complete with 60s costume contest, Mad Men trivia, and retro food and drink. 8:00-11:00 p.m. $10 general admission, $20 admission and two hour open bar.</p>'
-                },
-                geometry: {
-                  type: 'Point',
-                  coordinates: [pos.longitude, pos.latitude]
-                }
-              },
-              {
-                type: 'Feature',
-                properties: {
-                  description:
-                    '<strong>Big Backyard Beach Bash and Wine Fest</strong><p>EatBar (2761 Washington Boulevard Arlington VA) is throwing a Big Backyard Beach Bash and Wine Fest on Saturday, serving up conch fritters, fish tacos and crab sliders, and Red Apron hot dogs. 12:00-3:00 p.m. $25.</p>'
-                },
-                geometry: {
-                  type: 'Point',
-                  coordinates: [-77.090372, 38.881189]
-                }
-              }        
-            ]
-          }
-        });
-  
-        mapRef.current.addLayer({
-          id: 'places',
-          type: 'circle',
-          source: 'places',
-          paint: {
-            'circle-color': '#4264fb',
-            'circle-radius': 15,
-            'circle-stroke-width': 2,
-            'circle-stroke-color': '#ffffff'
-          }
-        });
-  
+        // Map each friend's data to GeoJSON features with associated profile pictures
+        
         const popup = new mapboxgl.Popup({
           closeButton: false,
           closeOnClick: false
         });
-  
-        mapRef.current.on('mouseenter', 'places', (e) => {  // popup when hover
-          mapRef.current.getCanvas().style.cursor = 'pointer';
-  
-          const coordinates = e.features[0].geometry.coordinates.slice();
-          const description = e.features[0].properties.description;
-  
-          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-          }
-  
-          popup.setLngLat(coordinates).setHTML(description).addTo(mapRef.current);
-        });
-  
-        mapRef.current.on('mouseleave', 'places', () => { // disappear when move away
-          mapRef.current.getCanvas().style.cursor = '';
+        // Add your own marker
+        const userMarker = createCustomMarker(userData.profile_picture);
+        new mapboxgl.Marker(userMarker)
+          .setLngLat([pos.longitude, pos.latitude])
+          .addTo(mapRef.current)
+          .getElement()
+            .addEventListener('mouseenter', () => {
+              popup
+                .setLngLat([pos.longitude, pos.latitude])
+                .setHTML(`<strong>You</strong>`)
+                .addTo(mapRef.current);
+            });
+
+        userMarker.addEventListener('mouseleave', () => {
           popup.remove();
         });
+
+          
+    
+        // Add markers for friends with popups
+        friends_data.forEach((friend) => {
+          const friendMarker = createCustomMarker(friend.profile_picture);
+          const markerElement = new mapboxgl.Marker(friendMarker)
+            .setLngLat([friend.longitude, friend.latitude])
+            .addTo(mapRef.current);
+
+          // Add hover event listeners
+          friendMarker.addEventListener('mouseenter', () => {
+            popup
+              .setLngLat([friend.longitude, friend.latitude])
+              .setHTML(`<strong>${friend.username}</strong>`)
+              .addTo(mapRef.current);
+          });
+
+          friendMarker.addEventListener('mouseleave', () => {
+            popup.remove();
+          });
+        });
+
       });
   
 
       return () => {
-        mapRef.current.remove()
+        if (mapRef.current.getLayer('friends')) {
+          mapRef.current.removeLayer('friends');
+        }
+        if (mapRef.current.getSource('friends-source')) {
+          mapRef.current.removeSource('friends-source');
+        }
+        if (mapRef.current) {
+          mapRef.current.remove();
+        }
       }
     }
-
+    catch(err) {
+      console.error("error: ", err);
+    }
+  }
     init();
-    
-
-    
   }, [])
 
   return (

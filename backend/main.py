@@ -33,6 +33,7 @@ event_container = database.collection('events')
 message_container = database.collection('messages')
 block_container = database.collection('block')
 report_container = database.collection('report')
+user_location_container = database.collection('locations_user')
 
 
 @app.route('/user/<path:action>', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -142,12 +143,31 @@ def translate_controller():
         return jsonify({"error": f"Failed to translate: {str(e)}"}), 500
 
 
-@app.route('/search', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def search_controller(action):
-    method = request.method
+@app.route('/get_friend_location', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def search_controller():
+    request_json = request.get_json()
+    friends = request_json.get('friends',[])
+    list_of_location = []
+    for fri in friends:
+        user_ref = user_location_container.document(fri)
+        user = user_ref.get()
+        if not user.exists: 
+            return jsonify({"error": f"User with ID {fri} does not exist"}), 404
+        
+        user_data = user.to_dict()
+        list_of_location.append({ 
+            "longitude": user_data["longitude"] ,  
+            "latitude" :  user_data["latitude"] ,
+            "username" : fri
+        })
 
-    return 0
+    response = {
+        "status": "success",
+        "message": "Login successful",
+        "data" : list_of_location
+    }
 
+    return jsonify(response), 200
 
 @socketio.on('connect')
 def handle_connect():

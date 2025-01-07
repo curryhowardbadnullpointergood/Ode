@@ -13,7 +13,10 @@ def getFriendData(request, container):
         if not user: 
             return jsonify({"error": "Invalid username or password1"}), 200 
         user_data = user.to_dict()
-        list_of_field.append(user_data[field])
+        list_of_field.append({
+            "username" : fri,
+             "field_data" : user_data[field]
+            })
 
     response = {
         "status": "success",
