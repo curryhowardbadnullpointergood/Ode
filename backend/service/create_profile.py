@@ -1,5 +1,6 @@
 from flask import jsonify
 import datetime
+from firebase_admin import firestore
 
 def create_profile(request, container):
     request_json = request.get_json()
@@ -33,18 +34,11 @@ def create_profile(request, container):
     profile_data_1["name"] = user_data["name"] if name is None else name
     profile_data_1["profile_picture"] = user_data["profile_picture"] if profile_picture is None else profile_picture # Store Base64-encoded string
     profile_data_1["interests"] = user_data["interests"] if interests is None else list(set(interests) & set(INTERESTS))
-    profile_data_1["friends"] = user_data["friends"] if friends is None else friends
+    
     profile_data_1["profile_created_time"] = datetime.datetime.utcnow().isoformat()
    
+        
 
-
-    #profile_data = {
-        #"name": name,
-        #"bio" : bio,
-        #"profile_picture": profile_picture,  # Store Base64-encoded string
-        #"interests": list(set(interests) & set(INTERESTS)),
-        #"profile_created_time": datetime.datetime.utcnow().isoformat(),
-    #}
     container.document(user_doc.id).update(profile_data_1)
 
     response = {
@@ -92,3 +86,37 @@ def view_user(request, container):
         "status": "success",
         "data": user_data
     }), 200
+
+def add_friend_profile(request, container):
+    request_json = request.get_json()
+    username = request_json.get("username")
+    friends = request_json.get("friends")
+
+    user_query = container.where("username", "==", username).stream()
+    user_doc = next(user_query, None)
+
+    user_query2 = container.where("username", "==", friends).stream()
+    user_doc2 = next(user_query2, None)
+
+    if not user_doc:
+        return jsonify({"error": "User with the provided username does not exist"}), 202 
+    
+    if not user_doc2:
+        return jsonify({"error": "User with the provided username does not exist"}), 202 
+    
+    user_data = user_doc.to_dict()
+
+    if user_data["friends"] == []:
+        container.document(user_doc.id).update({
+            "friends" : [friends]
+        })
+    else:
+        container.document(user_doc.id).update({ # Strange behaviour here
+            "friends" : firestore.ArrayUnion([friends]) 
+        })
+    
+    return jsonify({
+        "status": "success",
+        "data": user_data
+    }), 200
+

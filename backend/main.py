@@ -12,7 +12,7 @@ from service.edit import edit_user
 from service.login import login_user
 from service.logout import logout_user
 from service.delete import delete_user
-from service.create_profile import create_profile, view_interests, view_user
+from service.create_profile import create_profile, view_interests, view_user, add_friend_profile
 from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre, subscribing_event, get_all_events
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
 from service.generate_notification import generate_notifications
@@ -89,6 +89,8 @@ def user_process(action, container):
         return view_interests(request, container)
     elif action == "view_user" and method == "POST":
         return view_user(request, container)
+    elif action == "add_friend"  and method == "POST":
+        return add_friend_profile(request, container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
 

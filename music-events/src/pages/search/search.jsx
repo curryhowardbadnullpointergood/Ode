@@ -61,13 +61,13 @@ export default function Search(props) {
 
     return( // main return function
         <div className="search_main">
-        <InstantSearch indexName="user_name" searchClient={searchClient}>
-            <Configure query={searchQuery} />
-            <h1>Search result with: {searchQuery}</h1>
-            <Display_hit/>
-            
-            {/*<Pagination />*/}
-        </InstantSearch>
+            <InstantSearch indexName="user_name" searchClient={searchClient}>
+                <Configure query={searchQuery} />
+                <h1>Search result with: {searchQuery}</h1>
+                <Display_hit/>
+                
+                {/*<Pagination />*/}
+            </InstantSearch>
         </div>
     )
 
