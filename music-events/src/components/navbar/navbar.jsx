@@ -102,11 +102,16 @@ function Navbar() {
                 <Link to="/notification">
                     <IoMdNotifications/>
                 </Link>
+
+
+                < FaEarthAfrica onClick={handleTranslate} /> {/* Translate Icon */}
+
+                
                 <div className="user">
                     <User_profile token={auth.token}/>
                     {/* <span> Dummy User</span> */}
                 </div>
-                < FaEarthAfrica onClick={handleTranslate} /> {/* Translate Icon */}
+                
             </div>
 
 
