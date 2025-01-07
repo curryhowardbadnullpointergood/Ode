@@ -17,11 +17,12 @@ link submit buttont to backend function
 const Organisation = () => {
     const navigate = useNavigate();
     const currentUser = localStorage.getItem('username');
-
     return (
         <div className="organisation">
             <h1> ORGANISATION ACCOUNT </h1>
             <form onSubmit={(e) => HandleCreateEvent(e, navigate)}>
+                <input type="text" name="event_name" placeholder="Event name" />
+                <span> Event name </span>
                 <input type="hidden" name="admin" value={currentUser} />
                 <span> Event description</span>
                 <input type="text" name="information" placeholder="Event description" />
@@ -30,6 +31,12 @@ const Organisation = () => {
                 <span> Upload Location! </span>
                 <input type="text" name="location" placeholder="Location" />
                 <span> Upload Genre! </span>
+                <input type="text" name="start_time" placeholder="Start time" />
+                <span> Time the event starts. </span>
+                <input type="text" name="end_time" placeholder="End time" />
+                <span> Time the event ends. </span>
+                <input type="text" name="ticket_price" placeholder="Ticket price" />
+                <span> Price of tickets. </span>
                 <input type="text" name="genres" placeholder="Music genre!" />
                 <button type="submit">Submit</button>
             </form>
