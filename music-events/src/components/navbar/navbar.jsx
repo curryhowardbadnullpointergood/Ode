@@ -103,10 +103,6 @@ function Navbar() {
                 <Link to="/notification">
                     <IoMdNotifications/>
                 </Link>
-
-
-                < FaEarthAfrica onClick={handleTranslate} /> {/* Translate Icon */}
-
                 
                 <div className="user">
                     <User_profile token={auth.token} image={userData.profile_picture}/>

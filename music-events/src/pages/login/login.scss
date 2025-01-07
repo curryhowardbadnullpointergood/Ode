@@ -20,16 +20,16 @@ display: flex;
 align-items: center;
 justify-content: center;
 
-// background-image: url('../../assets/Kate_Chriscicka.gif');
-// background-size: cover; 
-// background-position: center;  
+background-image: url('../../../../../sea.gif');
+background-size: cover; 
+background-position: center;  
 // // background-repeat: no-repeat; 
 
 
 
     .box{
         display: flex;
-        background-color: aliceblue;
+        
         width: 50%;
         //border-radius: 7px;
         min-height: 650px;
@@ -54,14 +54,14 @@ justify-content: center;
         .left{
             flex: 1;
 
-            background: linear-gradient(rgb(226,52,184,0.5), rgb(190,27,151,0.5) ), url('../../assets/Hahn.jpg') left;
+            background: rgba(175,238,238,0.7);
             background-size: cover;
 
             padding: 40px;
             display: flex;
             flex-direction: column;
             gap: 35px;
-            color: aliceblue;
+            color: black;
             h1{
                 font-size: 95px;
                 line-height: 10px;
@@ -78,58 +78,86 @@ justify-content: center;
             button{ 
                 width: 40%;
                 padding: 10px;
-                border: none;
-                background-color: aliceblue;
-                color: rgb(190,27,151);
+                border: 1px solid black;
+                background-color: white;
+                color: black;
                 font-weight: bold;
                 cursor: pointer;
+                background: rgba(255,255,255,0.7);
 
+                height: 50px;
+                font-size: 15px;
+
+                -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                 box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                
                 // on hover 
                 &:hover {
-                    background-color: rgb(190, 27, 151);  
-                    color: aliceblue;  
+                    background-color: black;  
+                    color: white;  
                 }
             }
         }
 
         .right{
             flex: 1;
-            padding: 60px; 
+            padding: 50px; 
             display: flex;
             flex-direction: column;
-            gap: 30px;
-            justify-content: center;
+            gap: 63px;
+            // justify-content: center;
 
 
             h1{
-                color: rgb(190,27,151);
+                color: black;
                 font-size: 40px;
             }
             form{
                 display: flex;
                 flex-direction: column;
-                gap: 30px; 
+                gap: 50px; 
                 input{
-                    border: none;
+                    border: 1px solid black;
                     border-radius: 1px solid black;
                     padding: 22px 12px;
-                    color: rgb(190,27,151,0.7) ;
+                    color: black;
                     font-weight: 900;
+                    background: rgba(255,255,255,0.7);
+                    -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    
+                   &::placeholder {
+
+                     color: rgba(0,0,0,0.5);
+                   } 
+
+                        
                 }
+
+                
                 button{
                     width: 40%;
+                    height: 50px; 
                     padding: 15px;
-                    border: none;
-                    background-color: rgb(190,27,151,0.7);
-                    color: aliceblue;
+                    border: 1px solid black;
+                    background-color: white;
+                    color: black;
                     font-weight: bold;
                     cursor: pointer;
+                    font-size: 15px;
+                    background: rgba(255,255,255,0.7);
+                    
+                    -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
 
 
                     // on hover 
                     &:hover {
                         background-color: black;  
-                        color: aliceblue;   
+                        color: white;   
                     }
                 }
             }
