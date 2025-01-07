@@ -35,10 +35,10 @@ const Profile = (props) => {
     // Can be removed once everything is tested but for simpicity we just connecting the info from api to them first: Lucas
     let interests = [];
     let events_interested = ["event1","event2","event3"];
-    let friends = ["friend1", "friend2", "friend3", "friend4", "friend5" ];
-    let name = "name";
-    let nickname = "nickname";
-    let bio = "Anne-Sophie Mutter (born 29 June 1963) is a German violinist. Born and raised in Rheinfelden, Baden-Württemberg, Mutter started playing the violin at age five and continued studies in Germany and Switzerland. She was supported early in her career by Herbert von Karajan and made her orchestral debut with the Berlin Philharmonic in 1977. Since Mutter gained prominence in the 1970s and 1980s, she has recorded over 50 albums, mostly with the Deutsche Grammophon label, and performed as a soloist with leading orchestras worldwide and as a recitalist. Her primary instrument is the Lord Dunn–Raven Stradivarius violin\.Mutter's repertoire includes traditional classical violin works from the Baroque period to the 20th century, but she also is known for performing, recording, and commissioning new works by present-day composers. As an advocate of contemporary music, she has had several works composed especially for her, by Thomas Adès, Unsuk Chin, Sebastian Currier, Henri Dutilleux, Sofia Gubaidulina, Witold Lutosławski, Norbert Moret, Krzysztof Penderecki, André Previn, Wolfgang Rihm, Jörg Widmann, and John Williams. Mutter has received numerous awards and prizes, including four Grammy Awards (1994, 1999, 2000, and 2005), Echo Klassik awards (2009, 2014), the Grand Decoration of Honour of Austria (2007), the Grand Cross Order of Merit of the Federal Republic of Germany (2009), France\'s Legion of Honour (2009), Spain\'s Gold Medal of Merit in the Fine Arts (2016), Romania\'s Grand Cross National Order of Merit (2017), Poland\'s Gold Medal for Merit to Culture – Gloria Artis (2018), Japan\'s Praemium Imperiale (2019), the Polar Music Prize (2019), and holds honorary memberships at the Royal Academy of Music (1986) and American Academy of Arts and Sciences (2013)\.Mutter founded the Association of Friends of the Anne-Sophie Mutter Foundation e.V. in 1997 and the Anne-Sophie Mutter Foundation in 2008, which support young string musicians. She frequently gives benefits concerts and, since 2021, has been the president of the German Cancer Aid. "
+    //let [name, setName] = useState("name");
+    let [friends, setFriends] = useState(["friend1", "friend2", "friend3", "friend4", "friend5" ]);
+    let [nickname, setNickName] = useState("nickname");
+    let [bio, setBio] = useState("");
     useEffect(() =>{
         // the data retrieved from api will have time delay that making userData empty here. Should have a loading screen before it arrives
         if (userData_profile === "User not found" || userData_profile.name === undefined){ // user not found or the data hasn't arrived yet
@@ -48,9 +48,9 @@ const Profile = (props) => {
             console.log(userData_profile);
             //console.log("userData_profile[\"interests\"]: ",userData_profile["interests"]);
             interests = userData_profile["interests"];
-            bio = userData_profile["bio"];
-            nickname = userData_profile["name"];
-            friends = userData_profile["friends"];
+            setBio(userData_profile["bio"]);
+            setNickName(userData_profile["name"]);
+            setFriends(userData_profile["friends"]);
             if (userData_profile["profile_picture"] === "" || userData_profile["profile_picture"] === null){ // placeholder image
                 userData_profile["profile_picture"] = placeholder;
             }
