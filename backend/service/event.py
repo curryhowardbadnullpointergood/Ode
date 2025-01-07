@@ -12,6 +12,7 @@ def create_event(request, container, admin_container):
     information = request_json.get('information')
     event_name = request_json.get('name')
     location = request_json.get('location')
+    date = request_json.get('date')
     start_time = request_json.get('start_time')
     end_time = request_json.get('end_time')
     picture = request_json.get('picture')
@@ -42,7 +43,8 @@ def create_event(request, container, admin_container):
         'information': information,
         'description': description,
         'picture': picture,
-        'genres': genres
+        'genres': genres,
+        'date': date
     }
     new_event.set(data)
     response = {
