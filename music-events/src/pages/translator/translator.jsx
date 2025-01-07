@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./translator.scss"
-import { FaEarthAfrica } from "react-icons/fa6";// this is for translation of the page 
-
+import "./translator.scss";
+import { FaEarthAfrica } from "react-icons/fa6";
 
 function Translator() {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isTranslating, setIsTranslating] = useState(false);
 
   const languages = [
     { code: "es", name: "Spanish" },
@@ -15,39 +15,90 @@ function Translator() {
     { code: "ar", name: "Arabic" },
   ];
 
+  useEffect(() => {
+    const handleClickOutside = () => setShowDropdown(false);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const getTranslatableNodes = () => {
+    const textNodes = [];
+    const walk = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: (node) => {
+          const parent = node.parentElement;
+          if (
+            !parent ||
+            ["SCRIPT", "STYLE", "NOSCRIPT"].includes(parent.tagName) ||
+            parent.classList.contains("no-translate") ||
+            !node.textContent.trim()
+          ) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        },
+      }
+    );
+
+    let node;
+    while ((node = walk.nextNode())) {
+      const text = node.textContent.trim();
+      if (text) {
+        textNodes.push({ node, text });
+      }
+    }
+
+    console.log("Translatable nodes found:", textNodes);
+    return textNodes;
+  };
+
   const handleLanguageSelect = async (languageCode) => {
     try {
-      const pageContent = Array.from(document.body.querySelectorAll("*"))
-        .map((node) => (node.nodeType === 3 ? node : null)) // Only text nodes (nodeType 3)
-        .filter(Boolean)
-        .map((node) => node.textContent)
-        .join(" "); // Extract the text
+      setIsTranslating(true);
 
-      const response = await axios.post("/translate", {
-        texts: pageContent,
-        target_language: languageCode,
-      });
+      const translatableNodes = getTranslatableNodes();
+      const textsToTranslate = translatableNodes.map((item) => item.text);
 
-      if (response.status === 200) {
-        const translatedText = response.data.translated_texts.join(" ");
-        replacePageText(translatedText);
-      } else {
-        console.error("Translation failed:", response.data.error);
+      if (textsToTranslate.length === 0) {
+        console.warn("No translatable text found.");
+        return;
       }
+
+      console.log("Texts to translate:", textsToTranslate);
+
+      const batchSize = 100;
+      const translatedTexts = [];
+
+      for (let i = 0; i < textsToTranslate.length; i += batchSize) {
+        const batch = textsToTranslate.slice(i, i + batchSize);
+        console.log("Sending batch:", batch);
+
+        const response = await axios.post("http://localhost:8080/translate", {
+          texts: batch,
+          target_language: languageCode,
+        });
+
+        if (response.data.translated_texts) {
+          translatedTexts.push(...response.data.translated_texts);
+        }
+
+        console.log("Translated batch:", response.data.translated_texts);
+      }
+
+      translatableNodes.forEach((item, index) => {
+        if (translatedTexts[index]) {
+          console.log(`Replacing "${item.text}" with "${translatedTexts[index]}"`);
+          item.node.textContent = translatedTexts[index];
+        }
+      });
     } catch (error) {
       console.error("Translation failed:", error);
     } finally {
-      setShowDropdown(false); // Hide the dropdown after translation
+      setIsTranslating(false);
+      setShowDropdown(false);
     }
-  };
-
-  const replacePageText = (translatedText) => {
-    let textNodes = document.body.querySelectorAll("*");
-    textNodes.forEach((node) => {
-      if (node.nodeType === 3) { 
-        node.textContent = translatedText;
-      }
-    });
   };
 
   const toggleDropdown = (e) => {
@@ -55,32 +106,23 @@ function Translator() {
     setShowDropdown(!showDropdown);
   };
 
-  const closeDropdown = () => {
-    setShowDropdown(false);
-  };
-
-  document.addEventListener("click", closeDropdown);
-
   return (
-    <div
-        className="translate-icon-container"
-        onClick={toggleDropdown}
-      >
-        <FaEarthAfrica className="translate-icon" />
-        {showDropdown && (
-          <div className="language-dropdown" onClick={(e) => e.stopPropagation()}>
-            {languages.map((lang) => (
-              <div
-                key={lang.code}
-                className="language-box"
-                onClick={() => handleLanguageSelect(lang.code)}
-              >
-                {lang.name}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+    <div className="translate-icon-container" onClick={toggleDropdown}>
+      <FaEarthAfrica className={`translate-icon ${isTranslating ? "spinning" : ""}`} />
+      {showDropdown && (
+        <div className="language-dropdown" onClick={(e) => e.stopPropagation()}>
+          {languages.map((lang) => (
+            <div
+              key={lang.code}
+              className={`language-box ${isTranslating ? "disabled" : ""}`}
+              onClick={() => !isTranslating && handleLanguageSelect(lang.code)}
+            >
+              {lang.name}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

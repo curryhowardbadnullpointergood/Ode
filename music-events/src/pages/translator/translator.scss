@@ -1,39 +1,57 @@
+// translator.scss
 .translate-icon-container {
     position: relative;
-    display: inline-block;
     cursor: pointer;
-  }
-  
-  .translate-icon {
-    font-size: 24px;
-    color: #333;
-    transition: transform 0.2s ease, color 0.2s ease;
-  
-    &:hover {
-      transform: scale(1.2);
-      color: #007bff; // Change color on hover
+    padding: 8px;
+    
+    .translate-icon {
+      font-size: 1.5rem;
+      color: #333;
+      transition: transform 0.3s ease;
+      
+      &.spinning {
+        animation: spin 1s infinite linear;
+      }
+    }
+    
+    &:hover .translate-icon {
+      transform: scale(1.1);
     }
   }
   
   .language-dropdown {
     position: absolute;
-    top: 40px;
+    top: 100%;
     right: 0;
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background: white;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 10;
-    padding: 5px;
-  
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 150px;
+    padding: 8px 0;
+    
     .language-box {
-      padding: 10px;
-      font-size: 14px;
+      padding: 8px 16px;
       cursor: pointer;
-      transition: background-color 0.3s;
-  
+      transition: background-color 0.2s;
+      
       &:hover {
-        background-color: #f0f0f0;
+        background-color: #f5f5f5;
+      }
+      
+      &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
     }
   }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
