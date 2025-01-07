@@ -5,6 +5,7 @@ import {useContext} from "react";
 import hahn from "../../assets/Hahn.jpg";
 import placeholder from "../../assets/placeholder.jpg"
 import AuthContext from "../../authentication/AuthContext";
+import Translator from "../../pages/translator/translator";
 
 import { MdEventAvailable } from "react-icons/md";//Anna
 
@@ -106,7 +107,7 @@ function Navbar() {
                     <User_profile token={auth.token} image={userData.profile_picture}/>
                     {/* <span> Dummy User</span> */}
                 </div>
-                < FaEarthAfrica onClick={handleTranslate} /> {/* Translate Icon */}
+                <Translator />
             </div>
 
 

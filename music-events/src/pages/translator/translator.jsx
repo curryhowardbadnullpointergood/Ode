@@ -1,51 +1,86 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./translator.scss"
+import { FaEarthAfrica } from "react-icons/fa6";// this is for translation of the page 
+
 
 function Translator() {
-  const [language, setLanguage] = useState("es"); // Set initial language as Spanish
-  const [translatedContent, setTranslatedContent] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  const translatePage = async () => {
+  const languages = [
+    { code: "es", name: "Spanish" },
+    { code: "fr", name: "French" },
+    { code: "de", name: "German" },
+    { code: "zh", name: "Chinese" },
+    { code: "ar", name: "Arabic" },
+  ];
+
+  const handleLanguageSelect = async (languageCode) => {
     try {
-      const pageContent = document.body.innerText; // Get all text from the webpage
+      const pageContent = Array.from(document.body.querySelectorAll("*"))
+        .map((node) => (node.nodeType === 3 ? node : null)) // Only text nodes (nodeType 3)
+        .filter(Boolean)
+        .map((node) => node.textContent)
+        .join(" "); // Extract the text
 
-      // Send request to backend for translation
       const response = await axios.post("/translate", {
         texts: pageContent,
-        target_language: language,
+        target_language: languageCode,
       });
 
       if (response.status === 200) {
-        setTranslatedContent(response.data.translated_texts.join(" "));
+        const translatedText = response.data.translated_texts.join(" ");
+        replacePageText(translatedText);
+      } else {
+        console.error("Translation failed:", response.data.error);
       }
     } catch (error) {
       console.error("Translation failed:", error);
+    } finally {
+      setShowDropdown(false); // Hide the dropdown after translation
     }
   };
 
+  const replacePageText = (translatedText) => {
+    let textNodes = document.body.querySelectorAll("*");
+    textNodes.forEach((node) => {
+      if (node.nodeType === 3) { 
+        node.textContent = translatedText;
+      }
+    });
+  };
+
+  const toggleDropdown = (e) => {
+    e.stopPropagation();
+    setShowDropdown(!showDropdown);
+  };
+
+  const closeDropdown = () => {
+    setShowDropdown(false);
+  };
+
+  document.addEventListener("click", closeDropdown);
+
   return (
-    <div className="container">
-      <h1>Translate Page</h1>
-      <div className="language">
-        <label htmlFor="language">Select Language: </label>
-        <select
-          id="language"
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-        >
-          <option value="es">Spanish</option>
-          <option value="fr">French</option>
-          <option value="de">German</option>
-        </select>
+    <div
+        className="translate-icon-container"
+        onClick={toggleDropdown}
+      >
+        <FaEarthAfrica className="translate-icon" />
+        {showDropdown && (
+          <div className="language-dropdown" onClick={(e) => e.stopPropagation()}>
+            {languages.map((lang) => (
+              <div
+                key={lang.code}
+                className="language-box"
+                onClick={() => handleLanguageSelect(lang.code)}
+              >
+                {lang.name}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-
-      <button onClick={translatePage}>Translate</button>
-
-      <div className="translated-content">
-        <p>{translatedContent}</p>
-      </div>
-    </div>
   );
 }
 

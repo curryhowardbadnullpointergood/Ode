@@ -1,49 +1,39 @@
-.container{
-
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    background-color: rgb(179,138,184);
-
-    height: 100vmax;
-    width: 100vmax;
-
-    gap: 20px;
-
-    h1{
-        font-size: 40px;
-        color: aliceblue;
+.translate-icon-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .translate-icon {
+    font-size: 24px;
+    color: #333;
+    transition: transform 0.2s ease, color 0.2s ease;
+  
+    &:hover {
+      transform: scale(1.2);
+      color: #007bff; // Change color on hover
     }
-
-    .language{
-
-        label{
-            font-size: 20px;
-            color: aliceblue;
-        }
-
-        select{
-            width: 100px;
-            height: 30px;
-            border: solid black 2px ;
-            background-color: aliceblue;
-            color: rgb(179,138,184);
-
-        }
-
-        
+  }
+  
+  .language-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    padding: 5px;
+  
+    .language-box {
+      padding: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  
+      &:hover {
+        background-color: #f0f0f0;
+      }
     }
-
-    button{
-        background-color: aliceblue;
-        color: rgb(179,138,184);
-        width: 100px;
-        height: 30px;
-        border: solid black 2px; 
-    }
-
-    
-
-
-}
+  }
