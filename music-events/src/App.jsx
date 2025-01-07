@@ -64,14 +64,14 @@ const route = createBrowserRouter(
 
         <Route path="/" element={<MainLayout/>}>
 
-        <Route path="/map_testing" element={<GeolocationComponent />} />
+        <Route path="/map" element={<GeolocationComponent />} />
         <Route path="/chat" element={<Chat/>} />
 
         <Route path="/search" element={<Search/>}/> {/* Search page path */}
 
         <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} /> {/* not sure if home should be secure from outsiders  */}
 
-
+         
           <Route path="/profile/:id" element= {<Profile/>} /> 
           {/* Allright so this basically makes suer that the components are like children of the main layout, we might need more layouts in the future but again that would increase complexity 
           and so we should try and avoid that, well I should anyway, if you realise that we for some reason need a new layout style, let me know */}

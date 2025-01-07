@@ -5,6 +5,7 @@ import {useContext} from "react";
 import hahn from "../../assets/Hahn.jpg";
 import placeholder from "../../assets/placeholder.jpg"
 import AuthContext from "../../authentication/AuthContext";
+import Translator from "../../pages/translator/translator";
 
 import { MdEventAvailable } from "react-icons/md";//Anna
 
@@ -15,6 +16,7 @@ import { MdEventAvailable } from "react-icons/md";//Anna
 import { IoHomeSharp } from "react-icons/io5";
 import { IoMusicalNote } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io"; // this is for the notifications of the event and if someone tagged the user or well discord tag / instagram at 
 import { BiSolidMessageSquare } from "react-icons/bi"; // this is for messages in the group chats/ direct messages between users etc 
 import { FaEarthAfrica } from "react-icons/fa6";// this is for translation of the page 
@@ -26,13 +28,9 @@ function Navbar() {
   const {auth, userData, searchQuery, setSearchQuery} = useContext(AuthContext);
   //Anna
   //const isAdmin = userData?.isAdmin || false;
-  console.log("userData:", userData);
-  //console.log("isAdmin:", isAdmin);
 
-    const User_profile = (token1) =>{
+  const User_profile = (token1, image) =>{
     if (token1.token !== null){
-      //console.log("token1: ", token1);
-      //console.log("userData: " ,userData);
       return(
         <Link to={"/profile/" + token1.token }>
                 <img src={userData["profile_picture"]} alt="" />
@@ -96,6 +94,9 @@ function Navbar() {
 
 
             <div className="right">
+                <Link to={`/map`}>
+                  <FaMapMarkerAlt/>
+                </Link>
                 <Link to="/chat">
                     <BiSolidMessageSquare/>
                 </Link>
@@ -108,10 +109,10 @@ function Navbar() {
 
                 
                 <div className="user">
-                    <User_profile token={auth.token}/>
+                    <User_profile token={auth.token} image={userData.profile_picture}/>
                     {/* <span> Dummy User</span> */}
                 </div>
-                
+                <Translator />
             </div>
 
 

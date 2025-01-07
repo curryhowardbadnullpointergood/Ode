@@ -17,22 +17,35 @@ export default async function HandleLogin(e, navigate, login_auth, set_user_deta
         // Try user login first
         const userResponse = await axios.post(userPath, data);
         if (userResponse.data.status === "success") {
-            login_auth(data["username"]);
-            set_user_detail(userResponse.data.user_id, { ...userResponse.data.data, isAdmin: false });
+            login_auth(data["username"], "user");
+            set_user_detail(userResponse.data.user_id,  userResponse.data.data ,"user" );
             alert("Success!");
             navigate("/home");
             return;
         }
+        else{
+            // If user login fails, try admin login
+            // transferring username to organisation
+            const data_org = {
+                "organisation" : data["username"],
+                "password" : data["password"]
+            }
+            const adminResponse = await axios.post(adminPath, data_org);
+            console.log(adminResponse.data);
+            console.log(data_org);
+            if (adminResponse.data.status === "success") {
+                login_auth(data["username"], "admin");
+                set_user_detail(adminResponse.data.user_id, adminResponse.data.data, "admin");
+                alert("Admin login successful!");
+                navigate("/home");
+                return;
+            }
+            else{
 
-        // If user login fails, try admin login
-        const adminResponse = await axios.post(adminPath, data);
-        if (adminResponse.data.status === "success") {
-            login_auth(data["username"]);
-            set_user_detail(adminResponse.data.user_id, { ...adminResponse.data.data, isAdmin: true });
-            alert("Admin login successful!");
-            navigate("/home");
-            return;
+            }
         }
+
+        
 
         // If both fail, show error
         alert("Invalid credentials");

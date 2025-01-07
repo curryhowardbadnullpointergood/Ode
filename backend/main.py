@@ -12,11 +12,11 @@ from service.edit import edit_user
 from service.login import login_user
 from service.logout import logout_user
 from service.delete import delete_user
-from service.create_profile import create_profile, view_interests, view_user
+from service.create_profile import create_profile, view_interests, view_user, add_friend_profile
 from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre, subscribing_event, get_all_events
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
 from service.generate_notification import generate_notifications
-# from service.translator import translate_texts
+from service.translator import translate_texts, SUPPORTED_LANGUAGES
 
 load_dotenv()
 app = Flask(__name__)
@@ -89,6 +89,8 @@ def user_process(action, container):
         return view_interests(request, container)
     elif action == "view_user" and method == "POST":
         return view_user(request, container)
+    elif action == "add_friend"  and method == "POST":
+        return add_friend_profile(request, container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
 
@@ -109,12 +111,29 @@ def friend_request_controller(action):
 def notification_controller():
     return generate_notifications(request, event_container)
 
+@app.route('/translate-<lang_code>', methods=['POST'])
+def translate_specific_language(lang_code):
+    try:
+        if lang_code not in SUPPORTED_LANGUAGES:
+            return jsonify({"error": f"Unsupported language code: {lang_code}"}), 400
+        
+        data = request.get_json()
+        texts = data.get('texts')
+        return translate_texts(texts, lang_code)
+    except Exception as e:
+        return jsonify({"error": f"Failed to translate: {str(e)}"}), 500
+
+# Update the existing translate route to handle webpage content
 @app.route('/translate', methods=['POST'])
 def translate_controller():
     try:
         data = request.get_json()
         texts = data.get('texts')
         target_language = data.get('target_language')
+        
+        if not target_language:
+            return jsonify({"error": "Target language is required"}), 400
+            
         return translate_texts(texts, target_language)
     except Exception as e:
         return jsonify({"error": f"Failed to translate: {str(e)}"}), 500
