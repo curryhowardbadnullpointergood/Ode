@@ -15,7 +15,7 @@ box-sizing: inherit;
 
 .login{
 height: 100vh;
-background-color: rgb(179,138,184);
+background-color: #FFFFFF;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -31,12 +31,14 @@ justify-content: center;
         display: flex;
         background-color: aliceblue;
         width: 50%;
-        border-radius: 7px;
+        //border-radius: 7px;
         min-height: 650px;
         
-        -webkit-box-shadow: 20px 20px 0px 0px rgba(72,55,74,0.59);
-        -moz-box-shadow: 20px 20px 0px 0px rgba(72,55,74,0.59);
-        box-shadow: 20px 20px 0px 0px rgba(72,55,74,0.59);
+        
+
+        -webkit-box-shadow: 15px 15px 32px 0px rgba(0,0,0,0.7);
+        -moz-box-shadow: 15px 15px 32px 0px rgba(0,0,0,0.7);
+        box-shadow: 15px 15px 32px 0px rgba(0,0,0,0.7);
 
 
 
@@ -55,7 +57,7 @@ justify-content: center;
             background: linear-gradient(rgb(226,52,184,0.5), rgb(190,27,151,0.5) ), url('../../assets/Hahn.jpg') left;
             background-size: cover;
 
-            padding: 60px;
+            padding: 40px;
             display: flex;
             flex-direction: column;
             gap: 35px;

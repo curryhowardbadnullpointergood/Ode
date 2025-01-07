@@ -18,17 +18,15 @@ import back from "../../assets/profile_background.jpg"
 import Sophie from "../../assets/anne-sophie-mutter_profile.jpg"
 import placeholder from "../../assets/placeholder.jpg"
 
-const Profile = (props) => {
+const Organisation_profile = (props) => {
     const params = useParams();
-	const [userData_profile, setUserData_profile] = useState({
-        "interests" : []
-    });
+	const [userData, setUserData] = useState({});
     const [followed, setFollowed] = useState("Click to Follow!");
     let exist = true;
-    const response = HandleUserInfo(params.id,setUserData_profile);
-    //console.log("userData: ",userData_profile);
-    //console.log("follow: ", followed);
-    const {auth, logout_auth, userData} = useContext(AuthContext);
+    const response = HandleUserInfo(params.id,setUserData);
+    console.log("userData: ",userData);
+    console.log("follow: ", followed);
+    const {auth, logout_auth} = useContext(AuthContext);
     
 
     // the following is the variable controlling the showing. 
@@ -39,30 +37,25 @@ const Profile = (props) => {
     let name = "name";
     let nickname = "nickname";
     let bio = "Anne-Sophie Mutter (born 29 June 1963) is a German violinist. Born and raised in Rheinfelden, Baden-Württemberg, Mutter started playing the violin at age five and continued studies in Germany and Switzerland. She was supported early in her career by Herbert von Karajan and made her orchestral debut with the Berlin Philharmonic in 1977. Since Mutter gained prominence in the 1970s and 1980s, she has recorded over 50 albums, mostly with the Deutsche Grammophon label, and performed as a soloist with leading orchestras worldwide and as a recitalist. Her primary instrument is the Lord Dunn–Raven Stradivarius violin\.Mutter's repertoire includes traditional classical violin works from the Baroque period to the 20th century, but she also is known for performing, recording, and commissioning new works by present-day composers. As an advocate of contemporary music, she has had several works composed especially for her, by Thomas Adès, Unsuk Chin, Sebastian Currier, Henri Dutilleux, Sofia Gubaidulina, Witold Lutosławski, Norbert Moret, Krzysztof Penderecki, André Previn, Wolfgang Rihm, Jörg Widmann, and John Williams. Mutter has received numerous awards and prizes, including four Grammy Awards (1994, 1999, 2000, and 2005), Echo Klassik awards (2009, 2014), the Grand Decoration of Honour of Austria (2007), the Grand Cross Order of Merit of the Federal Republic of Germany (2009), France\'s Legion of Honour (2009), Spain\'s Gold Medal of Merit in the Fine Arts (2016), Romania\'s Grand Cross National Order of Merit (2017), Poland\'s Gold Medal for Merit to Culture – Gloria Artis (2018), Japan\'s Praemium Imperiale (2019), the Polar Music Prize (2019), and holds honorary memberships at the Royal Academy of Music (1986) and American Academy of Arts and Sciences (2013)\.Mutter founded the Association of Friends of the Anne-Sophie Mutter Foundation e.V. in 1997 and the Anne-Sophie Mutter Foundation in 2008, which support young string musicians. She frequently gives benefits concerts and, since 2021, has been the president of the German Cancer Aid. "
-    useEffect(() =>{
-        // the data retrieved from api will have time delay that making userData empty here. Should have a loading screen before it arrives
-        if (userData_profile === "User not found" || userData_profile.name === undefined){ // user not found or the data hasn't arrived yet
-            exist = false;
+    
+    
+    // the data retrieved from api will have time delay that making userData empty here. Should have a loading screen before it arrives
+    if (userData === "User not found" || userData.name === undefined){ // user not found or the data hasn't arrived yet
+        exist = false;
+    }
+    else{ // data arrives
+        //console.log(userData);
+        //console.log("userData[\"interests\"]: ",userData["interests"]);
+        interests.push(...userData["interests"]);
+        bio = userData["bio"];
+        nickname = userData["name"];
+        if (userData["profile_picture"] === "" || userData["profile_picture"] === null){
+            userData["profile_picture"] = placeholder;
         }
-        else{ // data arrives
-            console.log(userData_profile);
-            //console.log("userData_profile[\"interests\"]: ",userData_profile["interests"]);
-            interests = userData_profile["interests"];
-            bio = userData_profile["bio"];
-            nickname = userData_profile["name"];
-            friends = userData_profile["friends"];
-            if (userData_profile["profile_picture"] === "" || userData_profile["profile_picture"] === null){ // placeholder image
-                userData_profile["profile_picture"] = placeholder;
-            }
-            if( userData_profile["friends"].includes(auth.token)){
-                setFollowed("followed");
-            }
+        if(!(auth.token in userData.friends)){
+
         }
-    },[userData_profile])
-        
-    
-    
-    
+    }
     const LoginUserProfile = () =>  {  // list of buttons made available solely for login user
         if (params.id ===auth.token ){
             return (
@@ -79,7 +72,7 @@ const Profile = (props) => {
     }
 
     const follow_option = () => {
-        if (params.id !==auth.token && auth.token!== null  ){
+        if (params.id !==auth.token && auth.token!== null ){
             return (
                 <div>
                     <button onClick={handleFollow}>
@@ -91,27 +84,21 @@ const Profile = (props) => {
     }
 
     const handleFollow = () => {
-        //console.log("Button clicked!");
-        if (followed == "Click to Follow!"){
-            HandleFollowUser(userData_profile["username"], auth.token );
-        }
-        else{
-            alert("You have followed this person!");
-        }
-            
-        
+        console.log("Button clicked!");
+        HandleFollowUser(userData["username"], userData["friends"], auth.token);
       };
 
     return(
+        
         exist &&   // if user exist, display the following
         <div className="profile"> 
         <div className="profileimages">
             
             <img src={back} alt="" className="background" />
-            <img src={userData_profile["profile_picture"]} alt="" className="profile" />
+            <img src={userData["profile_picture"]} alt="" className="profile" />
         </div>
         <div className="personalinformation">
-            <h1>{userData_profile.username}</h1> {/*displaying username*/}
+            <h1>{userData.username}</h1> {/*displaying username*/}
             <span> {nickname}</span>  {/*displaying name*/}
             {LoginUserProfile()}
             {follow_option()}
@@ -131,7 +118,7 @@ const Profile = (props) => {
 
             <span>Interests</span> {/*The part showing the interest of this player. Need styling */}
             <ul className="interest">
-                {userData_profile["interests"].map((fav) => (
+                {interests.map((fav) => (
                     <li key={fav}>{fav}</li>
                 ))}
             </ul>
@@ -140,5 +127,5 @@ const Profile = (props) => {
     )
 }
 
-export default Profile
+export default Organisation_profile
 

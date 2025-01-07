@@ -7,7 +7,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
     const [auth, setAuth] = useState({
         isLoggedIn: false,
-        token: null, // the username aka id in <user/:id> routing
+        token: null, // the username aka id in <user/:id> routing   
         loading: true,
         account_type : ""
     });
@@ -29,20 +29,19 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {  // handle side effect of stored information by browser to ensure user won't log off when refreshing their screen
         const token = sessionStorage.getItem("authToken");
-        const user_data = sessionStorage.getItem("user_data");
+        const user_data_22 = sessionStorage.getItem("user_data_22");
         const acc_type = sessionStorage.getItem("user_type");
         let parsedData = null;
-        if (user_data) { // parsedata: parsing user_data object
+        if (user_data_22) { // parsedata: parsing user_data_22 object
             try {
-                parsedData = JSON.parse(user_data);
-                console.log(parsedData);
+                parsedData = JSON.parse(user_data_22);
+                //console.log(parsedData);
             } catch (error) {
                 console.error("Error parsing JSON:", error);
             }
         } else {
             console.log("No data found in sessionStorage");
         }
-        console.log("user_data from sessionStorage: ", parsedData);
         if (token) {
             setAuth({isLoggedIn: true, token: token, loading: false, account_type : acc_type});
             setUserData(parsedData);
@@ -97,9 +96,9 @@ export const AuthProvider = ({children}) => {
                 bio: data["bio"]
             }   
         }
-        sessionStorage.setItem("user_data", JSON.stringify(data_to_write));
+        const b =  JSON.stringify(data_to_write)
+        sessionStorage.setItem("user_data_22", b);
         setUserData(data_to_write);
-        //console.log("userData: ",userData);
     }
     
 

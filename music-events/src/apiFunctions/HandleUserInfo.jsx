@@ -17,8 +17,6 @@ export default async function HandleUserInfo(id, setUserData) {
         const fetchData = async() => {
             try{ 
                 const response = await axios.post(path,{username : id} );
-                //console.log("response: ", response);
-                //console.log("response.data.data: ", response.data.data);
                 const dataObject = response.data.data;
                 if (response.data.status === "success"){
                     for (const key of Object.keys(dataObject)){
@@ -27,20 +25,19 @@ export default async function HandleUserInfo(id, setUserData) {
                             reply[key] = dataObject[key];
                         }
                     }
-                    console.log(reply);
+                    //console.log(reply);
                     setUserData(reply);
                     if (auth.token === id){
-                        set_user_detail(reply); // change the login user info once the id (username) is the same
+                        set_user_detail( userData.id ,reply, auth.account_type); // change the login user info once the id (username) is the same
                     }
                     
                 }
                 else{
                     setUserData(response.data.error);
-                    
                 }
             }
             catch(error){
-                //console.error("Error: ", error.message);
+                console.error("Error: ", error.message);
             }
         }
         fetchData();

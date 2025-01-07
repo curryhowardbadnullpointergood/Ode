@@ -84,7 +84,7 @@ export const EventPosts = () => {
         const fetchEvents = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/event/all');
-                console.log("Event data:", JSON.stringify(response.data.data, null, 2));
+                //console.log("Event data:", JSON.stringify(response.data.data, null, 2));
                 setEvents(response.data.data || []);
             } catch (error) {
                 console.error("Failed to fetch events:", error);
