@@ -8,6 +8,7 @@ from service.calendar import create_event_in_calendar, add_attendee_to_event
 def create_event(request, container, admin_container):
     request_json = request.get_json()
     admin = request_json.get('admin')
+    ticket_price = request_json.get('ticket_price')
     information = request_json.get('information')
     event_name = request_json.get('name')
     location = request_json.get('location')
@@ -25,7 +26,7 @@ def create_event(request, container, admin_container):
     description = get_description(information)
 
     # event_id = create_event_in_calendar(user_data['google_calendar_credentials'], user_data['email_address'],
-    #                                     event_name, location, information, start_time, end_time)
+    #                                     event_name, location, information, start_time, end_time, ticket_price, picture)
 
     event_id = str(uuid.uuid4())
     new_event = container.document(event_id)
@@ -35,6 +36,7 @@ def create_event(request, container, admin_container):
         'admin': admin,
         'users': [],
         'location': location,
+        'ticket_price': ticket_price,
         'start_time': start_time,
         'end_time': end_time,
         'information': information,
