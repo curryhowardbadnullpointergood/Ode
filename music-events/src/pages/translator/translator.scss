@@ -1,49 +1,57 @@
-.container{
-
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    background-color: rgb(179,138,184);
-
-    height: 100vmax;
-    width: 100vmax;
-
-    gap: 20px;
-
-    h1{
-        font-size: 40px;
-        color: aliceblue;
-    }
-
-    .language{
-
-        label{
-            font-size: 20px;
-            color: aliceblue;
-        }
-
-        select{
-            width: 100px;
-            height: 30px;
-            border: solid black 2px ;
-            background-color: aliceblue;
-            color: rgb(179,138,184);
-
-        }
-
-        
-    }
-
-    button{
-        background-color: aliceblue;
-        color: rgb(179,138,184);
-        width: 100px;
-        height: 30px;
-        border: solid black 2px; 
-    }
-
+// translator.scss
+.translate-icon-container {
+    position: relative;
+    cursor: pointer;
+    padding: 8px;
     
-
-
-}
+    .translate-icon {
+      font-size: 1.5rem;
+      color: #333;
+      transition: transform 0.3s ease;
+      
+      &.spinning {
+        animation: spin 1s infinite linear;
+      }
+    }
+    
+    &:hover .translate-icon {
+      transform: scale(1.1);
+    }
+  }
+  
+  .language-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 150px;
+    padding: 8px 0;
+    
+    .language-box {
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      
+      &:hover {
+        background-color: #f5f5f5;
+      }
+      
+      &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

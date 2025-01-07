@@ -9,6 +9,7 @@ import Joshua from "../../assets/Joshua_Bell.jpg"
 import Nikola from "../../assets/Nicola.jpg"
 
 // going to hard code this in for now, but API should be able to handle this in the future
+// here is the event section 
 
 const Events = () => {
     // temporary dummy data, link this up to the API
