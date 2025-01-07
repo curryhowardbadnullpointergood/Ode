@@ -64,7 +64,7 @@ const route = createBrowserRouter(
 
         <Route path="/" element={<MainLayout/>}>
 
-        <Route path="/map" element={<GeolocationComponent />} />
+        <Route path="/map" element={<GeolocationComponent/>} />
         <Route path="/chat" element={<Chat/>} />
 
         <Route path="/search" element={<Search/>}/> {/* Search page path */}
