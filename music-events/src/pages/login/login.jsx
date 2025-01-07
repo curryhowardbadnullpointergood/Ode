@@ -18,8 +18,8 @@ const Login = () => {
 
             
         <div className="left">
-            <h1> Welcome! </h1>
-            <p> Welcome to Ode! Here you can find interesting events to go to and meet people with similar interests as yours. Just create an account and your musical adventure can begin!</p>
+            <h1> Ode! </h1>
+            <p> Welcome to Ode! Here you can find interesting events to go to and meet people with similar interests. Create an account and start your musical adventure!</p>
             <span> Click here to register! </span>
             <Link to = '/register'>
                 <button>Register</button>

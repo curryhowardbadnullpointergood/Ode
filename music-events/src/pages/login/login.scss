@@ -29,7 +29,7 @@ background-position: center;
 
     .box{
         display: flex;
-        background-color: aliceblue;
+        
         width: 50%;
         //border-radius: 7px;
         min-height: 650px;
@@ -54,14 +54,14 @@ background-position: center;
         .left{
             flex: 1;
 
-            background: linear-gradient(rgb(226,52,184,0.5), rgb(190,27,151,0.5) ), url('../../assets/Hahn.jpg') left;
+            background: rgba(175,238,238,0.7);
             background-size: cover;
 
             padding: 40px;
             display: flex;
             flex-direction: column;
             gap: 35px;
-            color: aliceblue;
+            color: black;
             h1{
                 font-size: 95px;
                 line-height: 10px;
@@ -78,23 +78,29 @@ background-position: center;
             button{ 
                 width: 40%;
                 padding: 10px;
-                border: none;
-                background-color: aliceblue;
-                color: rgb(190,27,151);
+                border: 1px solid black;
+                background-color: white;
+                color: black;
                 font-weight: bold;
                 cursor: pointer;
 
+
+
+                -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                 box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                
                 // on hover 
                 &:hover {
-                    background-color: rgb(190, 27, 151);  
-                    color: aliceblue;  
+                    background-color: black;  
+                    color: white;  
                 }
             }
         }
 
         .right{
             flex: 1;
-            padding: 60px; 
+            padding: 50px; 
             display: flex;
             flex-direction: column;
             gap: 30px;
@@ -102,7 +108,7 @@ background-position: center;
 
 
             h1{
-                color: rgb(190,27,151);
+                color: black;
                 font-size: 40px;
             }
             form{
@@ -110,26 +116,38 @@ background-position: center;
                 flex-direction: column;
                 gap: 30px; 
                 input{
-                    border: none;
+                    border: 1px solid black;
                     border-radius: 1px solid black;
                     padding: 22px 12px;
                     color: rgb(190,27,151,0.7) ;
                     font-weight: 900;
+
+                    -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    
+
+
+                      
                 }
                 button{
                     width: 40%;
                     padding: 15px;
-                    border: none;
-                    background-color: rgb(190,27,151,0.7);
-                    color: aliceblue;
+                    border: 1px solid black;
+                    background-color: white;
+                    color: black;
                     font-weight: bold;
                     cursor: pointer;
+
+                    -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
 
 
                     // on hover 
                     &:hover {
                         background-color: black;  
-                        color: aliceblue;   
+                        color: white;   
                     }
                 }
             }
