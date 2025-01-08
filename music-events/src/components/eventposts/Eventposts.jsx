@@ -83,8 +83,9 @@ export const EventPosts = () => {
 
     useEffect(() => {
         const fetchEvents = async () => {
+            const path = process.env.REACT_APP_BACKEND_ENDPOINT+'event/all'
             try {
-                const response = await axios.get('http://localhost:8080/event/all');
+                const response = await axios.get(path);
                 //console.log("Event data:", JSON.stringify(response.data.data, null, 2));
                 setEvents(response.data.data || []);
             } catch (error) {
