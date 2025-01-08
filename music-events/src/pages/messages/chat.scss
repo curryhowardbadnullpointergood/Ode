@@ -370,7 +370,7 @@ body {
   /* height: 800px; */
   height: 100%;
   box-shadow: inset 1px 0px 0px rgba(0, 0, 0, 0.1);
-  background-color: blue;
+  background-color: purple;
 }
 
 .channel-list__sidebar {
@@ -399,7 +399,7 @@ body {
 .channel-list__list__wrapper {
   display: flex;
   flex-direction: column;
-  background: blue;
+  background: rgb(179,138,184);
   width: 240px;
 }
 
@@ -941,7 +941,7 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: blue;
+  background-color: rgb(179,138,184);
 }
 
 .team-channel-list__message {
@@ -1831,7 +1831,7 @@ div.rta__autocomplete.str-chat__emojisearch {
 }
 
 .str-chat.team.light.str-chat__channel-list.str-chat__channel-list-react {
-  background-color: blue;
+  background-color: rgb(179,138,184);
   
 }
 
@@ -1848,16 +1848,41 @@ div.rta__autocomplete.str-chat__emojisearch {
   white-space: nowrap; 
 }
 
-.str-chat__avatar.str-chat__avatar--one-letter {
-  color: blue;
-}
+
 
 .str-chat__avatar .str-chat__avatar-image {
-  border-radius: 50%; /* 强制圆形 */
+  border-radius: 999px; /* 强制圆形 */
   height: 32px;
   width: 32px;
+  background-color: purple;
 }
 
+
+.str-chat__avatar .str-chat__avatar-fallback {
+  background-color: purple;
+  border-radius: 999px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
+}
+
+.str-chat__message.str-chat__message--me .str-chat__message-bubble {
+  background-color: rgb(179,138,184);
+}
+
+.create-channel__button-wrapper p {
+  background-color: purple;
+}
+
+.str-chat__avatar.str-chat__avatar--one-letter {
+  border-radius: 999px;
+  height: 32px;
+  width: 32px;  
+  justify-content: center;
+  align-items: center;
+  
+}
 
 
 

@@ -38,9 +38,9 @@ function Register() {
                 </div>
             </div>
             <div className="login2">
-                <h1>Welcome!</h1>
+                <h1>Ode!</h1>
                 <div>
-                    <p>Here's your portal into the world of music fantasy. Just need a simple account and you are all set!</p>
+                    <p>Welcome to the world of music fantasy. Just need an account and you are all set!</p>
                     <h4>Already have an account?</h4>
                     <Link to="/login">
                         <button>Login</button>

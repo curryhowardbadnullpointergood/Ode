@@ -4,7 +4,7 @@
  }
  
  .centerBlock{
-    background-color:aliceblue;
+    background:rgba(255,255,255,0.3);
     min-height: 650px;
     width: 50%;
     
@@ -15,8 +15,12 @@
     justify-content: center;
 
     text-align: center;
-    border-radius: 25px;
-    box-shadow: 5px 5px 10px 10px rgba(0, 0, 0, 0.377);
+    //border-radius: 25px;
+
+    -webkit-box-shadow: 15px 15px 32px 0px rgba(0,0,0,0.7);
+    -moz-box-shadow: 15px 15px 32px 0px rgba(0,0,0,0.7);
+    box-shadow: 15px 15px 32px 0px rgba(0,0,0,0.7);
+
 
     .reigsterPage{
     
@@ -25,57 +29,72 @@
         
         place-items: center;
         padding: 10px;
-        border-radius: 25px 0px 0px 25px;
+        //border-radius: 25px 0px 0px 25px;
         
         h1{
-            color: rgb(190,27,151);
+            color: black;
             text-align: left;
+            font-size: 40px;
         };
         form{
             display: flex;
             flex-direction: column;
             gap: 30px; 
             input{
-                border: none;
-                border-radius: 1px solid black;
+                //border: none;
+                border: 1px solid black;
                 padding: 22px 12px;
                 background-color: white;
-    
+                font-weight: bold;
                 width: 100%;
                 
+                &::placeholder {
+
+                    color: rgba(0,0,0,0.5);
+                } 
+
+                -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
                 
-                border-radius: 5px;
+                // border-radius: 5px;
             }
             button{
                 width: 40%;
                 padding: 15px;
                 border: none;
-                background-color: rgb(190,27,151,0.7);
-                color: aliceblue;
+                background-color: white;
+                color: black;
+                border: 1px solid black;
                 font-weight: bold;
+                height: 50px;
                 cursor: pointer;
-                transition: transform 0.3s ease-in-out;
+                //transition: transform 0.3s ease-in-out;
+
+                -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
             };
             button:hover{
-                background-color: rgb(43, 43, 43);
+                background-color: black;
                 color: white;
-                transform: scale(1.1);
+                //transform: scale(1.1);
             }
         }
        
      }
      .login2{
         flex: 1;
-        background: linear-gradient(rgb(226,52,184,0.5), rgb(190,27,151,0.5) ), url('../../assets/Hahn.jpg') left;
+        background: rgba(175,238,238,0.7);
         background-size: cover;
         min-height: 650px;
         display: flex;
         flex-direction: column;
-        border-radius: 0px 25px 25px 0px;
+        //border-radius: 0px 25px 25px 0px;
         gap: 35px;
-        padding: 60px;
+        padding: 20px;
                
-        color: aliceblue;
+        color: black;
         h1{
             font-size: 95px;
             line-height: 10px;
@@ -99,19 +118,25 @@
             
             width: 40%;
             height: 50px;
-            border-radius: 50px;
-            background-color: aliceblue;
-            color: rgb(190,27,151,0.7);
+            //border-radius: 50px;
+            background-color: white;
+            color: black;
             font-size: 16px;
             border: none;
             font-weight: bold;
-            transition: transform 0.3s ease-in-out;
+
+            -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+                    box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+
+
+            //transition: transform 0.3s ease-in-out;
         }
         
         button:hover{
-            background-color: rgb(43, 43, 43);
+            background-color: black;
             color: white;
-            transform: scale(1.1);
+            //transform: scale(1.1);
         }
     }
     
@@ -120,7 +145,11 @@
  .grad{
 
     // background-image: linear-gradient(to bottom, rgb(179,138,184), rgb(190,27,151));
-    background-color: rgb(179,138,184);
+    //background-color: rgb(179,138,184);
+
+    background-image: url('../../../../../sea.gif');
+    background-size: cover; 
+    background-position: center; 
 
      position: absolute;
      top:0;
@@ -132,6 +161,6 @@
      display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(179,138,184);
+    //background-color: rgb(179,138,184);
  }
  
