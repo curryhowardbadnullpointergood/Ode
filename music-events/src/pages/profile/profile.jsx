@@ -216,7 +216,6 @@ const Profile = () => {
     if (loading) {
         return <div>Loading...</div>; // Display a loading screen while data is being fetched
     }
-<<<<<<< HEAD
     try{
         return(
             exist &&
@@ -228,29 +227,6 @@ const Profile = () => {
                 
                 { auth.account_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
                 { auth.account_type ==="admin" && <img src={image} alt="" className="profile" />}
-=======
-    
-    return(
-        exist &&
-         // if user exist, display the following
-        <div className="profile"> 
-        <div className="profileimages">
-            
-            <img src='../../assets/flowers.gif' alt="" className="background" />
-            
-            { auth.account_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
-            { auth.account_type ==="admin" && <img src={image} alt="" className="profile" />}
-        </div>
-        <div className="personalinformation">
-            {displayName()}
-            {LoginUserProfile()}
-            {follow_option()}
-            {auth.account_type ==="user" && <Friend_list list = {friends} />} {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
-            <div className="bio">
-                <p>
-                {bio}
-                </p>
->>>>>>> fba0d0b310b2ef3e8833e2343366bf0db799e716
             </div>
             <div className="personalinformation">
                 {displayName()}
