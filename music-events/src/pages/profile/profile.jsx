@@ -236,7 +236,7 @@ const Profile = () => {
                 {auth.account_type ==="user" && <Friend_list list = {friends} />} {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
                 <div className="bio">
                     { auth.account_type ==="user" && <p>{userData_profile["bio"]}</p> }
-                    { auth.account_type ==="admin" && <p>{userData_profile["bio"]} hiiiii</p> }
+                    { auth.account_type ==="admin" && <p>{userData_profile_admin["bio"]}</p> }
                 </div>
 
                 {renderEventInterested()}

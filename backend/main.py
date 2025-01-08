@@ -16,7 +16,7 @@ from service.login import login_user
 from service.logout import logout_user
 from service.delete import delete_user
 from service.getFriendData import getFriendData
-from service.create_profile import create_profile, view_interests, view_user, add_friend_profile, view_admin
+from service.create_profile import create_profile, view_interests, view_user, add_friend_profile, view_admin, admin_profile
 from service.event import report_user, block_user, create_event, get_users_by_event_id, view_event, filter_by_genre, subscribing_event, get_all_events
 from service.friend_request import send_friend_request, receive_friend_request, add_friend, view_friend_requests
 from service.generate_notification import generate_notifications
@@ -101,6 +101,8 @@ def user_process(action, container):
         return getFriendData(request, container) 
     elif action == "view_admin" and method == "POST":
         return view_admin(request, container)
+    elif action == "admin_profile" and method == "POST":
+        return admin_profile(request, container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
 
