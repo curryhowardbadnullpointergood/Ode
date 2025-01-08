@@ -45,16 +45,16 @@ const Organisation = () => {
                 <input type="text" name="location" placeholder="Location" />
                 <span> Upload Location! </span>
 
-                <input type="text" name="genres" placeholder="Music genre!" />
+                <input type="text" name="genres" placeholder="genre1, genre2..." />
                 <span> Upload Genre! </span>
 
-                <input type="text" name="date" placeholder="Date" />
+                <input type="text" name="date" placeholder="YYYY-MM-DD" />
                 <span> Date of the event. </span>
 
-                <input type="text" name="start_time" placeholder="Start time" />
+                <input type="text" name="start_time" placeholder="HH:MM" />
                 <span> Time the event starts. </span>
 
-                <input type="text" name="end_time" placeholder="End time" />
+                <input type="text" name="end_time" placeholder="HH:MM" />
                 <span> Time the event ends. </span>
 
                 <input type="number" name="ticket_price" placeholder="Ticket price" />  {/* Changed type to number */}
