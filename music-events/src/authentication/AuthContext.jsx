@@ -20,7 +20,8 @@ export const AuthProvider = ({children}) => {
         interests: [],
         events_interested: [],
         friends: [],
-        bio: ""
+        bio: "",
+        email: "",
         // organisation
         // event_created
     })
@@ -68,7 +69,8 @@ export const AuthProvider = ({children}) => {
             interests: [],
             events_interested: [],
             friends: [],
-            bio: ""
+            bio: "",
+            email: "",
         });
     };
 
@@ -83,7 +85,8 @@ export const AuthProvider = ({children}) => {
                 interests: data["interests"],
                 events_interested: data["events_interested"],
                 friends: data["friends"],
-                bio: data["bio"]
+                bio: data["bio"],
+                email: data["email_address"],
             }
         }
         else if (type === "admin"){
@@ -93,7 +96,8 @@ export const AuthProvider = ({children}) => {
                 name: data["name"],
                 profile_picture: data["profile_picture"],
                 events_created : data["events_created"],
-                bio: data["bio"]
+                bio: data["bio"],
+                email: data["email_address"],
             }   
         }
         const b =  JSON.stringify(data_to_write)
