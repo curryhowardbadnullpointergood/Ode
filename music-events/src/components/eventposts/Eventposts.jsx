@@ -49,28 +49,29 @@ const EventDetails = ({ event, onClose }) => {
 
     return (
         <div className="event-details-overlay" onClick={onClose}>
-            <div className="event-details" onClick={e => e.stopPropagation()}>
+            <div className="event-details" onClick={(e) => e.stopPropagation()}>
                 <button className="close-btn" onClick={onClose}>×</button>
                 {getImageUrl(event.picture) ? (
-                    <img
-                        src={getImageUrl(event.picture)}
-                        alt=""
-                        className="full-image"
-                    />
+                    <img src={getImageUrl(event.picture)} alt="" className="full-image" />
                 ) : (
                     <div className="placeholder-image">No Image Available</div>
                 )}
-                <h2>{typeof event.admin === 'string' ? event.admin : 'Unknown Organization'}</h2>
+                <h2>{event.name}</h2>
                 <div className="genres">
-                    {Array.isArray(event.genres) && event.genres.map((genre, index) => (
-                        <span key={index} className="genre-tag">
-                            {typeof genre === 'string' ? genre : ''}
-                        </span>
-                    ))}
+                    {Array.isArray(event.genres) &&
+                        event.genres.map((genre, index) => (
+                            <span key={index} className="genre-tag">
+                {typeof genre === 'string' ? genre : ''}
+              </span>
+                        ))}
                 </div>
-                <p className="description">
-                    {typeof event.information === 'string' ? event.information : 'No description available'}
+                <p className="description">{event.information}</p>
+                <p>Location: {event.location}</p>
+                <p>
+                    Date: {event.date} | Start Time: {event.start_time} | End Time:{' '}
+                    {event.end_time}
                 </p>
+                <p>Ticket Price: ${event.ticket_price}</p>
             </div>
         </div>
     );
@@ -82,8 +83,9 @@ export const EventPosts = () => {
 
     useEffect(() => {
         const fetchEvents = async () => {
+            const path = process.env.REACT_APP_BACKEND_ENDPOINT+'event/all'
             try {
-                const response = await axios.get('http://localhost:8080/event/all');
+                const response = await axios.get(path);
                 //console.log("Event data:", JSON.stringify(response.data.data, null, 2));
                 setEvents(response.data.data || []);
             } catch (error) {
