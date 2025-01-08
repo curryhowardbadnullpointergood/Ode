@@ -36,14 +36,30 @@ def get_calendar_service(creds_dict):
 
         if isinstance(creds_dict, dict):
             print("Creating Credentials object from dictionary")
-            creds = Credentials(
-                token=creds_dict['token'],
-                refresh_token=creds_dict['refresh_token'],
-                token_uri=creds_dict['token_uri'],
-                client_id=creds_dict['client_id'],
-                client_secret=creds_dict['client_secret'],
-                scopes=creds_dict['scopes']
-            )
+
+            required_fields = ['token', 'token_uri', 'client_id', 'client_secret', 'scopes']
+            missing_fields = [field for field in required_fields if field not in creds_dict]
+            if missing_fields:
+                print(f"Missing required fields: {missing_fields}")
+                return None
+
+            if 'refresh_token' in creds_dict:
+                creds = Credentials(
+                    token=creds_dict['token'],
+                    refresh_token=creds_dict['refresh_token'],
+                    token_uri=creds_dict['token_uri'],
+                    client_id=creds_dict['client_id'],
+                    client_secret=creds_dict['client_secret'],
+                    scopes=creds_dict['scopes']
+                )
+            else:
+                creds = Credentials(
+                    token=creds_dict['token'],
+                    token_uri=creds_dict['token_uri'],
+                    client_id=creds_dict['client_id'],
+                    client_secret=creds_dict['client_secret'],
+                    scopes=creds_dict['scopes']
+                )
             print("Successfully created Credentials object")
         else:
             creds = creds_dict

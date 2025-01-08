@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import jsonify
 import uuid
 import openai
@@ -10,7 +12,7 @@ def create_event(request, container, admin_container):
     admin = request_json.get('admin')
     ticket_price = request_json.get('ticket_price')
     information = request_json.get('information')
-    event_name = request_json.get('name')
+    event_name = request_json.get('event_name')
     location = request_json.get('location')
     date = request_json.get('date')
     start_time = request_json.get('start_time')
@@ -27,7 +29,7 @@ def create_event(request, container, admin_container):
     description = get_description(information)
 
     event_id = create_event_in_calendar(user_data['google_calendar_credentials'], user_data['email_address'],
-                                        event_name, location, information, start_time, end_time, ticket_price, picture)
+                                        event_name, location, information, start_time, end_time)
 
     # event_id = str(uuid.uuid4())
     new_event = container.document(event_id)
@@ -210,6 +212,7 @@ def subscribing_event(request, database):
     if not admin:
         return jsonify({"error": "Event admin not found"}), 400
 
+
     block_container = database.collection("block")
     admin_doc = block_container.document(f"{admin}_block")
     users_collection = admin_doc.collection("users")
@@ -223,6 +226,17 @@ def subscribing_event(request, database):
     admin_data = next(admin_container.where(field_path='organisation', op_string='==', value=admin).stream(), None)
     admin_creds = admin_data.get('google_calendar_credentials')
     admin_email = admin_data.get('email_address')
+
+    user_doc = user_container.document(user_id)
+    user_interests = user_data.get('interest', [])
+    user_interest = {'id': event_id,
+                     'name': event['name']}
+    if event_id not in user_interests:
+        user_interests.append(user_interest)
+        user_doc.update({'event_interested': user_interests})
+
+    user_doc.update({'edit_time': datetime.utcnow()})
+
     if user_id not in user_list:
         user_list.append(user_id)
         event_container.document(event_id).update({'users': user_list})
