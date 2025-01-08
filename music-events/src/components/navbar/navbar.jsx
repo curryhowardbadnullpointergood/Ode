@@ -29,7 +29,14 @@ function Navbar() {
   //Anna
   //const isAdmin = userData?.isAdmin || false;
 
-  const User_profile = (token1, image) =>{
+  const User_profile = (token1) =>{
+    let image = "";
+    if (userData["profile_picture"] === ""){
+      image = userData["profile_picture"];
+    }
+    else{
+      image = placeholder;
+    }
     if (token1.token !== null){
       return(
         <Link to={"/profile/" + token1.token }>
@@ -134,7 +141,9 @@ function Navbar() {
                 
                 
                 <div className="user">
-                    <User_profile token={auth.token} image={userData.profile_picture}/>
+                    
+                    <User_profile token={auth.token}/>
+
                     {/* <span> Dummy User</span> */}
                 </div>
                 <Translator />

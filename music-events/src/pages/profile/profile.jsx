@@ -3,6 +3,7 @@ import { useLoaderData, useParams, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom"
 import {useState, useContext, useEffect} from "react";
 import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
+import HandleAdminInfo from "../../apiFunctions/HandleAdminInfo";
 import Friend_list from "./popup_screen/Friend_list";
 import AuthContext from "../../authentication/AuthContext";
 import HandleFollowUser from "../../apiFunctions/HandleFollowUser"
@@ -18,16 +19,17 @@ import back from "../../assets/profile_background.jpg"
 import Sophie from "../../assets/anne-sophie-mutter_profile.jpg"
 import placeholder from "../../assets/placeholder.jpg"
 
-const Profile = () => {
+const Profile = (prop) => {
     const params = useParams();
-	const [userData_profile, setUserData_profile] = useState({
-        "interests" : []
-    });
+	const [userData_profile, setUserData_profile] = useState(null);
+    const [userData_profile_admin, setUserData_profile_admin] = useState(null);
+
     const [followed, setFollowed] = useState("Click to Follow!");
-    let exist = true;
+    const [exist, setExist] = useState(true);
     //console.log("userData: ",userData_profile);
     //console.log("follow: ", followed);
-    const {auth, logout_auth, userData} = useContext(AuthContext);
+    const {auth, logout_auth, userData,set_user_detail} = useContext(AuthContext);
+    let exists = true;
     
 
     // the following is the variable controlling the showing. 
@@ -35,28 +37,36 @@ const Profile = () => {
     let interests = [];
     let [events_interested, setEvents_interested] = useState(["event1","event2","event3"]);
     //let [name, setName] = useState("name");
-    let [friends, setFriends] = useState(["friend1", "friend2", "friend3", "friend4", "friend5" ]);
+    let [friends, setFriends] = useState();
     let [nickname, setNickName] = useState("nickname");
+    let [image, setImage] = useState();
     let [bio, setBio] = useState("");
-    useEffect(() =>{
-        
-        if (auth.account_type === "user"){ // api for user
-            const response = HandleUserInfo(params.id,setUserData_profile);
-        }
-        else if(auth.account_type === "admin"){ // api for admin
-            const response = HandleUserInfo(params.id,setUserData_profile);
-        }
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            const response = await HandleUserInfo(params.id, setUserData_profile, auth, userData,set_user_detail);
+            const res = await HandleAdminInfo(params.id, setUserData_profile_admin, auth, userData,set_user_detail);
+            
+        };
+
+        fetchUserInfo();
+    }, [params.id]);
+    
 
 
 
-
-
+    useEffect(  () => {
+        console.log("userData_profile: ", userData_profile);
+        console.log("userData_profile_admin: ", userData_profile_admin);
         // the data retrieved from api will have time delay that making userData empty here. Should have a loading screen before it arrives
-        if (userData_profile === "User not found" || userData_profile.name === undefined){ // user not found or the data hasn't arrived yet
-            exist = false;
+        if (userData_profile === "User not found" && userData_profile_admin === "User not found"){ // user not found or the data hasn't arrived yet
+            setExist(false);
+            exists = false;
         }
-        else{ // data arrives
-            console.log(userData_profile);
+        else if ( auth.account_type === "user" && userData_profile !== null && userData_profile !== "User not found"){ // for user info
+            setExist(true);
+            exists = true;
+            console.log("finally");
             //console.log("userData_profile[\"interests\"]: ",userData_profile["interests"]);
             interests = userData_profile["interests"];
             setBio(userData_profile["bio"]);
@@ -64,15 +74,28 @@ const Profile = () => {
             setFriends(userData_profile["friends"]);
             setEvents_interested(userData_profile["events_interested"]);
             if (userData_profile["profile_picture"] === "" || userData_profile["profile_picture"] === null){ // placeholder image
-                console.log("no photo");
+                //console.log("no photo");
                 userData_profile["profile_picture"] = placeholder;
             }
             if( userData_profile["friends"].includes(auth.token)){
                 setFollowed("followed");
             }
         }
-    },[params.id])
-        
+        else if (auth.account_type === "admin" &&userData_profile_admin !== null && userData_profile_admin !== "User not found"){ //admin info
+            //console.log("hi");
+            //console.log(userData_profile_admin);
+            setExist(true);
+            if (userData_profile_admin["profile_picture"] === "" ){ // placeholder image
+                setImage(placeholder);
+                userData_profile_admin["profile_picture"] = placeholder;
+                
+            }
+            else{
+                setImage(userData_profile_admin["profile_picture"]);
+            }
+        }
+    
+    },[userData_profile, userData_profile_admin,exist])
     
     
     
@@ -117,7 +140,7 @@ const Profile = () => {
 
     const renderInterest = () => {
         return (
-            auth.account_type === "user" &&
+            auth.account_type === "user" && userData_profile !== "User not found" && userData_profile !== undefined &&
             <>
                 <span>Interests</span> {/*The part showing the interest of this player. Need styling */}
                 <ul className="interest">
@@ -131,7 +154,7 @@ const Profile = () => {
 
     const renderEventInterested = () => {
         return (
-            auth.account_type === "user" &&
+            auth.account_type === "user" && userData_profile !== "User not found" &&
             <>
                 <span>Events interested</span> {/*The part showing the interested event of this player. Need styling */}
                 <ul className="interest">
@@ -163,28 +186,48 @@ const Profile = () => {
         )
     }
 
+    const displayName = () => {
+        if (auth.account_type === "user"){
+            return(
+                <>
+                    <h1>{userData_profile["username"]}</h1> {/*displaying username*/}
+                    <span> {userData_profile["name"]}</span>  {/*displaying name*/}
+                </>
+        )
+        }
+        else{
+            return(
+                <>
+                    <h1>{userData_profile_admin["organisation"]}</h1> {/*displaying username*/}
+                    <span> {userData_profile_admin["name"]}</span>  {/*displaying name*/}
+                </>
+            )
+        }
+    }
+
     return(
-        exist &&   // if user exist, display the following
+        exists && (userData_profile !== null && userData_profile_admin !== null)  &&  // if user exist, display the following
         <div className="profile"> 
         <div className="profileimages">
             
             <img src={back} alt="" className="background" />
-            <img src={userData_profile["profile_picture"]} alt="" className="profile" />
+            
+            { auth.account_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
+            { auth.account_type ==="admin" && <img src={image} alt="" className="profile" />}
         </div>
         <div className="personalinformation">
-            <h1>{userData_profile.username}</h1> {/*displaying username*/}
-            <span> {nickname}</span>  {/*displaying name*/}
+            {displayName()}
             {LoginUserProfile()}
             {follow_option()}
-            <Friend_list list = {friends} /> {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
+            {auth.account_type ==="user" && <Friend_list list = {friends} />} {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
             <div className="bio">
                 <p>
-                {bio}
+                {userData_profile["bio"]}
                 </p>
             </div>
 
             {renderEventInterested()}
-
+           
             {renderInterest()}
 
             {renderSpotify()}
