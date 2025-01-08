@@ -9,10 +9,11 @@ from service.calendar import create_event_in_calendar, add_attendee_to_event
 
 def create_event(request, container, admin_container):
     request_json = request.get_json()
+    print(f'request_json in create_event: {request_json}')
     admin = request_json.get('admin')
     ticket_price = request_json.get('ticket_price')
     information = request_json.get('information')
-    event_name = request_json.get('event_name')
+    event_name = request_json.get('name')
     location = request_json.get('location')
     date = request_json.get('date')
     start_time = request_json.get('start_time')

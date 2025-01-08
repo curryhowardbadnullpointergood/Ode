@@ -43,7 +43,7 @@ export default async function HandleCreateEvent(e, navigate) {
 
         if (response.data.status === "success") {
             alert(response.data.message);
-            navigate("/");
+            navigate("/home");
         } else {
             alert(response.data.error);
         }
