@@ -43,7 +43,7 @@ const Profile = () => {
     const [image_user, setImage_user] = useState();
     const [bio, setBio] = useState("");
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
+    useEffect(() => { // use Effect for data retrieval
         const fetchUserInfo = async () => {
             try{
             const response = await HandleUserInfo(params.id, setUserData_profile, auth, userData,set_user_detail);
@@ -63,17 +63,12 @@ const Profile = () => {
     
 
 
-    useEffect(  () => {
+    useEffect(  () => { // useEffect for data handling
         console.log("userData_profile: ", userData_profile);
         console.log("userData_profile_admin: ", userData_profile_admin);
         // the data retrieved from api will have time delay that making userData empty here. Should have a loading screen before it arrives
-        if (userData_profile === "User not found" && userData_profile_admin === "User not found"){ // user not found or the data hasn't arrived yet
-            //setExist(false);
-            //exists = false;
-        }
-        else if ( auth.account_type === "user" && userData_profile !== null && userData_profile !== "User not found"){ // for user info
+        if ( auth.account_type === "user" && userData_profile !== null && userData_profile !== "User not found"){ // for user info
             setExist(true);
-            exists = true;
             console.log("finally");
             //console.log("userData_profile[\"interests\"]: ",userData_profile["interests"]);
             interests = userData_profile["interests"];
@@ -205,7 +200,7 @@ const Profile = () => {
                 </>
         )
         }
-        else{
+        else if ((auth.account_type === "admin")){
             return(
                 <>
                     <h1>{userData_profile_admin["organisation"]}</h1> {/*displaying username*/}
@@ -217,37 +212,40 @@ const Profile = () => {
     if (loading) {
         return <div>Loading...</div>; // Display a loading screen while data is being fetched
     }
-    
-    return(
-        exist &&
-         // if user exist, display the following
-        <div className="profile"> 
-        <div className="profileimages">
-            
-            <img src={back} alt="" className="background" />
-            
-            { auth.account_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
-            { auth.account_type ==="admin" && <img src={image} alt="" className="profile" />}
-        </div>
-        <div className="personalinformation">
-            {displayName()}
-            {LoginUserProfile()}
-            {follow_option()}
-            {auth.account_type ==="user" && <Friend_list list = {friends} />} {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
-            <div className="bio">
-                <p>
-                {bio}
-                </p>
+    try{
+        return(
+            exist &&
+            // if user exist, display the following
+            <div className="profile"> 
+            <div className="profileimages">
+                
+                <img src={back} alt="" className="background" />
+                
+                { auth.account_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
+                { auth.account_type ==="admin" && <img src={image} alt="" className="profile" />}
             </div>
+            <div className="personalinformation">
+                {displayName()}
+                {LoginUserProfile()}
+                {follow_option()}
+                {auth.account_type ==="user" && <Friend_list list = {friends} />} {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
+                <div className="bio">
+                    { auth.account_type ==="user" && <p>{userData_profile["bio"]}</p> }
+                    { auth.account_type ==="admin" && <p>{userData_profile["bio"]} hiiiii</p> }
+                </div>
 
-            {renderEventInterested()}
-           
-            {renderInterest()}
+                {renderEventInterested()}
+            
+                {renderInterest()}
 
-            {renderSpotify()}
-        </div>
-        </div>
-    )
+                {renderSpotify()}
+            </div>
+            </div>
+        )
+    }
+    catch(err){
+        console.log("error: ", err);
+    }
 }
 
 export default Profile
