@@ -228,7 +228,7 @@ const Profile = () => {
         <div className="profile"> 
         <div className="profileimages">
             
-            <img src={back} alt="" className="background" />
+            <img src='../../' alt="" className="background" />
             
             { auth.account_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
             { auth.account_type ==="admin" && <img src={image} alt="" className="profile" />}
