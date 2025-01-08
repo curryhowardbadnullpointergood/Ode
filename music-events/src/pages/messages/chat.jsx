@@ -13,34 +13,17 @@ import 'stream-chat-react/dist/css/v2/index.css';
 
 import './chat.scss';
 
-const apiKey = 'khmcwws8htv6';
-const client = StreamChat.getInstance(apiKey);
-
-const userData = JSON.parse(localStorage.getItem('userData'));  
-const currentUser = userData.username;
-
-const devToken = client.devToken(currentUser);
-
-const currentId = currentUser.replace(/[^a-z0-9@_\-]/gi, '');
-
-    if (!client.userID) { // Check if user is already connected
-        client.connectUser(
-            {
-                id: currentId,
-                fullName: currentUser,
-                image: userData.profile_picture
-            },
-            devToken 
-        );
-    } else {
-        console.log('User already connected:', client.userID);
-    };
-
-
 const App = () => {
     const [isCreating, setIsCreating] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
 
+    const apiKey = 'khmcwws8htv6';
+
+    const { userData } = useContext(AuthContext);
+    const currentUser = userData.username;
+
+
+    const client = StreamChat.getInstance(apiKey);
 
     const registerUsers = async () => {
         try {
@@ -73,6 +56,23 @@ const App = () => {
         }
     };
 
+   
+    useEffect(() => {
+        registerUsers();
+    }, []); 
+
+    const devToken = client.devToken(currentUser);
+
+    const currentId = currentUser.replace(/[^a-z0-9@_\-]/gi, '');
+
+    client.connectUser(
+        {
+            id: currentId,
+            fullName: currentUser,
+            image: userData.profile_picture
+        },
+        devToken 
+    );
 
     return (
         <div className="app__wrapper">
