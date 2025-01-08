@@ -150,6 +150,7 @@ function Navbar() {
                 {renderNoti()}
                 {renderCalendar()}
                 
+                <Translator />
                 
                 <div className="user">
                     
@@ -157,7 +158,7 @@ function Navbar() {
 
                     {/* <span> Dummy User</span> */}
                 </div>
-                <Translator />
+                
             </div>
 
 

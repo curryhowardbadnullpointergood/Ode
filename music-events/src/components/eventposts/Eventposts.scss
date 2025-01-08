@@ -1,27 +1,41 @@
 .events-container {
   padding: 20px;
-  max-width: 1200px;
+  max-width: 55%;
   margin: 0 auto;
+  
 
   .events-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    display: flex;
+    flex-direction: column;
+    // grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
     padding: 20px;
   }
 }
 
 .event-card {
-  background: #8fb88a;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: black;
+  color: white;
+  //border-radius: 8px;
+  //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+
+  -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+  box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+
+
+
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  // transition: transform 0.2s ease;
 
-  &:hover {
-    transform: translateY(-5px);
-  }
+  // &:hover {
+  //   transform: translateY(-5px);
+  // }
 
   .event-image {
     width: 100%;
@@ -53,10 +67,12 @@
       gap: 5px;
 
       .genre-tag {
-        background: #8fb88a;
+        background: black;
         padding: 4px 8px;
         border-radius: 4px;
         font-size: 0.9em;
+
+        color: white;
       }
     }
   }
@@ -75,7 +91,8 @@
   z-index: 1000;
 
   .event-details {
-    background: #8fb88a;
+    background: black;
+    color: white;
     border-radius: 8px;
     padding: 20px;
     max-width: 600px;

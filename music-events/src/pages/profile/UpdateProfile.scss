@@ -4,7 +4,7 @@
     flex-direction: column;
     width: 100vmax;
     height: 100vmax;
-    background-color: rgb(164, 247, 219);
+    background-color: white;
 
     form{
         padding: 30px;
@@ -23,10 +23,50 @@
         .addingImage{
             border-radius: 20px;
             border-color: black;
-            background-color: aliceblue;
+            background-color: white;
+
             display: flex;
             align-items: center;
             flex-direction: column;
+        }
+
+        button{
+            background-color: white;
+            border: 1px solid black;
+            height: 50px;
+            padding: 10px 10px;
+
+            font-weight: bold;
+
+            &:hover{
+
+                background-color: black;
+                color: rgb(175,238,238);
+
+                -webkit-box-shadow: 4px 4px 5px 1px rgba(175,238,238,1);
+                -moz-box-shadow: 4px 4px 5px 1px rgba(175,238,238,1);
+                box-shadow: 4px 4px 5px 1px rgba(175,238,238,1);
+
+
+
+            }
+
+            -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+            -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+            box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+
+        }
+
+        input{
+
+            min-height: 50px;
+            padding: 10px 10px;
+            font-weight: bold;
+
+            &::placeholder{
+                color: black;
+
+            }
         }
         
     }
