@@ -1,6 +1,8 @@
-import "./organisation.scss"
-import HandleCreateEvent from '../../apiFunctions/HandleCreateEvent';
+import React, { useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../authentication/AuthContext";
+import HandleCreateEvent from '../../apiFunctions/HandleCreateEvent';
+import "./organisation.scss"
 
 /* 
 So we need organisation name input, this is done in the login stage I guess, need to tweak it for organisation 
@@ -16,28 +18,48 @@ link submit buttont to backend function
 
 const Organisation = () => {
     const navigate = useNavigate();
-    const currentUser = localStorage.getItem('username');
+    const { auth, userData } = useContext(AuthContext);
+    const currentUser = userData.username; // Get username from userData instead of localStorage
+
+    useEffect(() => {
+        if (auth.account_type !== "admin") {
+            console.log("Not an admin, redirecting. Account type:", auth.account_type);
+            navigate('/');
+        }
+    }, [auth.account_type, navigate]);
+
     return (
         <div className="organisation">
             <h1> ORGANISATION ACCOUNT </h1>
             <form onSubmit={(e) => HandleCreateEvent(e, navigate)}>
-                <input type="text" name="event_name" placeholder="Event name" />
+                <input type="text" name="name" placeholder="Event name" />
                 <span> Event name </span>
                 <input type="hidden" name="admin" value={currentUser} />
-                <span> Event description</span>
+
                 <input type="text" name="information" placeholder="Event description" />
-                <span> Upload event image! </span>
+                <span> Event description</span>
+
                 <input type="file" name="picture" accept="image/*" />
-                <span> Upload Location! </span>
+                <span> Upload event image! </span>
+
                 <input type="text" name="location" placeholder="Location" />
+                <span> Upload Location! </span>
+
+                <input type="text" name="genres" placeholder="Music genre!" />
                 <span> Upload Genre! </span>
+
+                <input type="text" name="date" placeholder="Date" />
+                <span> Date of the event. </span>
+
                 <input type="text" name="start_time" placeholder="Start time" />
                 <span> Time the event starts. </span>
+
                 <input type="text" name="end_time" placeholder="End time" />
                 <span> Time the event ends. </span>
-                <input type="text" name="ticket_price" placeholder="Ticket price" />
+
+                <input type="number" name="ticket_price" placeholder="Ticket price" />  {/* Changed type to number */}
                 <span> Price of tickets. </span>
-                <input type="text" name="genres" placeholder="Music genre!" />
+
                 <button type="submit">Submit</button>
             </form>
         </div>

@@ -7,8 +7,8 @@ import {useContext} from "react";
 
 const Home = () => {
     const {auth, userData} = useContext(AuthContext); 
-    //console.log("userData: ", userData);
-    //console.log("auth: ", auth);
+    console.log("userData: ", userData);
+    console.log("auth: ", auth);
     return(
         <div className="home"> 
             <Event/> 

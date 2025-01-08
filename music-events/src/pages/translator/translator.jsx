@@ -8,6 +8,7 @@ function Translator() {
   const [isTranslating, setIsTranslating] = useState(false);
 
   const languages = [
+    { code: "en", name: "English" },
     { code: "es", name: "Spanish" },
     { code: "fr", name: "French" },
     { code: "de", name: "German" },

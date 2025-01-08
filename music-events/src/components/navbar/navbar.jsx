@@ -19,7 +19,9 @@ import { FaSearch } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io"; // this is for the notifications of the event and if someone tagged the user or well discord tag / instagram at 
 import { BiSolidMessageSquare } from "react-icons/bi"; // this is for messages in the group chats/ direct messages between users etc 
-import { FaEarthAfrica } from "react-icons/fa6";// this is for translation of the page 
+import { FaEarthAfrica } from "react-icons/fa6";
+import {BsCalendar} from "react-icons/bs";
+// this is for translation of the page
 
 // for now the name of the app is Ode, sounds allright as a name and is catchy 
 
@@ -29,7 +31,14 @@ function Navbar() {
   //Anna
   //const isAdmin = userData?.isAdmin || false;
 
-  const User_profile = (token1, image) =>{
+  const User_profile = (token1) =>{
+    let image = "";
+    if (userData["profile_picture"] === ""){
+      image = userData["profile_picture"];
+    }
+    else{
+      image = placeholder;
+    }
     if (token1.token !== null){
       return(
         <Link to={"/profile/" + token1.token }>
@@ -59,6 +68,52 @@ function Navbar() {
     navigate("/translate");
   };
 
+    const renderCalendar = () => {
+        return (
+            <a href={`https://calendar.google.com/calendar/u/${userData.email}/r`} target="_blank" rel="noopener noreferrer">
+                <BsCalendar/>
+            </a>
+        )
+    }
+
+  const renderMap = () =>{
+    return (
+      auth.account_type === "user" &&
+      <Link to={`/map`}>
+        <FaMapMarkerAlt/>
+      </Link>
+    )
+  }
+  const renderChat = () =>{
+    return (
+      auth.account_type === "user" &&
+      <Link 
+          to="/chat"
+          onClick={() => localStorage.setItem('userData', JSON.stringify(userData))}
+      >
+          <BiSolidMessageSquare/>
+      </Link>
+    )
+  }
+
+  const renderNoti = () =>{
+    return (
+      auth.account_type === "user" &&
+      <Link to="/notification">
+          <IoMdNotifications/>
+      </Link>
+    )
+  }
+
+  const renderCreateEvent = () => {
+    return (
+      auth.account_type === "admin" &&
+      <Link to={`/organisation/${userData.id}`}>
+          <MdEventAvailable className="admin-icon" title="Create Event"/>
+      </Link>
+    )
+  }
+
 
   return (
     <div className="navBar"> 
@@ -79,36 +134,31 @@ function Navbar() {
 
 
             <div className="middle">
-                <IoHomeSharp/>
-                <IoMusicalNote/>
+                {/*<IoHomeSharp/>*/}
+                {/*<IoMusicalNote/>*/}
                 {/* Anna - adding icon for creating events */}
                 {/* {isAdmin && (
                     <Link to={`/organisation/${userData.id}`}>
                         <MdEventAvailable className="admin-icon" title="Create Event"/>
                     </Link>
                 )} */}
-                <Link to={`/organisation/${userData.id}`}>
-                    <MdEventAvailable className="admin-icon" title="Create Event"/>
-                </Link>
+                {renderCreateEvent()} 
+                
             </div>
 
 
             <div className="right">
-                <Link to={`/map`}>
-                  <FaMapMarkerAlt/>
-                </Link>
-                <Link 
-                    to="/chat"
-                    onClick={() => localStorage.setItem('userData', JSON.stringify(userData))}
-                >
-                    <BiSolidMessageSquare/>
-                </Link>
-                <Link to="/notification">
-                    <IoMdNotifications/>
-                </Link>
+
+
+                {renderMap()}
+                {renderChat()}
+                {renderNoti()}
+                {renderCalendar()}
                 
                 <div className="user">
-                    <User_profile token={auth.token} image={userData.profile_picture}/>
+                    
+                    <User_profile token={auth.token}/>
+
                     {/* <span> Dummy User</span> */}
                 </div>
                 <Translator />

@@ -2,11 +2,11 @@ import axios from "axios";
 
 export default async function HandleCreateEvent(e, navigate) {
     e.preventDefault();
-    const path = process.env.REACT_APP_BACKEND_ENDPOINT+'event/create';
-    console.log("handleCreateEvent was called!");
+    const path = `${process.env.REACT_APP_BACKEND_ENDPOINT}event/create`;
+    console.log("1. HandleCreateEvent was called!");
+    console.log("2. Using endpoint:", path);
 
     const form = e.target;
-    console.log("form: ", form);
     const formData = new FormData(form);
     let data = {
         users: [],
@@ -14,7 +14,7 @@ export default async function HandleCreateEvent(e, navigate) {
     };
 
     for (var [key, value] of formData.entries()) {
-        console.log(key, value);
+        console.log(`3. Processing form field - ${key}:`, value);
         if (key === 'picture' && value instanceof File) {
             const base64 = await new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -30,17 +30,26 @@ export default async function HandleCreateEvent(e, navigate) {
         }
     }
 
+    console.log("4. Final data being sent:", data);
+
     try {
-        const response = await axios.post(path, data);
-        console.log("response: ", response);
+        console.log("5. Attempting POST request...");
+        const response = await axios.post(path, data, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log("6. Response:", response);
+
         if (response.data.status === "success") {
             alert(response.data.message);
-            navigate("/events");
+            navigate("/");
         } else {
             alert(response.data.error);
         }
     } catch (error) {
-        console.error("Error: ", error.message);
+        console.error("7. Error details:", error);
+        console.error("8. Error response:", error.response?.data || error.message);
         alert("Failed to create event. Please try again.");
     }
 }

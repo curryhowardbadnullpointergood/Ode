@@ -87,6 +87,21 @@ def view_user(request, container):
         "data": user_data
     }), 200
 
+def view_admin(request, container):
+    request_json = request.get_json()
+    organisation = request_json.get("organisation")
+
+    user = next(container.where("organisation", "==", organisation).stream(), None)
+    if not user:
+        return jsonify({"error": "User not found"}), 202 
+
+    user_data = user.to_dict()
+
+    return jsonify({
+        "status": "success",
+        "data": user_data
+    }), 200
+
 def add_friend_profile(request, container):
     request_json = request.get_json()
     username = request_json.get("username")

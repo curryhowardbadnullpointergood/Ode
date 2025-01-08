@@ -29,6 +29,9 @@ import { ChatContextProvider } from "./context/ChatContext";
 import UpdateProfile from "./pages/profile/UpdateProfile";
 import Search from "./pages/search/search";
 import GeolocationComponent from "./components/map/GeolocationComponent"
+import AuthContext from "./authentication/AuthContext";
+import {useState, useContext, useEffect} from "react";
+
 
 
 
@@ -40,7 +43,6 @@ import GeolocationComponent from "./components/map/GeolocationComponent"
 
 
 // changing the routing a bit for better code quality
-
 const route = createBrowserRouter(
   createRoutesFromElements(
     <Route>
@@ -72,7 +74,7 @@ const route = createBrowserRouter(
         <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} /> {/* not sure if home should be secure from outsiders  */}
 
          
-          <Route path="/profile/:id" element= {<Profile/>} /> 
+          <Route path="/profile/:id" element= {<Profile />} /> 
           {/* Allright so this basically makes suer that the components are like children of the main layout, we might need more layouts in the future but again that would increase complexity 
           and so we should try and avoid that, well I should anyway, if you realise that we for some reason need a new layout style, let me know */}
           
@@ -96,6 +98,7 @@ function App() {
   // this is for the integration, making that easier to think about, 
 
   const isUser = false; 
+  
   
   // turn this flag to true for the autentication, we can protect the routes this way by prohibiting, ore redirecting the user 
   // to the login page, or the register page, of course, can take this a couple steps further, but don't think that is necessary for this 
