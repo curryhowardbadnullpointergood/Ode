@@ -19,13 +19,13 @@ import back from "../../assets/profile_background.jpg"
 import Sophie from "../../assets/anne-sophie-mutter_profile.jpg"
 import placeholder from "../../assets/placeholder.jpg"
 
-const Profile = (prop) => {
+const Profile = () => {
     const params = useParams();
 	const [userData_profile, setUserData_profile] = useState(null);
     const [userData_profile_admin, setUserData_profile_admin] = useState(null);
-
+    
     const [followed, setFollowed] = useState("Click to Follow!");
-    const [exist, setExist] = useState(true);
+    const [exist, setExist] = useState(false);
     //console.log("userData: ",userData_profile);
     //console.log("follow: ", followed);
     const {auth, logout_auth, userData,set_user_detail} = useContext(AuthContext);
@@ -35,24 +35,32 @@ const Profile = (prop) => {
     // the following is the variable controlling the showing. 
     // Can be removed once everything is tested but for simpicity we just connecting the info from api to them first: Lucas
     let interests = [];
-    let [events_interested, setEvents_interested] = useState(["event1","event2","event3"]);
-    //let [name, setName] = useState("name");
-    let [friends, setFriends] = useState();
-    let [nickname, setNickName] = useState("nickname");
-    let [image, setImage] = useState();
-    let [bio, setBio] = useState("");
-
+    const [events_interested, setEvents_interested] = useState(["event1","event2","event3"]);
+    //const [name, setName] = useState("name");
+    const [friends, setFriends] = useState();
+    const [nickname, setNickName] = useState("nickname");
+    const [image, setImage] = useState();
+    const [image_user, setImage_user] = useState();
+    const [bio, setBio] = useState("");
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchUserInfo = async () => {
+            try{
             const response = await HandleUserInfo(params.id, setUserData_profile, auth, userData,set_user_detail);
             const res = await HandleAdminInfo(params.id, setUserData_profile_admin, auth, userData,set_user_detail);
-            
+            }
+            catch(err){
+                console.error(err);
+            }
+            finally{
+                setLoading(false);
+            }
         };
 
         fetchUserInfo();
     }, [params.id]);
     
-
+    
 
 
     useEffect(  () => {
@@ -60,8 +68,8 @@ const Profile = (prop) => {
         console.log("userData_profile_admin: ", userData_profile_admin);
         // the data retrieved from api will have time delay that making userData empty here. Should have a loading screen before it arrives
         if (userData_profile === "User not found" && userData_profile_admin === "User not found"){ // user not found or the data hasn't arrived yet
-            setExist(false);
-            exists = false;
+            //setExist(false);
+            //exists = false;
         }
         else if ( auth.account_type === "user" && userData_profile !== null && userData_profile !== "User not found"){ // for user info
             setExist(true);
@@ -76,9 +84,11 @@ const Profile = (prop) => {
             if (userData_profile["profile_picture"] === "" || userData_profile["profile_picture"] === null){ // placeholder image
                 //console.log("no photo");
                 userData_profile["profile_picture"] = placeholder;
+                setImage_user(placeholder);
             }
             if( userData_profile["friends"].includes(auth.token)){
                 setFollowed("followed");
+                setImage_user(userData_profile["profile_picture"]);
             }
         }
         else if (auth.account_type === "admin" &&userData_profile_admin !== null && userData_profile_admin !== "User not found"){ //admin info
@@ -204,9 +214,13 @@ const Profile = (prop) => {
             )
         }
     }
-
+    if (loading) {
+        return <div>Loading...</div>; // Display a loading screen while data is being fetched
+    }
+    
     return(
-        exists && (userData_profile !== null && userData_profile_admin !== null)  &&  // if user exist, display the following
+        exist &&
+         // if user exist, display the following
         <div className="profile"> 
         <div className="profileimages">
             
@@ -222,7 +236,7 @@ const Profile = (prop) => {
             {auth.account_type ==="user" && <Friend_list list = {friends} />} {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
             <div className="bio">
                 <p>
-                {userData_profile["bio"]}
+                {bio}
                 </p>
             </div>
 

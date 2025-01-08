@@ -15,6 +15,7 @@ export default async function HandleUserInfo(id,setUserData_handle,auth, userDat
       };
     
     console.log("id: ",id);
+    
     const FetchData = async() => {
         
         try{ 
@@ -50,5 +51,5 @@ export default async function HandleUserInfo(id,setUserData_handle,auth, userDat
         }
     }
     FetchData();
-    
+
 }
