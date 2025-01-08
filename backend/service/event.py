@@ -27,7 +27,7 @@ def create_event(request, container, admin_container):
     description = get_description(information)
 
     event_id = create_event_in_calendar(user_data['google_calendar_credentials'], user_data['email_address'],
-                                        event_name, location, information, start_time, end_time, ticket_price, picture)
+                                        event_name, location, information, start_time, end_time)
 
     # event_id = str(uuid.uuid4())
     new_event = container.document(event_id)
