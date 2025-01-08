@@ -11,6 +11,8 @@
         font-weight: bold;
         font-size: 17px;
     }
-
+    input::placeholder {
+        color: #999;
+    }
 
 }
