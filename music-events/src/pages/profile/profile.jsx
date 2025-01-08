@@ -18,14 +18,13 @@ import back from "../../assets/profile_background.jpg"
 import Sophie from "../../assets/anne-sophie-mutter_profile.jpg"
 import placeholder from "../../assets/placeholder.jpg"
 
-const Profile = (props) => {
+const Profile = () => {
     const params = useParams();
 	const [userData_profile, setUserData_profile] = useState({
         "interests" : []
     });
     const [followed, setFollowed] = useState("Click to Follow!");
     let exist = true;
-    const response = HandleUserInfo(params.id,setUserData_profile);
     //console.log("userData: ",userData_profile);
     //console.log("follow: ", followed);
     const {auth, logout_auth, userData} = useContext(AuthContext);
@@ -34,12 +33,24 @@ const Profile = (props) => {
     // the following is the variable controlling the showing. 
     // Can be removed once everything is tested but for simpicity we just connecting the info from api to them first: Lucas
     let interests = [];
-    let events_interested = ["event1","event2","event3"];
+    let [events_interested, setEvents_interested] = useState(["event1","event2","event3"]);
     //let [name, setName] = useState("name");
     let [friends, setFriends] = useState(["friend1", "friend2", "friend3", "friend4", "friend5" ]);
     let [nickname, setNickName] = useState("nickname");
     let [bio, setBio] = useState("");
     useEffect(() =>{
+        
+        if (auth.account_type === "user"){ // api for user
+            const response = HandleUserInfo(params.id,setUserData_profile);
+        }
+        else if(auth.account_type === "admin"){ // api for admin
+            const response = HandleUserInfo(params.id,setUserData_profile);
+        }
+
+
+
+
+
         // the data retrieved from api will have time delay that making userData empty here. Should have a loading screen before it arrives
         if (userData_profile === "User not found" || userData_profile.name === undefined){ // user not found or the data hasn't arrived yet
             exist = false;
@@ -51,14 +62,16 @@ const Profile = (props) => {
             setBio(userData_profile["bio"]);
             setNickName(userData_profile["name"]);
             setFriends(userData_profile["friends"]);
+            setEvents_interested(userData_profile["events_interested"]);
             if (userData_profile["profile_picture"] === "" || userData_profile["profile_picture"] === null){ // placeholder image
+                console.log("no photo");
                 userData_profile["profile_picture"] = placeholder;
             }
             if( userData_profile["friends"].includes(auth.token)){
                 setFollowed("followed");
             }
         }
-    },[userData_profile])
+    },[params.id])
         
     
     
@@ -102,6 +115,54 @@ const Profile = (props) => {
         
       };
 
+    const renderInterest = () => {
+        return (
+            auth.account_type === "user" &&
+            <>
+                <span>Interests</span> {/*The part showing the interest of this player. Need styling */}
+                <ul className="interest">
+                    {userData_profile["interests"].map((fav) => (
+                        <li key={fav}>{fav}</li>
+                    ))}
+                </ul>
+            </>
+        )
+    }
+
+    const renderEventInterested = () => {
+        return (
+            auth.account_type === "user" &&
+            <>
+                <span>Events interested</span> {/*The part showing the interested event of this player. Need styling */}
+                <ul className="interest">
+                    {events_interested.map((fav) => (
+                        <li key={fav}>{fav}</li>
+                    ))}
+                </ul>
+            </>
+        )
+    }
+
+    const renderSpotify = () => {
+        return (
+            auth.account_type === "user" &&
+            /* Spotify Playlist Integration */
+            <div className="spotify-embed">
+            <h2 className="centered-title">Recommended Playlist</h2>            
+            <iframe
+                title="Spotify Embed: Recommendation Playlist"
+                src={`https://open.spotify.com/embed/playlist/6ApWSZHI5Bn86iWZXw9utu?utm_source=generator&theme=0`}
+                width="100%"
+                height="360"
+                style={{ minHeight: "360px" }}
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                ></iframe>
+            </div>
+        )
+    }
+
     return(
         exist &&   // if user exist, display the following
         <div className="profile"> 
@@ -122,34 +183,11 @@ const Profile = (props) => {
                 </p>
             </div>
 
-            <span>Events interested</span> {/*The part showing the interested event of this player. Need styling */}
-            <ul className="interest">
-                {events_interested.map((fav) => (
-                    <li key={fav}>{fav}</li>
-                ))}
-            </ul>
+            {renderEventInterested()}
 
-            <span>Interests</span> {/*The part showing the interest of this player. Need styling */}
-            <ul className="interest">
-                {userData_profile["interests"].map((fav) => (
-                    <li key={fav}>{fav}</li>
-                ))}
-            </ul>
+            {renderInterest()}
 
-            {/* Spotify Playlist Integration */}
-            <div className="spotify-embed">
-            <h2 className="centered-title">Recommended Playlist</h2>            
-            <iframe
-                title="Spotify Embed: Recommendation Playlist"
-                src={`https://open.spotify.com/embed/playlist/6ApWSZHI5Bn86iWZXw9utu?utm_source=generator&theme=0`}
-                width="100%"
-                height="360"
-                style={{ minHeight: "360px" }}
-                frameBorder="0"
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-                ></iframe>
-            </div>
+            {renderSpotify()}
         </div>
         </div>
     )

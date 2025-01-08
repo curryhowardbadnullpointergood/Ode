@@ -59,6 +59,41 @@ function Navbar() {
     navigate("/translate");
   };
 
+  const renderMap = () =>{
+    return (
+      auth.account_type === "user" &&
+      <Link to={`/map`}>
+        <FaMapMarkerAlt/>
+      </Link>
+    )
+  }
+  const renderChat = () =>{
+    return (
+      auth.account_type === "user" &&
+      <Link to="/chat">
+          <BiSolidMessageSquare/>
+      </Link>
+    )
+  }
+
+  const renderNoti = () =>{
+    return (
+      auth.account_type === "user" &&
+      <Link to="/notification">
+          <IoMdNotifications/>
+      </Link>
+    )
+  }
+
+  const renderCreateEvent = () => {
+    return (
+      auth.account_type === "admin" &&
+      <Link to={`/organisation/${userData.id}`}>
+          <MdEventAvailable className="admin-icon" title="Create Event"/>
+      </Link>
+    )
+  }
+
 
   return (
     <div className="navBar"> 
@@ -79,30 +114,24 @@ function Navbar() {
 
 
             <div className="middle">
-                <IoHomeSharp/>
-                <IoMusicalNote/>
+                {/*<IoHomeSharp/>*/}
+                {/*<IoMusicalNote/>*/}
                 {/* Anna - adding icon for creating events */}
                 {/* {isAdmin && (
                     <Link to={`/organisation/${userData.id}`}>
                         <MdEventAvailable className="admin-icon" title="Create Event"/>
                     </Link>
                 )} */}
-                <Link to={`/organisation/${userData.id}`}>
-                    <MdEventAvailable className="admin-icon" title="Create Event"/>
-                </Link>
+                {renderCreateEvent()} 
+                
             </div>
 
 
             <div className="right">
-                <Link to={`/map`}>
-                  <FaMapMarkerAlt/>
-                </Link>
-                <Link to="/chat">
-                    <BiSolidMessageSquare/>
-                </Link>
-                <Link to="/notification">
-                    <IoMdNotifications/>
-                </Link>
+                {renderMap()}
+                {renderChat()}
+                {renderNoti()}
+                
                 
                 <div className="user">
                     <User_profile token={auth.token} image={userData.profile_picture}/>
