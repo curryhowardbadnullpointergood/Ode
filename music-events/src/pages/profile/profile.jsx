@@ -109,15 +109,19 @@ const Profile = () => {
     
     
     
-    const LoginUserProfile = () =>  {  // list of buttons made available solely for login user
+    const LoginUserProfile = () =>  {  // list of buttons made available solely for login user ---- this is some horrible horrible code!!!!!
+        
         if (params.id ===auth.token ){
+        
             return (
-                <div>
+                
+          
+            <div className="styled">
                     <Link to = '/update_profile'>  {/* update profile */}
-                        <button>Update Profile</button>
+                        <button className="button">Update Profile</button>
                     </Link>
                     <Link to = '/login'> {/* logout */}
-                        <button onClick={logout_auth}>logout</button>
+                        <button className="button2" onClick={logout_auth}>logout</button>
                     </Link>
                 </div>
         )

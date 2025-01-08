@@ -64,6 +64,10 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+
+        // buttons 
+
+
         span{
             font-weight: bolder;
             font-size: larger;
@@ -99,4 +103,55 @@
             text-align: center;
           }
     }
+}
+
+
+
+.styled{
+    // this terribleness is using css inside scss 
+    display: flex;
+    flex-direction: row;
+    padding: 10px 40px;
+
+    gap: 10px;
+    .button{
+        color: white;
+        background-color: black;
+        height: 50px;
+        font-weight: bold;
+        padding: 10px;
+        border: none;
+
+        -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+        -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+        box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+
+
+
+        &:hover{
+            background-color: rgb(175,238,238);
+        }
+    }
+
+
+    .button2{
+        color: white;
+        background-color: black;
+        height: 50px;
+        font-weight: bold;
+        padding: 10px;
+        border: none;
+
+        -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+        -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+        box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+
+
+
+        &:hover{
+            background-color: rgb(175,238,238);
+        }
+    }
+
+
 }
