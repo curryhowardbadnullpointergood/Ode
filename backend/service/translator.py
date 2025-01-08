@@ -37,6 +37,7 @@ def translate_texts(texts, target_language):
         return {"error": str(e)}, 500
 
 SUPPORTED_LANGUAGES = {
+    'en': 'English',
     'es': 'Spanish',
     'fr': 'French',
     'de': 'German',

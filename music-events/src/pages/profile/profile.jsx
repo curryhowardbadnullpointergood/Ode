@@ -1,6 +1,7 @@
 import "./profile.scss";
 import { useLoaderData, useParams, withRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import { Music } from 'lucide-react'; // Spotify icon
 import {useState, useContext, useEffect} from "react";
 import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
 import HandleAdminInfo from "../../apiFunctions/HandleAdminInfo";

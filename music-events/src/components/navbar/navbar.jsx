@@ -87,7 +87,10 @@ function Navbar() {
   const renderChat = () =>{
     return (
       auth.account_type === "user" &&
-      <Link to="/chat">
+      <Link 
+          to="/chat"
+          onClick={() => localStorage.setItem('userData', JSON.stringify(userData))}
+      >
           <BiSolidMessageSquare/>
       </Link>
     )
@@ -145,11 +148,12 @@ function Navbar() {
 
 
             <div className="right">
+
+
                 {renderMap()}
                 {renderChat()}
                 {renderNoti()}
                 {renderCalendar()}
-                
                 
                 <div className="user">
                     

@@ -32,7 +32,7 @@ const Organisation = () => {
         <div className="organisation">
             <h1> ORGANISATION ACCOUNT </h1>
             <form onSubmit={(e) => HandleCreateEvent(e, navigate)}>
-                <input type="text" name="event_name" placeholder="Event name" />
+                <input type="text" name="name" placeholder="Event name" />
                 <span> Event name </span>
                 <input type="hidden" name="admin" value={currentUser} />
 
