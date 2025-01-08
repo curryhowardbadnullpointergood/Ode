@@ -3,13 +3,18 @@
       padding: 10px 15px;
       border-radius: 5px;
       border: none;
-      background-color: #007bff;
+      background-color: black;
       color: #fff;
       cursor: pointer;
       font-size: 16px;
+      font-weight: bold;
+
   
       &:hover {
-        background-color: #0056b3;
+        background-color: rgba(175,238,238);
+        color: black;
+        font-weight: bold;
+
       }
     }
   
