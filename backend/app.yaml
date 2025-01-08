@@ -17,3 +17,11 @@ resources:
 
 # Define entrypoint to start the app
 entrypoint: gunicorn -b :$PORT main:app
+
+env_variables:
+  GOOGLE_APPLICATION_CREDENTIALS: "music-event-app-442810-firebase-adminsdk-szww8-3fa59e6748.json"
+  FIREBASE_BUCKET: "music-event-app-442810.firebasestorage.app"
+  GOOGLE_OAUTH_CREDENTIALS: "client_secret_568353778562-dkesqgqmad5jpa0pkucpg7d1qusm3amp.apps.googleusercontent.com.json"
+  FRONTEND_REGISTER: "http://localhost:3000/register"
+  FLASK_SECRET_KEY: 'music-event-app-442810'
+  FRONTEND_URL: "http://localhost:3000"

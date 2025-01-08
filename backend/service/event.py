@@ -26,10 +26,10 @@ def create_event(request, container, admin_container):
     user_data = user.to_dict()
     description = get_description(information)
 
-    # event_id = create_event_in_calendar(user_data['google_calendar_credentials'], user_data['email_address'],
-    #                                     event_name, location, information, start_time, end_time, ticket_price, picture)
+    event_id = create_event_in_calendar(user_data['google_calendar_credentials'], user_data['email_address'],
+                                        event_name, location, information, start_time, end_time, ticket_price, picture)
 
-    event_id = str(uuid.uuid4())
+    # event_id = str(uuid.uuid4())
     new_event = container.document(event_id)
     data = {
         'id': event_id,
@@ -226,7 +226,7 @@ def subscribing_event(request, database):
     if user_id not in user_list:
         user_list.append(user_id)
         event_container.document(event_id).update({'users': user_list})
-        # add_attendee_to_event(admin_creds, admin_email, event_id, user_data['email_address'])
+        add_attendee_to_event(admin_creds, admin_email, event_id, user_data['email_address'])
 
     # return the latest version to frontend
     updated_event = get_event_by_event_id(event_id, event_container)
