@@ -13,7 +13,7 @@ export default async function HandleUserInfo(id, setUserData) {
         friends : [],
         bio : "testing"
       };
-    useEffect (() => {
+    
         const fetchData = async() => {
             try{ 
                 const response = await axios.post(path,{username : id} );
@@ -41,5 +41,5 @@ export default async function HandleUserInfo(id, setUserData) {
             }
         }
         fetchData();
-    },[id])
+    
 }
