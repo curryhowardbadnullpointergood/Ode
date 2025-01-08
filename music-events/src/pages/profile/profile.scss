@@ -27,13 +27,7 @@
             background-size: cover; 
             background-position: center; 
 
-            &:hover{
-
-                -webkit-box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
-                -moz-box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
-                box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
-
-            }
+           
 
 
        }
@@ -48,17 +42,17 @@
             margin: auto;
             top: 250px;
 
-            -webkit-box-shadow: 3px 5px 5px 0px rgba(0,0,0,1);
-            -moz-box-shadow: 3px 5px 5px 0px rgba(0,0,0,1);
-            box-shadow: 3px 5px 5px 0px rgba(0,0,0,1);
+            -webkit-box-shadow: 2px 2px 3px 3px rgba(0,0,0,1);
+            -moz-box-shadow: 2px 2px 3px 3px rgba(0,0,0,1);
+            box-shadow: 2px 2px 3px 3px rgba(0,0,0,1);
 
-            &:hover{
+            // &:hover{
 
-                -webkit-box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
-                -moz-box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
-                box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
+            //     -webkit-box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
+            //     -moz-box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
+            //     box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
 
-            }
+            // }
 
 
        }    
