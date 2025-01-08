@@ -13,6 +13,12 @@ const Login = () => {
     //console.log(auth.isLoggedIn);
     return(
         <div className="login"> 
+
+        {/* <video autoplay muted loop className='backvideo'  id="myVideo">
+         <source src='../../assets/sea.mp4' type="video/mp4"/>
+        </video> */}
+
+
         <div className="box">
 
 

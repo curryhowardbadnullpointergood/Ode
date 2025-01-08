@@ -15,15 +15,32 @@ box-sizing: inherit;
 
 .login{
 height: 100vh;
-background-color: #FFFFFF;
+//width: 100vh;
+//background-color: #FFFFFF;
 display: flex;
 align-items: center;
 justify-content: center;
 
-//background-image: url('../../../../../sea.gif');
+background-image: url('../../assets/sea1.gif');
 background-size: cover; 
 background-position: center;  
 // // background-repeat: no-repeat; 
+
+    // #myvideo{
+    
+    //     position: absolute;
+    //     top: 50%;
+    //     left: 50%;
+    //     transform: translate(-50%, -50%);
+    //     min-width: 100%;
+    //     min-height: 100%;
+    //     width: auto;
+    //     height: auto;
+    //     z-index: -1; // Places the video behind other content
+    //     object-fit: cover; 
+
+       
+    // }
 
 
 

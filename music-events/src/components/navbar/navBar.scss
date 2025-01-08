@@ -14,7 +14,7 @@
     position: sticky;
     top: 0;
     height: 50px;
-    background-color: #8FB88A;
+    background-color: white;
     .left{
         display: flex;
         align-items: center;
@@ -22,7 +22,7 @@
         span{
             font-weight: bolder;
             font-size: large;
-            color: #492E4D;
+            color: black;
             border: none;
         }
 
@@ -30,15 +30,31 @@
             display: flex;
             align-items: center;
             gap: 10px; 
-            border: 1px solid #492E4D;
-            border-radius: 10px;
+            border: 1px solid black;
+            //border-radius: 10px;
+            
+            -webkit-box-shadow: 1px 1px 0px 0.1px rgba(0,0,0,1);
+            -moz-box-shadow: 1px 1px 0px 0.1px rgba(0,0,0,1);
+            box-shadow: 1px 1px 0px 0.1px rgba(0,0,0,1);
+            
+            
+            
+            
             padding: 5px;
-            background-color: #8FB88A;
+            background-color: white;
             input{
-                border: 1px solid #8FB88A;
+                border: none;
                 width: 300px; 
-                color: #492E4D; // nice colour for text here 
-                background-color: #8FB88A;
+                color: black; // nice colour for text here 
+                background-color: white;
+                font-weight: bold;
+            }
+
+
+            &:hover{
+                -webkit-box-shadow: 1.5px 1.5px 2px 0.1px rgba(0,0,0,0.75);
+                -moz-box-shadow: 1.5px 1.5px 2px 0.1px rgba(0,0,0,0.75);
+                box-shadow: 1.5px 1.5px 2px 0.1px rgba(0,0,0,0.75);
             }
         }
     }
