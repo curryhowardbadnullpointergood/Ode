@@ -104,15 +104,19 @@ const Profile = () => {
     
     
     
-    const LoginUserProfile = () =>  {  // list of buttons made available solely for login user
+    const LoginUserProfile = () =>  {  // list of buttons made available solely for login user ---- this is some horrible horrible code!!!!!
+        
         if (params.id ===auth.token ){
+        
             return (
-                <div>
+                
+          
+            <div className="styled">
                     <Link to = '/update_profile'>  {/* update profile */}
-                        <button>Update Profile</button>
+                        <button className="button">Update Profile</button>
                     </Link>
                     <Link to = '/login'> {/* logout */}
-                        <button onClick={logout_auth}>logout</button>
+                        <button className="button2" onClick={logout_auth}>logout</button>
                     </Link>
                 </div>
         )
@@ -176,7 +180,7 @@ const Profile = () => {
             auth.account_type === "user" &&
             /* Spotify Playlist Integration */
             <div className="spotify-embed">
-            <h2 className="centered-title">Recommended Playlist</h2>            
+            <h2 className="centered-title">Recommended Playlist:</h2>            
             <iframe
                 title="Spotify Embed: Recommendation Playlist"
                 src={`https://open.spotify.com/embed/playlist/6ApWSZHI5Bn86iWZXw9utu?utm_source=generator&theme=0`}
@@ -212,6 +216,7 @@ const Profile = () => {
     if (loading) {
         return <div>Loading...</div>; // Display a loading screen while data is being fetched
     }
+<<<<<<< HEAD
     try{
         return(
             exist &&
@@ -223,6 +228,29 @@ const Profile = () => {
                 
                 { auth.account_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
                 { auth.account_type ==="admin" && <img src={image} alt="" className="profile" />}
+=======
+    
+    return(
+        exist &&
+         // if user exist, display the following
+        <div className="profile"> 
+        <div className="profileimages">
+            
+            <img src='../../assets/flowers.gif' alt="" className="background" />
+            
+            { auth.account_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
+            { auth.account_type ==="admin" && <img src={image} alt="" className="profile" />}
+        </div>
+        <div className="personalinformation">
+            {displayName()}
+            {LoginUserProfile()}
+            {follow_option()}
+            {auth.account_type ==="user" && <Friend_list list = {friends} />} {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
+            <div className="bio">
+                <p>
+                {bio}
+                </p>
+>>>>>>> fba0d0b310b2ef3e8833e2343366bf0db799e716
             </div>
             <div className="personalinformation">
                 {displayName()}

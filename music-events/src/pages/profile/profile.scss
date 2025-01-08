@@ -4,7 +4,7 @@
     flex-direction: column;
     width: 100vmax;
     height: 100%;
-    background-color: aquamarine;
+    background-color: white;
    
     
     .profileimages{
@@ -14,10 +14,22 @@
         width: 100%;
         position: relative;
         
+        
        .background{
             width: 100%;
             height: 400px;
             object-fit: cover;
+            -webkit-box-shadow: 0px 5px 5px 1px rgba(0,0,0,1);
+            -moz-box-shadow: 0px 5px 5px 1px rgba(0,0,0,1);    
+            box-shadow: 0px 5px 5px 1px rgba(0,0,0,1);
+
+            background-image: url('../../assets/flowers.gif');
+            background-size: cover; 
+            background-position: center; 
+
+           
+
+
        }
        .profile{
             width: 250px;
@@ -29,6 +41,20 @@
             right: 0;
             margin: auto;
             top: 250px;
+
+            -webkit-box-shadow: 2px 2px 3px 3px rgba(0,0,0,1);
+            -moz-box-shadow: 2px 2px 3px 3px rgba(0,0,0,1);
+            box-shadow: 2px 2px 3px 3px rgba(0,0,0,1);
+
+            // &:hover{
+
+            //     -webkit-box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
+            //     -moz-box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
+            //     box-shadow: 3px 5px 5px 0px rgba(175,238,238,1);
+
+            // }
+
+
        }    
     }
 
@@ -37,6 +63,10 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+
+        // buttons 
+
+
         span{
             font-weight: bolder;
             font-size: larger;
@@ -44,7 +74,7 @@
         }
         p{
             padding: 10px 20%;
-            font-size: 16px;
+            font-size: 20px;
         }
         .interest{
             display: grid;
@@ -72,4 +102,55 @@
             text-align: center;
           }
     }
+}
+
+
+
+.styled{
+    // this terribleness is using css inside scss 
+    display: flex;
+    flex-direction: row;
+    padding: 10px 40px;
+
+    gap: 10px;
+    .button{
+        color: white;
+        background-color: black;
+        height: 50px;
+        font-weight: bold;
+        padding: 10px;
+        border: none;
+
+        -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+        -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+        box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+
+
+
+        &:hover{
+            background-color: rgb(175,238,238);
+        }
+    }
+
+
+    .button2{
+        color: white;
+        background-color: black;
+        height: 50px;
+        font-weight: bold;
+        padding: 10px;
+        border: none;
+
+        -webkit-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+        -moz-box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+        box-shadow: 4px 4px 5px 1px rgba(0,0,0,0.75);
+
+
+
+        &:hover{
+            background-color: rgb(175,238,238);
+        }
+    }
+
+
 }
