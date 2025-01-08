@@ -11,29 +11,24 @@ import { db } from "../../components/chat/firebase";
 import 'stream-chat-react/dist/css/v2/index.css';
 import './chat.scss';
 
-// Stream Chat 客户端实例
 const apiKey = 'khmcwws8htv6';
 const client = StreamChat.getInstance(apiKey);
 
 const App = () => {
-    // 状态管理
     const [isCreating, setIsCreating] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [userData, setUserData] = useState(null); // 用户数据状态
-    const [loading, setLoading] = useState(true);  // 加载状态
+    const [userData, setUserData] = useState(null); 
+    const [loading, setLoading] = useState(true); 
 
-    // 获取 AuthContext 中的用户信息
     const authContext = useContext(AuthContext);
 
-    // 从 sessionStorage 加载用户数据
     useEffect(() => {
     
             setUserData(authContext.userData);
             
         
-    }, [authContext]); // 监听 AuthContext 变化
+    }, [authContext]);
 
-    // 注册用户
     const registerUsers = async () => {
         try {
             const usersCollection = collection(db, 'users');
@@ -63,7 +58,7 @@ const App = () => {
         }
     };
 
-    // 连接用户到 Stream Chat
+
     const connectUser = async (user) => {
         if (!user) return;
 
@@ -88,32 +83,31 @@ const App = () => {
     };
 
     const disconnectUser = async () => {
-        if (client.userID) { // 检查当前是否有用户连接
-            await client.disconnectUser(); // 断开连接
+        if (client.userID) { 
+            await client.disconnectUser(); 
             console.log('User disconnected.');
         }
     };
     
 
-    // 在 userData 更新时执行注册和连接
+
     useEffect(() => {
         const initChat = async () => {
             if (userData) {
                 await disconnectUser(); 
                 await connectUser(userData);
                 await registerUsers();
-                setLoading(false); // 数据加载完成
+                setLoading(false);
             }
         };
         initChat();
-    }, [userData]); // 依赖 userData
+    }, [userData]); 
 
-    // 加载中显示提示
+    
     if (loading) {
         return <div>Loading...</div>;
     }
 
-    // 渲染界面
     return (
         <div className="app__wrapper">
             <Chat client={client} theme="team light">
