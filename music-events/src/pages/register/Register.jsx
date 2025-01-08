@@ -1,6 +1,6 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import "./register.scss";
-import {Link,useNavigate} from "react-router-dom";
+import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import handleRegister from "../../apiFunctions/HandleRegister";
 function Register() {
     // function handleSubmit(e) {
@@ -21,6 +21,19 @@ function Register() {
     // const [userName, setUserName] = useState('');
     // const [password, setPassword] = useState('');
     const navigate = useNavigate(); // Hook for navigation
+    const [searchParams] = useSearchParams();
+
+    useEffect(() => {
+        const success = searchParams.get('success');
+        const error = searchParams.get('error');
+
+        if (success === 'true') {
+            alert('Registration successful!');
+            navigate('/login');
+        } else if (error) {
+            alert(`Registration failed: ${error}`);
+        }
+    }, [searchParams, navigate]);
 
   return (
     <div className="grad">
@@ -28,7 +41,7 @@ function Register() {
             <div className='reigsterPage'>
                 <div className='regBlock'>
                     <h1>Register</h1>
-                    <form method="post" onSubmit={e => handleRegister(e,navigate)} className="regForm">
+                    <form onSubmit={e => handleRegister(e,navigate)} className="regForm">
                         <input type='username' name="username" placeholder="Enter Username:" />
                         <input type='email' name="email_address" placeholder="Enter Email:" />
                         <input type='password' name="password" placeholder="Enter Password:" />

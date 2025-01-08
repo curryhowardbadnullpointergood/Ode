@@ -1,5 +1,7 @@
+import secrets
+
 from flask_socketio import SocketIO
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session, redirect
 from flask_cors import CORS
 from firebase_admin import firestore, credentials, storage
 from algoliasearch.search.client import SearchClient
@@ -7,7 +9,8 @@ from algoliasearch.search.client import SearchClient
 import os
 from dotenv import load_dotenv
 import firebase_admin
-from service.register import register_user, register_admin
+
+from service.register import register_user, register_admin, register_user_callback, register_admin_callback
 from service.edit import edit_user
 from service.login import login_user
 from service.logout import logout_user
@@ -21,6 +24,7 @@ from service.translator import translate_texts, SUPPORTED_LANGUAGES
 
 load_dotenv()
 app = Flask(__name__)
+app.secret_key = secrets.token_hex(16)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 cred = credentials.Certificate(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
@@ -144,6 +148,48 @@ def translate_controller():
     except Exception as e:
         return jsonify({"error": f"Failed to translate: {str(e)}"}), 500
 
+
+@app.route('/oauth2callback')
+def oauth2callback():
+    try:
+        import base64
+        import json
+        state = request.args.get('state', '')
+        if not state:
+            raise ValueError("No state parameter provided")
+
+        try:
+            state_data = json.loads(
+                base64.urlsafe_b64decode(state.encode()).decode()
+            )
+            reg_type = state_data.get("type")
+            registration_data = state_data.get("data")
+
+            print(f"Decoded registration type: {reg_type}")
+            print(f"Decoded registration data: {registration_data}")
+
+        except Exception as decode_error:
+            print(f"Error decoding state: {decode_error}")
+            raise ValueError("Invalid state parameter")
+
+        if reg_type == 'user':
+            result = register_user_callback(request, users_container, registration_data)
+            if result[1] == 201:
+                return redirect(f'{os.environ.get("FRONTEND_REGISTER")}?success=true')
+            return redirect(f'{os.environ.get("FRONTEND_REGISTER")}?error={result[0].json["error"]}')
+
+        elif reg_type == 'admin':
+            result = register_admin_callback(request, organiser_container, registration_data)
+            if result[1] == 201:
+                return redirect(f'{os.environ.get("FRONTEND_REGISTER")}?success=true')
+            return redirect(f'{os.environ.get("FRONTEND_REGISTER")}?error={result[0].json["error"]}')
+        else:
+            raise ValueError(f"Invalid registration type: {reg_type}")
+
+    except Exception as e:
+        print(f"Error in oauth2callback: {str(e)}")
+        error_message = str(e)
+        return redirect(f'{os.environ.get("FRONTEND_REGISTER")}?error={error_message}')
 
 @app.route('/get_friend_location', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def search_controller():

@@ -16,13 +16,12 @@ export default async function HandleAdminRegister(e, navigate) {
     try {
         const response = await axios.post(path, data);
         console.log("response: ", response);
-        if (response.data.status === "success") {
-            alert("Admin registered successfully!");
-            navigate("/login");
-        } else {
-            alert(response.data.error);
+
+        if (response.data.auth_url) {
+            window.location.href = response.data.auth_url;
         }
     } catch(error) {
         console.error("Error: ", error.message);
+        alert("Registration failed. Please try again.");
     }
 }

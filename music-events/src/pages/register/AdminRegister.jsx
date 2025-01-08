@@ -1,10 +1,24 @@
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import handleAdminRegister from "../../apiFunctions/HandleAdminRegister";
 import "./register.scss";
+import {useEffect} from "react";
 
 function AdminRegister() {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
+    useEffect(() => {
+        const success = searchParams.get('success');
+        const error = searchParams.get('error');
+
+        if (success === 'true') {
+            alert('Registration successful!');
+            navigate('/login');
+        } else if (error) {
+            alert(`Registration failed: ${error}`);
+        }
+    }, [searchParams, navigate]);
 
     return (
         <div className="grad">
@@ -12,11 +26,11 @@ function AdminRegister() {
                 <div className='reigsterPage'>
                     <div className='regBlock'>
                         <h1>Register Organisation</h1>
-                        <form method="post" onSubmit={e => handleAdminRegister(e, navigate)} className="regForm">
-                            <input type='text' name="organisation" placeholder="Enter Organisation Name:" />
-                            <input type='email' name="email_address" placeholder="Enter Email:" />
-                            <input type='password' name="password" placeholder="Enter Password:" />
-                            <input type='password' name="confirmed_password" placeholder="Confirm Password:" />
+                        <form onSubmit={e => handleAdminRegister(e, navigate)} className="regForm">
+                            <input type='text' name="organisation" placeholder="Enter Organisation Name:"/>
+                            <input type='email' name="email_address" placeholder="Enter Email:"/>
+                            <input type='password' name="password" placeholder="Enter Password:"/>
+                            <input type='password' name="confirmed_password" placeholder="Confirm Password:"/>
                             <button type="submit">Register Organisation</button>
                         </form>
                     </div>
