@@ -7,7 +7,7 @@ export default async function HandleSubscribeEvent(userId, eventId) {
         throw new Error('User must be logged in');
     }
 
-    const path = 'https://music-event-app-442810.ew.r.appspot.com/event/subscribe';
+    const path = process.env.REACT_APP_BACKEND_ENDPOINT + 'event/follow';
     console.log("2. Subscribe endpoint:", path);
 
     try {
