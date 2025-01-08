@@ -12,7 +12,7 @@ def create_event(request, container, admin_container):
     admin = request_json.get('admin')
     ticket_price = request_json.get('ticket_price')
     information = request_json.get('information')
-    event_name = request_json.get('name')
+    event_name = request_json.get('event_name')
     location = request_json.get('location')
     date = request_json.get('date')
     start_time = request_json.get('start_time')
