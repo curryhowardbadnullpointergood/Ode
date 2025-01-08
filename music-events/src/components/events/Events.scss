@@ -30,6 +30,11 @@
             color: white;
             font-weight: 550;
             font-style: italic;
+
+
+            &:hover{
+                color: rgba(175,238,238,1);
+            }
         }
     }
 
