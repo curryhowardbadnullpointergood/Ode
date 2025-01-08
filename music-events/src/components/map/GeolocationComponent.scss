@@ -6,20 +6,27 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  overflow: hidden;
+
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+    overflow: hidden;
 }
 
 .marker-btn {
   background: none;
   border: none;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .marker-btn img {
   width: 200px;
   height: 200px;
+  overflow: hidden;
 }
