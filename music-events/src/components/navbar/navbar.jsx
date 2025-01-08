@@ -97,7 +97,10 @@ function Navbar() {
                 <Link to={`/map`}>
                   <FaMapMarkerAlt/>
                 </Link>
-                <Link to="/chat">
+                <Link 
+                    to="/chat"
+                    onClick={() => localStorage.setItem('userData', JSON.stringify(userData))}
+                >
                     <BiSolidMessageSquare/>
                 </Link>
                 <Link to="/notification">
