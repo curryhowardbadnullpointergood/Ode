@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import jsonify
 import uuid
 import openai
@@ -210,6 +212,7 @@ def subscribing_event(request, database):
     if not admin:
         return jsonify({"error": "Event admin not found"}), 400
 
+
     block_container = database.collection("block")
     admin_doc = block_container.document(f"{admin}_block")
     users_collection = admin_doc.collection("users")
@@ -223,6 +226,17 @@ def subscribing_event(request, database):
     admin_data = next(admin_container.where(field_path='organisation', op_string='==', value=admin).stream(), None)
     admin_creds = admin_data.get('google_calendar_credentials')
     admin_email = admin_data.get('email_address')
+
+    user_doc = user_container.document(user_id)
+    user_interests = user_data.get('interest', [])
+    user_interest = {'id': event_id,
+                     'name': event['name']}
+    if event_id not in user_interests:
+        user_interests.append(user_interest)
+        user_doc.update({'event_interested': user_interests})
+
+    user_doc.update({'edit_time': datetime.utcnow()})
+
     if user_id not in user_list:
         user_list.append(user_id)
         event_container.document(event_id).update({'users': user_list})
