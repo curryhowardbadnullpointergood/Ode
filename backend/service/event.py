@@ -29,6 +29,9 @@ def create_event(request, container, admin_container):
     user_data = user.to_dict()
     description = get_description(information)
 
+    start_time = date+"T"+start_time+":00+00:00"
+    end_time = date+"T"+end_time+":00+00:00"
+
     event_id = create_event_in_calendar(user_data['google_calendar_credentials'], user_data['email_address'],
                                         event_name, location, information, start_time, end_time)
 

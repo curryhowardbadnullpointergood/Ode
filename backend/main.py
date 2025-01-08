@@ -25,7 +25,18 @@ from service.translator import translate_texts, SUPPORTED_LANGUAGES
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
-CORS(app)
+CORS(app, resources={
+    r"/*": {
+        "origins": "*",
+        "supports_credentials": True,
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allow_headers": [
+            "Content-Type",
+            "Authorization",
+            "Access-Control-Allow-Credentials"
+        ]
+    }
+})
 socketio = SocketIO(app, cors_allowed_origins="*")
 cred = credentials.Certificate(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
 firebase_admin.initialize_app(cred)
@@ -70,6 +81,8 @@ def event_controller(action):
         return subscribing_event(request, database)
     elif action == "all" and method == 'GET':
         return get_all_events(event_container)
+    else:
+        return jsonify({"error": f"Unknown action: {action}"}), 404
 
 
 def user_process(action, container):
