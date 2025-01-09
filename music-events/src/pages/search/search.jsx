@@ -39,7 +39,7 @@ export default function Search(props) {
             <h4>
                 {hit["name"]}   
             </h4>
-            
+                
         </div>
     );
 
