@@ -38,7 +38,7 @@ const EventCard = ({ event, onClick }) => {
 };
 
 const EventDetails = ({ event, onClose, userId }) => {
-    const [isInterested, setIsInterested] = useState(false);
+    const [isInterested, setIsInterested] = useState(event.is_interested || false);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleInterested = async () => {
@@ -125,7 +125,7 @@ export const EventPosts = () => {
 
     useEffect(() => {
         const fetchEvents = async () => {
-            const path = process.env.REACT_APP_BACKEND_ENDPOINT+'event/all'
+            const path = `${process.env.REACT_APP_BACKEND_ENDPOINT}event/all?user_id=${userData.id}`
             try {
                 const response = await axios.get(path);
                 setEvents(response.data.data || []);

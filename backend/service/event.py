@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import jsonify
 import uuid
 import openai
@@ -25,6 +27,9 @@ def create_event(request, container, admin_container):
 
     user_data = user.to_dict()
     description = get_description(information)
+
+    start_time = date+"T"+start_time+":00+00:00"
+    end_time = date+"T"+end_time+":00+00:00"
 
     event_id = create_event_in_calendar(user_data['google_calendar_credentials'], user_data['email_address'],
                                         event_name, location, information, start_time, end_time)
@@ -210,6 +215,7 @@ def subscribing_event(request, database):
     if not admin:
         return jsonify({"error": "Event admin not found"}), 400
 
+
     block_container = database.collection("block")
     admin_doc = block_container.document(f"{admin}_block")
     users_collection = admin_doc.collection("users")
@@ -223,6 +229,18 @@ def subscribing_event(request, database):
     admin_data = next(admin_container.where(field_path='organisation', op_string='==', value=admin).stream(), None)
     admin_creds = admin_data.get('google_calendar_credentials')
     admin_email = admin_data.get('email_address')
+
+    user_doc = user_container.document(user_id)
+    user_interests = user_data.get('events_interested', [])
+    user_interest = {'id': event_id,
+                     'name': event['name']}
+    if not any(interest['id'] == event_id for interest in user_interests):
+        user_interests.append(user_interest)
+        user_doc.update({
+            'events_interested': user_interests,
+            'edit_time': datetime.utcnow().isoformat()
+        })
+
     if user_id not in user_list:
         user_list.append(user_id)
         event_container.document(event_id).update({'users': user_list})
@@ -256,8 +274,17 @@ def get_description(event_description):
     return response["choices"][0]["message"]["content"]
 
 
-def get_all_events(event_container):
-    events = [doc.to_dict() for doc in event_container.stream()]
+def get_all_events(request, event_container):
+    user_id = request.args.get('user_id')
+    events = []
+    for doc in event_container.stream():
+        event = doc.to_dict()
+        event['id'] = doc.id
+
+        event['is_interested'] = user_id in event.get('users', [])
+
+        events.append(event)
+
     return jsonify({
         "status": "success",
         "data": events

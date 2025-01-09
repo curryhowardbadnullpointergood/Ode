@@ -87,10 +87,7 @@ function Navbar() {
   const renderChat = () =>{
     return (
       auth.account_type === "user" &&
-      <Link 
-          to="/chat"
-          onClick={() => localStorage.setItem('userData', JSON.stringify(userData))}
-      >
+      <Link to="/chat">
           <BiSolidMessageSquare/>
       </Link>
     )

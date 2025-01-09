@@ -1,0 +1,24 @@
+runtime: nodejs18
+env: standard
+
+env_variables:
+  REACT_APP_BACKEND_ENDPOINT: "https://music-event-app-442810.ew.r.appspot.com/"
+  LOCAL_ENDPOINT: "http://localhost:8080/"
+  GOOGLE_APP_ENGINE_ENDPOINT: "https://music-event-app-442810.ew.r.appspot.com/"
+  REACT_APP_MAPBOX_TOKEN: "pk.eyJ1IjoibHVjYXN0MDYwMSIsImEiOiJjbTVreWk1ZzkxazVtMmpzNnYwNjhiaXloIn0.OHYaQHX0TgtNgO9AGmYXnA"
+
+handlers:
+  - url: /(.*\.(js|jsx|css|scss|png|jpg|jpeg|gif|ico|json))$
+    static_files: build/\1
+    upload: build/.*\.(js|jsx|css|png|jpg|jpeg|gif|ico|json)$
+    secure: always
+
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
+    secure: always
+
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 1
+  max_instances: 10
