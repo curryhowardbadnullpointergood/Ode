@@ -231,14 +231,15 @@ def subscribing_event(request, database):
     admin_email = admin_data.get('email_address')
 
     user_doc = user_container.document(user_id)
-    user_interests = user_data.get('interest', [])
+    user_interests = user_data.get('events_interested', [])
     user_interest = {'id': event_id,
                      'name': event['name']}
-    if event_id not in user_interests:
+    if not any(interest['id'] == event_id for interest in user_interests):
         user_interests.append(user_interest)
-        user_doc.update({'event_interested': user_interests})
-
-    user_doc.update({'edit_time': datetime.utcnow()})
+        user_doc.update({
+            'events_interested': user_interests,
+            'edit_time': datetime.utcnow().isoformat()
+        })
 
     if user_id not in user_list:
         user_list.append(user_id)
