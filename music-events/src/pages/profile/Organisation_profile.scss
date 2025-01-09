@@ -4,7 +4,7 @@
     flex-direction: column;
     width: 100vmax;
     height: 100%;
-    background-color: aquamarine;
+    background-color: white;
    
     
     .profileimages{
@@ -60,11 +60,11 @@
 
             li {
                 list-style-type: none; /* Removes the bullet point */
-                background: #c5c5c5; /* Optional: Add a background */
+                background: white; /* Optional: Add a background */
                 padding: 10px; /* Optional: Add some padding */
                 text-align: center; /* Optional: Center text */
                 width: 100px;
-                border-radius: 10px;
+                
               }
 
         }
