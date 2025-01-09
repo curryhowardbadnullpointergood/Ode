@@ -7,6 +7,7 @@ import HandleAdminInfo from "../../apiFunctions/HandleAdminInfo";
 import Friend_list from "./popup_screen/Friend_list";
 import AuthContext from "../../authentication/AuthContext";
 import HandleFollowUser from "../../apiFunctions/HandleFollowUser"
+import { Music } from 'lucide-react';
 
 // this should be linked back to the profile of the person in question 
 // background image and profile pic 
@@ -223,7 +224,7 @@ const Profile = () => {
             <div className="profile"> 
             <div className="profileimages">
                 
-                <img src={back} alt="" className="background" />
+                <img src="" alt="" className="background" />
                 
                 { auth.account_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
                 { auth.account_type ==="admin" && <img src={image} alt="" className="profile" />}
@@ -243,6 +244,8 @@ const Profile = () => {
                 {renderInterest()}
 
                 {renderSpotify()}
+
+                <button> <a href="https://accounts.spotify.com/en-GB/login?continue=https%3A%2F%2Faccounts.spotify.com%2Foauth2%2Fv2%2Fauth%3Fresponse_type%3Dnone%26client_id%3D6cf79a93be894c2086b8cbf737e0796b%26scope%3Duser-read-email%2Buser-read-private%2Bugc-image-upload%26redirect_uri%3Dhttps%253A%252F%252Fartists.spotify.com%252Fc%26acr_values%3Durn%253Aspotify%253Asso%253Aacr%253Aartist%253A2fa">Spotify</a> </button>
             </div>
             </div>
         )
