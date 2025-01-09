@@ -166,6 +166,7 @@ def translate_controller():
 
 @app.route('/oauth2callback')
 def oauth2callback():
+    reg_type = ""
     try:
         import base64
         import json
@@ -196,15 +197,18 @@ def oauth2callback():
         elif reg_type == 'admin':
             result = register_admin_callback(request, organiser_container, registration_data)
             if result[1] == 201:
-                return redirect(f'{os.environ.get("FRONTEND_REGISTER")}?success=true')
-            return redirect(f'{os.environ.get("FRONTEND_REGISTER")}?error={result[0].json["error"]}')
+                return redirect(f'{os.environ.get("FRONTEND_ADMIN_REGISTER")}?success=true')
+            return redirect(f'{os.environ.get("FRONTEND_ADMIN_REGISTER")}?error={result[0].json["error"]}')
         else:
             raise ValueError(f"Invalid registration type: {reg_type}")
 
     except Exception as e:
         print(f"Error in oauth2callback: {str(e)}")
         error_message = str(e)
-        return redirect(f'{os.environ.get("FRONTEND_REGISTER")}?error={error_message}')
+        if reg_type == 'user':
+            return redirect(f'{os.environ.get("FRONTEND_REGISTER")}?error={error_message}')
+        elif reg_type == 'admin':
+            return redirect(f'{os.environ.get("FRONTEND_ADMIN_REGISTER")}?error={error_message}')
 
 @app.route('/get_friend_location', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def search_controller():
