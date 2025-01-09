@@ -56,7 +56,7 @@ export default async function HandleCreateEvent(data, navigate) {
             console.log("6. Response:", response);
             if (response.data.status === "success") {
                 alert(response.data.message);
-                navigate("/");
+                navigate("/home");
             } else {
                 alert(response.data.error);
             }
