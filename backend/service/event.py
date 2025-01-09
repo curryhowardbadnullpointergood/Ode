@@ -10,15 +10,15 @@ from service.calendar import create_event_in_calendar, add_attendee_to_event
 def create_event(request, container, admin_container):
     request_json = request.get_json()
     admin = request_json.get('admin')
-    ticket_price = request_json.get('ticket_price')
+    ticket_price = request_json.get('prices')
     information = request_json.get('information')
     event_name = request_json.get('name')
     location = request_json.get('location')
-    date = request_json.get('date')
     start_time = request_json.get('start_time')
     end_time = request_json.get('end_time')
     picture = request_json.get('picture')
     genres = request_json.get('genres', [])
+    print(request_json)
 
     user_list = admin_container.where(field_path='organisation', op_string='==', value=admin).stream()
     user = next(user_list, None)
@@ -28,11 +28,13 @@ def create_event(request, container, admin_container):
     user_data = user.to_dict()
     description = get_description(information)
 
-    start_time = date+"T"+start_time+":00+00:00"
-    end_time = date+"T"+end_time+":00+00:00"
+    start_time = start_time.split('.')[0]
+    calendar_start = start_time + '+00:00:00'
+    end_time = end_time.split('.')[0]
+    calendar_end = end_time + '+00:00:00'
 
     event_id = create_event_in_calendar(user_data['google_calendar_credentials'], user_data['email_address'],
-                                        event_name, location, information, start_time, end_time)
+                                        event_name, location, information, calendar_start, calendar_end)
 
     # event_id = str(uuid.uuid4())
     new_event = container.document(event_id)
@@ -49,7 +51,6 @@ def create_event(request, container, admin_container):
         'description': description,
         'picture': picture,
         'genres': genres,
-        'date': date
     }
     new_event.set(data)
     response = {
