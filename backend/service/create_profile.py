@@ -55,6 +55,49 @@ def create_profile(request, container):
     return jsonify(response), 201
 
 
+def admin_profile(request, container):
+    request_json = request.get_json()
+    organisation = request_json.get("organisation")
+    name = request_json.get("name")
+    bio = request_json.get("bio")
+    profile_picture = request_json.get("profile_picture")
+
+
+    #if not username or not name or not profile_picture:
+        #return jsonify({"error": "Username, name, and profile picture are required"}), 400
+
+    user_query = container.where("organisation", "==", organisation).stream()
+    user_doc = next(user_query, None)
+
+    if not user_doc:
+        return jsonify({"error": "Admin with the provided username does not exist"}), 202 
+    
+    # need to know the current profile first
+    user_data = user_doc.to_dict()
+
+    profile_data_1 = {}
+
+    profile_data_1["bio"] = user_data["bio"] if bio is None else bio
+    profile_data_1["name"] = user_data["name"] if name is None else name
+    profile_data_1["profile_picture"] = user_data["profile_picture"] if profile_picture is None else profile_picture # Store Base64-encoded string
+    profile_data_1["profile_created_time"] = datetime.datetime.utcnow().isoformat()
+   
+        
+
+    container.document(user_doc.id).update(profile_data_1)
+
+    response = {
+        "status": "success",
+        "message": "Profile created successfully",
+        "data": {
+            "organisation": organisation,
+            "name": name,
+            "profile_picture": "Uploaded",
+            "profile_created_time": profile_data_1["profile_created_time"]
+        },
+    }
+    return jsonify(response), 201
+
 def view_interests(request, container):
     request_json = request.get_json()
     username = request_json.get("username")

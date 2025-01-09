@@ -62,16 +62,16 @@ const route = createBrowserRouter(
         <Route path="/" element={<div> Hello world</div>} />
         {/* this is to prank the slackers when they try run npm start and see the front end not exist lol  */}
 
-        <Route path="/organisation/:id" element={<Organisation/>} />  
+        
 
         <Route path="/" element={<MainLayout/>}>
 
-        <Route path="/map" element={<GeolocationComponent/>} />
-        <Route path="/chat" element={<Chat/>} />
+          <Route path="/map" element={<GeolocationComponent/>} />
+          <Route path="/chat" element={<Chat/>} />
 
-        <Route path="/search" element={<Search/>}/> {/* Search page path */}
+          <Route path="/search" element={<Search/>}/> {/* Search page path */}
 
-        <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} /> {/* not sure if home should be secure from outsiders  */}
+          <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} /> {/* not sure if home should be secure from outsiders  */}
 
          
           <Route path="/profile/:id" element= {<Profile />} /> 
@@ -84,7 +84,7 @@ const route = createBrowserRouter(
 
           <Route path="/translate" element={<Translator />} /> {/*Danny*/}
 
-        
+          <Route path="/organisation/:id" element={<Organisation/>} />  
 
         </Route>
 

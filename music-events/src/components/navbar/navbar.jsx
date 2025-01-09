@@ -145,6 +145,8 @@ function Navbar() {
 
 
             <div className="right">
+
+
                 {renderMap()}
                 {renderChat()}
                 {renderNoti()}

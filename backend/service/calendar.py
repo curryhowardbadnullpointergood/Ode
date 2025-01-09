@@ -7,7 +7,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 import datetime
 
 ADMIN_SCOPES = ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile', 'openid']
-USER_SCOPES = ['https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile', 'openid']
+USER_SCOPES = ['https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile',
+               'openid']
 
 
 def get_service(creds):
@@ -36,17 +37,28 @@ def get_calendar_service(creds_dict):
 
         if isinstance(creds_dict, dict):
             print("Creating Credentials object from dictionary")
+
+            required_fields = ['token', 'token_uri', 'client_id', 'client_secret', 'scopes']
+            missing_fields = [field for field in required_fields if field not in creds_dict]
+            if missing_fields:
+                print(f"Missing required fields: {missing_fields}")
+                return None
+
             creds = Credentials(
-                token=creds_dict['token'],
-                refresh_token=creds_dict['refresh_token'],
-                token_uri=creds_dict['token_uri'],
-                client_id=creds_dict['client_id'],
-                client_secret=creds_dict['client_secret'],
-                scopes=creds_dict['scopes']
+                token=creds_dict.get('token'),
+                refresh_token=creds_dict.get('refresh_token'),
+                token_uri=creds_dict.get('token_uri'),
+                client_id=creds_dict.get('client_id'),
+                client_secret=creds_dict.get('client_secret'),
+                scopes=creds_dict.get('scopes', USER_SCOPES)
             )
             print("Successfully created Credentials object")
         else:
             creds = creds_dict
+
+        request = Request()
+        if creds.expired and creds.refresh_token:
+            creds.refresh(request)
 
         print("Building calendar service")
         calendar_service = build('calendar', 'v3', credentials=creds)
@@ -80,7 +92,7 @@ def authenticate_google_account(SCOPES):
         import warnings
         with warnings.catch_warnings():
             warnings.filterwarnings('ignore', category=Warning)
-            creds = flow.run_local_server(port=0)
+            creds = flow.run_local_server(port=0, prompt='consent', access_type='offline')
 
         if creds:
             return creds, True

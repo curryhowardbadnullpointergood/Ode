@@ -1,13 +1,11 @@
-import {useState, useContext} from "react";
+import {useState, useContext, useEffect} from "react";
 import HandleProfileUpdate from "../../apiFunctions/HandleProfileUpdate";
 import AuthContext from "../../authentication/AuthContext";
 import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
+import HandleAdminUpdate from "../../apiFunctions/HandleAdminUpdate";
 import "./UpdateProfile.scss";
 export default function UpdateProfile(){
     const {auth, userData,set_user_detail } = useContext(AuthContext);
-    const update_info = HandleUserInfo(auth.token,set_user_detail); // update stored user info before amendment
-
-
     const [file, setFile] = useState(); // storing the file
     const [file_url, setFile_url] = useState(); // storing the file
     const [favorites, setFavorites] = useState(userData.interests); // State to store selected favorites
@@ -16,8 +14,16 @@ export default function UpdateProfile(){
         "production", "composition"] // the choice of interests or genre
     
     // hook controlling forms
+    console.log("userData: ",userData );
     const [formName, setFormName] = useState({name: userData.name });
     const [formBio, setFormBio] = useState({bio: userData.bio});
+    
+
+    useEffect(() => {
+        //const update_info = HandleUserInfo(auth.token,set_user_detail,auth, userData,set_user_detail); // update stored user info before amendment
+
+        //const admin_info = HandleUserInfo(auth.token,set_user_detail,auth, userData,set_user_detail);
+    },[])
     
     const toggleFavorite = (item) => { // function to add the favourite genre 
         setFavorites((prevFavorites) =>
@@ -44,23 +50,39 @@ export default function UpdateProfile(){
         setFile(k);
         setFile_url(kk);
     }
+
+    
     
     return(  // for simplicity in functionality development, I use br/ for simple styling. Should be change later : Lucas
         <div className="update_profile">
-            <form onSubmit={e => HandleProfileUpdate(e, auth.token, "name" )}>
+            { auth.account_type === "user" &&  <form onSubmit={e => HandleProfileUpdate(e, auth.token, "name" )}>
                 <input type="text" placeholder="Enter your name here" name="name" onChange={e => handleChange(e,"name")} value={formName.name}></input>
                 <br/>
                 <button type="submit">Confirm update</button>
-            </form>
-            <form onSubmit={e => HandleProfileUpdate(e, auth.token,"bio" )}>
+            </form>}
+
+            { auth.account_type === "admin" &&  <form onSubmit={e => HandleAdminUpdate(e, auth.token, "name" )}>
+                <input type="text" placeholder="Enter your name here" name="name" onChange={e => handleChange(e,"name")} value={formName.name}></input>
+                <br/>
+                <button type="submit">Confirm update</button>
+            </form>}
+
+            {auth.account_type === "user" && <form onSubmit={e => HandleProfileUpdate(e, auth.token,"bio" )}>
                 <textarea id="w3review" name="bio" rows="4" cols="100" onChange={e => handleChange(e,"bio")}  value={formBio.bio}
                     placeholder="Type your bio here to describe yourself!" ></textarea>
                 <br/>
                 <button type="submit">Confirm update</button>
-            </form>
+            </form>}
+
+            {auth.account_type === "admin" && <form onSubmit={e => HandleAdminUpdate(e, auth.token,"bio" )}>
+                <textarea id="w3review" name="bio" rows="4" cols="100" onChange={e => handleChange(e,"bio")}  value={formBio.bio}
+                    placeholder="Type your bio here to describe yourself!" ></textarea>
+                <br/>
+                <button type="submit">Confirm update</button>
+            </form>}
 
             {/*upload profile pic */}
-            <form onSubmit={e => HandleProfileUpdate(e, auth.token,"pic",{file : file} )}>
+            {auth.account_type === "user" && <form onSubmit={e => HandleProfileUpdate(e, auth.token,"pic",{file : file} )}>
                 <div className="addingImage">
                     <h4>Add Image:</h4>
                     <input type="file" onChange={handleImgFile}  name="profile_picture" />
@@ -68,10 +90,20 @@ export default function UpdateProfile(){
                 </div>
                 <br/>
                 <button type="submit">Confirm update</button>
-            </form>
+            </form>}
+
+            {auth.account_type === "admin" && <form onSubmit={e => HandleAdminUpdate(e, auth.token,"pic",{file : file} )}>
+                <div className="addingImage">
+                    <h4>Add Image:</h4>
+                    <input type="file" onChange={handleImgFile}  name="profile_picture" />
+                    <img src={file_url} />
+                </div>
+                <br/>
+                <button type="submit">Confirm update</button>
+            </form>}
 
             
-            <form className="interests_choice" 
+            {auth.account_type === "user" && <form className="interests_choice" 
                 onSubmit={e => HandleProfileUpdate(e, auth.token, "interest", { interest : favorites} )}> {/*need amendment later */}
                 <label>Please select at least three genre of music you love below</label> 
                 <br/>
@@ -88,7 +120,7 @@ export default function UpdateProfile(){
                 </ul>
                 
                 <button type="submit">Confirm update</button>
-           </form>
+           </form>}
         </div>
     )
 }

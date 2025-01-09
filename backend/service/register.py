@@ -45,6 +45,7 @@ def register_user(request, container):
 
     endpoint = os.environ.get('BACKEND_ENDPOINT')
     redirect_uri = endpoint + '/oauth2callback'
+    print(f'redirect_uri: {redirect_uri}')
 
     flow = InstalledAppFlow.from_client_secrets_file(
         os.environ.get("GOOGLE_OAUTH_CREDENTIALS"),
@@ -54,7 +55,8 @@ def register_user(request, container):
 
     auth_url, _ = flow.authorization_url(
         access_type='offline',
-        state=state
+        state=state,
+        prompt='consent',
     )
     print(f'Authorization URL: {auth_url}')
 
@@ -96,6 +98,8 @@ def register_admin(request, container):
 
     endpoint = os.environ.get('BACKEND_ENDPOINT')
     redirect_uri = endpoint + '/oauth2callback'
+    print(f'redirect_uri: {redirect_uri}')
+
 
     flow = InstalledAppFlow.from_client_secrets_file(
         os.environ.get("GOOGLE_OAUTH_CREDENTIALS"),
@@ -105,7 +109,8 @@ def register_admin(request, container):
 
     auth_url, _ = flow.authorization_url(
         access_type='offline',
-        state=state
+        state=state,
+        prompt='consent',
     )
     print(f'Authorization URL: {auth_url}')
     return jsonify({'auth_url': auth_url}), 200
