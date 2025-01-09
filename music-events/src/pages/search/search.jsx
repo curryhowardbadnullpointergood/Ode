@@ -13,7 +13,8 @@ import {
     Hits,
     Highlight,
     Pagination,
-    Configure
+    Configure,
+    Index,
 } from "react-instantsearch-dom";
 
 export default function Search(props) {
@@ -25,28 +26,46 @@ export default function Search(props) {
 
     // Define how to display each hit (search result)
     const Hit = ({ hit }) => (
-    
-    <div className="search_entity" onClick={() =>handleClick(hit)}>
-        <h2>
-            {hit["username"]} 
-        </h2>
-        {hit["profile_picture"] ? (
-            <img src={hit["profile_picture"]} alt="" className="profile_img" />
-        ) : (
-            <img src={placeholder} alt="" className="profile_img" />
-        )}
-        
-        <h4>
-            {hit["name"]}   
-        </h4>
-        <p>
-            {hit["interests"]}  
-        </p>
-    </div>
+        <div className="search_entity" onClick={() =>handleClick(hit, hit["username"])}>
+            <h2>
+                {hit["username"]} 
+            </h2>
+            {hit["profile_picture"] ? (
+                <img src={hit["profile_picture"]} alt="" className="profile_img" />
+            ) : (
+                <img src={placeholder} alt="" className="profile_img" />
+            )}
+            
+            <h4>
+                {hit["name"]}   
+            </h4>
+            
+        </div>
     );
 
-    const handleClick = (hit) => {
-        navigate("/profile/" + hit["username"]);
+
+    const Hit_admin = ({ hit }) => (
+        <div className="search_entity" onClick={() =>handleClick(hit, hit["organisation"])}>
+            <h2>
+                {hit["organisation"]} 
+            </h2>
+            {hit["profile_picture"] ? (
+                <img src={hit["profile_picture"]} alt="" className="profile_img" />
+            ) : (
+                <img src={placeholder} alt="" className="profile_img" />
+            )}
+            
+            <h4>
+                {hit["name"]}   
+            </h4>
+            <p>
+                {hit["interests"]}  
+            </p>
+        </div>
+    );
+
+    const handleClick = (hit, path) => {
+        navigate("/profile/" + path);
     }
 
     const Display_hit = ()=>{
@@ -58,13 +77,29 @@ export default function Search(props) {
         }
     }
 
+    const Display_hit_admin = ()=>{
+        if (searchQuery !== ""){
+            return <Hits hitComponent={Hit_admin} className="search_entity"/>
+        }
+        else{
+            return <h4>No result</h4>
+        }
+    }
+
 
     return( // main return function
         <div className="search_main">
             <InstantSearch indexName="user_name" searchClient={searchClient}>
                 <Configure query={searchQuery} />
-                <h1>Search result with: {searchQuery}</h1>
+                <h1>Search result</h1>
+                <h2>User search</h2>
                 <Display_hit/>
+
+            <Index indexName="organisation_name" >
+                    <h2>organiser search</h2>
+                    <Display_hit_admin />
+                </Index>
+
                 
                 {/*<Pagination />*/}
             </InstantSearch>

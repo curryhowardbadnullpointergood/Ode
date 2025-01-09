@@ -45,6 +45,7 @@ const Profile = () => {
     const [image_user, setImage_user] = useState();
     const [bio, setBio] = useState("");
     const [loading, setLoading] = useState(true);
+    const [acc_type, set_acc_type] = useState();
     useEffect(() => { // use Effect for data retrieval
         const fetchUserInfo = async () => {
             try{
@@ -60,7 +61,7 @@ const Profile = () => {
         };
 
         fetchUserInfo();
-    }, [params.id]);
+    }, [params.id, auth]);
     
     
 
@@ -69,8 +70,9 @@ const Profile = () => {
         console.log("userData_profile: ", userData_profile);
         console.log("userData_profile_admin: ", userData_profile_admin);
         // the data retrieved from api will have time delay that making userData empty here. Should have a loading screen before it arrives
-        if ( auth.account_type === "user" && userData_profile !== null && userData_profile !== "User not found"){ // for user info
+        if ( userData_profile !== null && userData_profile !== "User not found" && userData_profile !== "wrong type" ){ // for user info
             setExist(true);
+            set_acc_type("user");
             console.log("finally");
             //console.log("userData_profile[\"interests\"]: ",userData_profile["interests"]);
             interests = userData_profile["interests"];
@@ -88,10 +90,11 @@ const Profile = () => {
                 setImage_user(userData_profile["profile_picture"]);
             }
         }
-        else if (auth.account_type === "admin" &&userData_profile_admin !== null && userData_profile_admin !== "User not found"){ //admin info
+        else if (userData_profile_admin !== null && userData_profile_admin !== "User not found" && userData_profile_admin !== "wrong type"){ //admin info
             //console.log("hi");
             //console.log(userData_profile_admin);
             setExist(true);
+            set_acc_type("admin");
             if (userData_profile_admin["profile_picture"] === "" ){ // placeholder image
                 setImage(placeholder);
                 userData_profile_admin["profile_picture"] = placeholder;
@@ -126,7 +129,7 @@ const Profile = () => {
     }
 
     const follow_option = () => {
-        if (params.id !==auth.token && auth.token!== null  ){
+        if (params.id !==auth.token && auth.token!== null && acc_type !== "admin" ){
             return (
                 <div>
                     <button onClick={handleFollow}>
@@ -152,7 +155,7 @@ const Profile = () => {
 
     const renderInterest = () => {
         return (
-            auth.account_type === "user" && userData_profile !== "User not found" && userData_profile !== undefined &&
+            acc_type === "user" && userData_profile !== "User not found" && userData_profile !== undefined &&
             <>
                 <span>Interests</span> {/*The part showing the interest of this player. Need styling */}
                 <ul className="interest">
@@ -166,7 +169,7 @@ const Profile = () => {
 
     const renderEventInterested = () => {
         return (
-            auth.account_type === "user" && userData_profile !== "User not found" &&
+            acc_type === "user" && userData_profile !== "User not found" &&
             <>
                 <span>Events interested</span> {/*The part showing the interested event of this player. Need styling */}
                 {console.log("events_interested: ", events_interested)}
@@ -186,7 +189,7 @@ const Profile = () => {
         try{
             return (
                 
-                auth.account_type === "admin" && userData_profile_admin !== "User not found" &&
+                acc_type === "admin" && userData_profile_admin !== "User not found" &&
                 <>
                     <span>Events Organised</span> {/*The part showing the interested event of this player. Need styling */}
                     {console.log("events_interested: ", userData_profile_admin["events_created"])}
@@ -209,7 +212,7 @@ const Profile = () => {
 
     const renderSpotify = () => {
         return (
-            auth.account_type === "user" &&
+            acc_type === "user" &&
             /* Spotify Playlist Integration */
             <div className="spotify-embed">
             <h2 className="centered-title">Recommended Playlist:</h2>            
@@ -228,7 +231,7 @@ const Profile = () => {
     }
 
     const displayName = () => {
-        if (auth.account_type === "user"){
+        if (acc_type === "user"){
             return(
                 <>
                     <h1>{userData_profile["username"]}</h1> {/*displaying username*/}
@@ -236,7 +239,7 @@ const Profile = () => {
                 </>
         )
         }
-        else if ((auth.account_type === "admin")){
+        else if ((acc_type === "admin")){
             return(
                 <>
                     <h1>{userData_profile_admin["organisation"]}</h1> {/*displaying username*/}
@@ -246,8 +249,9 @@ const Profile = () => {
         }
     }
     if (loading) {
-        return <div>Loading...</div>; // Display a loading screen while data is being fetched
+        return <div>Loading...</div>;
     }
+
     try{
         return(
             exist &&
@@ -258,17 +262,17 @@ const Profile = () => {
                 {console.log("userData_profile: ", userData_profile_admin)}
                 <img src="" alt="" className="background" />
                 
-                { auth.account_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
-                { auth.account_type ==="admin" && <img src={image} alt="" className="profile" />}
+                { acc_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
+                { acc_type ==="admin" && <img src={image} alt="" className="profile" />}
             </div>
             <div className="personalinformation">
                 {displayName()}
                 {LoginUserProfile()}
                 {follow_option()}
-                {auth.account_type ==="user" && <Friend_list list = {friends} />} {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
+                {acc_type ==="user" && <Friend_list list = {friends} />} {/*displaying firend list in a pop up manner with basic styling. Tho need amendment on display later on*/}
                 <div className="bio">
-                    { auth.account_type ==="user" && <p>{userData_profile["bio"]}</p> }
-                    { auth.account_type ==="admin" && <p>{userData_profile_admin["bio"]}</p> }
+                    { acc_type ==="user" && <p>{userData_profile["bio"]}</p> }
+                    { acc_type ==="admin" && <p>{userData_profile_admin["bio"]}</p> }
                 </div>
 
                 {renderEventInterested()}
