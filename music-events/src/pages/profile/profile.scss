@@ -128,7 +128,7 @@
             display: grid;
             /*grid-template-columns: repeat(4, 1fr); /* 4 items per row */
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            max-width: calc(4 * 110px);
+            max-width: calc(6 * 110px);
             gap: 10px; /* Optional: spacing between items */
             list-style-type: none; /* Remove bullets */
             padding: 0; /* Remove padding */
@@ -137,7 +137,7 @@
             
             align-items: center;
             justify-content: center;
-            cursor: "pointer"
+            cursor: pointer;
 
             li {
                 list-style-type: none; /* Removes the bullet point */
@@ -149,14 +149,20 @@
                 border-radius: 10px;
               }
             button{
-              list-style-type: none; /* Removes the bullet point */
+                list-style-type: none; /* Removes the bullet point */
                 background: #c5c5c5; /* Optional: Add a background */
                 padding: 20px; /* Optional: Add some padding */
                 text-align: center; /* Optional: Center text */
                 min-width: 100px;
                 min-height: 50px;
                 border-radius: 10px;
-                cursor: "pointer"
+                font-size: 15px;
+                cursor: pointer;
+                display: inline-block;
+            }
+            button:hover{
+              background: #080808;
+              cursor: pointer;
             }
 
         }
