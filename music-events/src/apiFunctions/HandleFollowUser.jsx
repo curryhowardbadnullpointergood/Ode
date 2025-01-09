@@ -1,6 +1,7 @@
 import axios from "axios";
+import HandleUserInfo from "./HandleUserInfo";
 import { useNavigate } from "react-router-dom";
-export default async function HandleFollowUser(username, user_to_add) {
+export default async function HandleFollowUser(username, user_to_add, setFollowed, auth, userData,set_user_detail) {
         // Prevent the browser from reloading the page
         const path = process.env.REACT_APP_BACKEND_ENDPOINT+'user/add_friend';
         console.log("HandleFollowUser was called!");
@@ -22,6 +23,9 @@ export default async function HandleFollowUser(username, user_to_add) {
             console.log("response_2: ", response_2);
             if (response_1.data.status === "success" && response_2.data.status === "success"){
                 alert("successfully followed!");
+                setFollowed("followed");
+                HandleUserInfo(auth.token, undefined, auth, userData,set_user_detail);
+                
             }
             else{
                 alert("operation failed");

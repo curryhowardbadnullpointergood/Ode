@@ -13,7 +13,7 @@ const EventCard = ({ event, onClick }) => {
     };
 
     return (
-        <div className="event-card" onClick={onClick}>
+        <div id={event.id} className="event-card" onClick={onClick}>
             <div className="image-container">
                 {getImageUrl(event.picture) ? (
                     <img
