@@ -8,7 +8,7 @@ import HandleAdminInfo from "../../apiFunctions/HandleAdminInfo";
 import Friend_list from "./popup_screen/Friend_list";
 import AuthContext from "../../authentication/AuthContext";
 import HandleFollowUser from "../../apiFunctions/HandleFollowUser"
-import { Music } from 'lucide-react';
+//import { Music } from 'lucide-react';
 
 // this should be linked back to the profile of the person in question 
 // background image and profile pic 
