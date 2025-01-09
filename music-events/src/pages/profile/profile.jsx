@@ -168,9 +168,11 @@ const Profile = () => {
             auth.account_type === "user" && userData_profile !== "User not found" &&
             <>
                 <span>Events interested</span> {/*The part showing the interested event of this player. Need styling */}
-                <ul className="interest">
-                    {events_interested.map((fav) => (
-                        <li key={fav}>{fav}</li>
+                {console.log("events_interested: ", events_interested)}
+                <ul className="events_interested">
+                
+                    {events_interested.map((id,name) => (
+                        <li key={id}>{id.name}</li>
                     ))}
                 </ul>
             </>

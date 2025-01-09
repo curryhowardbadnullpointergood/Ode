@@ -37,7 +37,7 @@ const EventCard = ({ event, onClick }) => {
     );
 };
 
-const EventDetails = ({ event, onClose, userId }) => {
+const EventDetails = ({ event, onClose, userId,auth }) => {
     const [isInterested, setIsInterested] = useState(event.is_interested || false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -98,9 +98,9 @@ const EventDetails = ({ event, onClose, userId }) => {
                     Date: {event.date} | Start Time: {event.start_time} | End Time:{' '}
                     {event.end_time}
                 </p>
-                <p>Ticket Price: ${event.ticket_price}</p>
+                <p>Ticket Price: {event.ticket_price}£</p>
 
-                <button
+                {auth.account_type === "user" && <button
                     onClick={handleInterested}
                     disabled={isLoading || isInterested}
                     className={`mt-4 px-6 py-2 rounded ${
@@ -112,7 +112,7 @@ const EventDetails = ({ event, onClose, userId }) => {
                     }`}
                 >
                     {isInterested ? 'Interested!' : isLoading ? 'Processing...' : 'Interested'}
-                </button>
+                </button>}
             </div>
         </div>
     );
@@ -152,6 +152,7 @@ export const EventPosts = () => {
                     event={selectedEvent}
                     onClose={() => setSelectedEvent(null)}
                     userId={userData?.id}
+                    auth = {auth}
                 />
             )}
         </div>
