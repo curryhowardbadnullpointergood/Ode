@@ -26,6 +26,15 @@ def create_event(request, container, admin_container):
         return jsonify({"error": "Invalid user"}), 401
 
     user_data = user.to_dict()
+    admin_doc = admin_container.document(user.id)
+    events_created = user_data['events_created']
+    if event_name not in events_created:
+        events_created.append(event_name)
+        admin_doc.update({
+            'events_created': events_created,
+            'edit_time': datetime.utcnow().isoformat()
+        })
+
     description = get_description(information)
 
     start_time = start_time.split('.')[0]
@@ -215,7 +224,6 @@ def subscribing_event(request, database):
     admin = event.get('admin')
     if not admin:
         return jsonify({"error": "Event admin not found"}), 400
-
 
     block_container = database.collection("block")
     admin_doc = block_container.document(f"{admin}_block")

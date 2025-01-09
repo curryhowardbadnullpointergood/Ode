@@ -125,7 +125,7 @@ const HandleInterested = ({event, userId}) => {
                     }`}
                 >
                     {isInterested ? 'Interested!' : isLoading ? 'Processing...' : 'Interested'}
-                </button>
+                </button>}
             </div>
 
 

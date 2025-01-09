@@ -14,7 +14,7 @@ export default async function HandleAdminInfo(id, setUserData,auth, userData,set
         const dataObject = response.data.data;
         if (response.data.status === "success"){
             console.log("success");
-            console.log(dataObject["profile_picture"]);
+            console.log(dataObject);
             const reply = {
                 "bio" : dataObject["bio"],
                 "organisation" : dataObject["organisation"],

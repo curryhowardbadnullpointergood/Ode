@@ -1,12 +1,12 @@
 import "./search.scss";
 import { useLoaderData, useParams, withRouter } from "react-router-dom";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import {useState, useContext} from "react";
 import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
 import AuthContext from "../../authentication/AuthContext";
 import placeholder from "../../assets/placeholder.jpg";
 import React from "react";
-import { liteClient as algoliasearch } from 'algoliasearch/lite';
+import {liteClient as algoliasearch} from 'algoliasearch/lite';
 import {
     InstantSearch,
     SearchBox,
@@ -18,7 +18,7 @@ import {
 
 export default function Search(props) {
     // Initialize Algolia client
-    const searchClient = algoliasearch("ADGAUZ8S9H", "6f8d04ee92925557efb7b54e072b8707");
+    const searchClient = algoliasearch("ADGAUZ8S9H", "6f8d04ee92925557efb7b54e072b8707"); // id and api
     const {searchQuery, setSearchQuery} = useContext(AuthContext);
     const navigate = useNavigate();
 

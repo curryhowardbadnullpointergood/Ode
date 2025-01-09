@@ -79,4 +79,30 @@
         align-items: center;
         flex-direction: column;
     }
+    .genreList{
+        display: "flex";
+        flex-direction: column;
+        gap: "10px"; // Space between buttons
+        max-width: 600px;
+        padding: 20px;
+        align-items: center;
+        .genre-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9; /* Default background */
+            color: #000;
+            cursor: pointer;
+            text-align: center;
+            margin: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+          }
+          
+          /* Active button styles */
+          .genre-button.active {
+            background-color: black; /* Selected button background */
+            color: #fff; /* Selected button text color */
+          }
+    }
 }

@@ -35,6 +35,7 @@ const Organisation = () => {
     const [start_value_time, onChange] = useState('10:00');
     const [endDate, setEndDate] = useState(startDate);
     const [end_value_time, onEndChange] = useState('10:00');
+    const [isLoading, setIsLoading] = useState(false);
 
     
     const genreList = ["rock", "pop", "jazz", "classical", "electronic", "hip-hop", "metal", "indie", "folk",
@@ -88,6 +89,7 @@ const Organisation = () => {
     const [file, setFile] = useState(); // storing the file
     const [file_url, setFile_url] = useState(); // storing the file
     const [genre, setGenre] = useState([]);
+    
     // date time validator
     const isValidDate = (dateStr) => !isNaN(new Date(dateStr).getTime());
     const isValidTime = (timeStr) => /^([0-1]\d|2[0-3]):([0-5]\d)$/.test(timeStr);
@@ -123,39 +125,50 @@ const Organisation = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        let object_to_send ={};
-        if (name === ""){
-            alert("Event name required");
-        }
-        else if (description === ""){
-            alert("Description required");
-        }
-        else if (genre.length === 0){
-            alert("At least one Genre required");
-        }
-        else{ // passing all check
-
-            //switching date format to ISO 8601
-            let temp_start_date = startDate.toISOString().split("T")[0];
-            let temp_end_date = endDate.toISOString().split("T")[0];
-            let start_dateTime = new Date(`${temp_start_date}T${start_value_time}:00`).toISOString();
-            let end_dateTime = new Date(`${temp_end_date}T${end_value_time}:00`).toISOString();
-           
-
-            object_to_send = {
-                "admin" : currentUser,
-                "name" : name,
-                "description" : description,
-                "picture" : file,
-                "location" : location,
-                "start_time" : start_dateTime,
-                "end_time" : end_dateTime,
-                "genres" : genre,
-                "prices" : price
+        setIsLoading(true);
+        console.log("isloading: ", isLoading);
+        try{
+            let object_to_send ={};
+            if (name === ""){
+                alert("Event name required");
             }
-            console.log("object_to_send: ", object_to_send);
-            HandleCreateEvent(object_to_send,navigate);
+            else if (description === ""){
+                alert("Description required");
+            }
+            else if (genre.length === 0){
+                alert("At least one Genre required");
+            }
+            else{ // passing all check
+
+                //switching date format to ISO 8601
+                let temp_start_date = startDate.toISOString().split("T")[0];
+                let temp_end_date = endDate.toISOString().split("T")[0];
+                let start_dateTime = new Date(`${temp_start_date}T${start_value_time}:00`).toISOString();
+                let end_dateTime = new Date(`${temp_end_date}T${end_value_time}:00`).toISOString();
+            
+
+                object_to_send = {
+                    "admin" : currentUser,
+                    "name" : name,
+                    "description" : description,
+                    "picture" : file,
+                    "location" : location,
+                    "start_time" : start_dateTime,
+                    "end_time" : end_dateTime,
+                    "genres" : genre,
+                    "prices" : price
+                }
+                console.log("object_to_send: ", object_to_send);
+                HandleCreateEvent(object_to_send,navigate);
+            }
         }
+        catch(err){
+            console.error("error: ", err);
+        }
+        finally {
+            setIsLoading(false);
+        }
+
     }
 
 
@@ -220,7 +233,7 @@ const Organisation = () => {
                     ))}
                 </div>
 
-                <button className='submitButton' type="submit">Submit</button>
+                <button className='submitButton' disabled={isLoading} type="submit"> {isLoading ? "Submitting..." : "Submit"}</button>
             </form>
         </div>
     )

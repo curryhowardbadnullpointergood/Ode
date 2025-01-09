@@ -51,7 +51,7 @@ function GeolocationComponent() {
           });
         }
       }
-      //console.log("friends_data", friends_data);
+      console.log("friends_data", friends_data);
     }
     
     return { latitude, longitude };
@@ -79,7 +79,7 @@ function GeolocationComponent() {
   const createCustomMarker = (imageUrl, size = 50) => {
     const markerElement = document.createElement('div');
     markerElement.className = 'custom-marker';
-    markerElement.style.width = `${size}px`;
+    markerElement.style.width = `${size}px`;  
     markerElement.style.height = `${size}px`;
     markerElement.style.borderRadius = '50%'; // Makes the image circular
     markerElement.style.overflow = 'hidden';

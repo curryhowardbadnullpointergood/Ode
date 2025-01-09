@@ -1,7 +1,7 @@
 import axios from "axios";
 import {useEffect, useState, useContext} from "react";
 import AuthContext from "../authentication/AuthContext";
-export default async function HandleUserInfo(id,setUserData_handle,auth, userData,set_user_detail ) {
+export default async function HandleUserInfo(id,setUserData_handle  = () => {},auth, userData,set_user_detail ) {
     //const {auth, userData,set_user_detail } = useContext(AuthContext);
     const path = process.env.REACT_APP_BACKEND_ENDPOINT+'user/view_user';
     const reply = {  
