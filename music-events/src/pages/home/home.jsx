@@ -10,24 +10,18 @@ const Home = () => {
     console.log("userData: ", userData);
     console.log("auth: ", auth);
 
-    useEffect(() => {
-        const scrollToHash = () => {
-          const hash = window.location.hash; // Get the hash from the URL
-          if (hash) {
-            const escapedHash = CSS.escape(hash.slice(1)); // Remove '#' and escape the ID
-            const targetElement = document.querySelector(`#${escapedHash}`);
-            if (targetElement) {
-              // Smoothly scroll to the element
-              window.scrollTo({
-                top: targetElement.offsetTop, // Calculate the vertical offset of the element
-                behavior: 'smooth', // Enable smooth scrolling
-              });
-            }
-          }
-        };
     
-        scrollToHash(); // Run on page load
-      }, []); // Run only once on mount
+
+
+    useEffect(() => {
+      const hash = window.location.hash.slice(1); // Remove the '#' character from the hash
+      if (hash) {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }, []);
 
     return(
         <div className="home"> 

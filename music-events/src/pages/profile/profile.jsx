@@ -173,13 +173,38 @@ const Profile = () => {
                 <ul className="events_interested">
                 
                     {events_interested.map((id,name) => (
-                        <Link to={'/home#'+ id.id}>
+                        <Link to={'/home#'+ id.name}>
                             <button key={id}>{id.name}</button>
                         </Link>
                     ))}
                 </ul>
             </>
         )
+    }
+
+    const renderEventOrganise = () => {
+        try{
+            return (
+                
+                auth.account_type === "admin" && userData_profile_admin !== "User not found" &&
+                <>
+                    <span>Events Organised</span> {/*The part showing the interested event of this player. Need styling */}
+                    {console.log("events_interested: ", userData_profile_admin["events_created"])}
+                    <ul className="events_interested">
+                        {console.log(userData_profile_admin["events_created"])}
+                        {userData_profile_admin["events_created"].map((id) => (
+                            <Link to={'/home#'+ id}>
+                                <button key={id}>{id}</button>
+                            </Link>
+                        ))}
+                    </ul>
+                </>
+            
+            )
+        }
+        catch(err){
+            console.error("error: ", err);
+        }
     }
 
     const renderSpotify = () => {
@@ -247,6 +272,8 @@ const Profile = () => {
                 </div>
 
                 {renderEventInterested()}
+
+                {renderEventOrganise()}
             
                 {renderInterest()}
 
