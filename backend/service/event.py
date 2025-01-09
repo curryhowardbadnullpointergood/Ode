@@ -274,8 +274,17 @@ def get_description(event_description):
     return response["choices"][0]["message"]["content"]
 
 
-def get_all_events(event_container):
-    events = [doc.to_dict() for doc in event_container.stream()]
+def get_all_events(request, event_container):
+    user_id = request.args.get('user_id')
+    events = []
+    for doc in event_container.stream():
+        event = doc.to_dict()
+        event['id'] = doc.id
+
+        event['is_interested'] = user_id in event.get('users', [])
+
+        events.append(event)
+
     return jsonify({
         "status": "success",
         "data": events

@@ -80,7 +80,7 @@ def event_controller(action):
     elif action == "follow" and method == 'POST':
         return subscribing_event(request, database)
     elif action == "all" and method == 'GET':
-        return get_all_events(event_container)
+        return get_all_events(request, event_container)
     else:
         return jsonify({"error": f"Unknown action: {action}"}), 404
 
