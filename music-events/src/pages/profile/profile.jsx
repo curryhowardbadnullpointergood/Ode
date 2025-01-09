@@ -223,7 +223,8 @@ const Profile = () => {
             // if user exist, display the following
             <div className="profile"> 
             <div className="profileimages">
-                
+                {console.log("userData_profile: ", userData_profile)}
+                {console.log("userData_profile: ", userData_profile_admin)}
                 <img src={back} alt="" className="background" />
                 
                 { auth.account_type ==="user" && <img src={userData_profile["profile_picture"]} alt="" className="profile" />}
