@@ -4,7 +4,7 @@ import HandleSubscribeEvent from '../../apiFunctions/HandleSubscribeEvent';
 import axios from 'axios';
 import "./Eventposts.scss";
 
-const EventCard = ({ event, onClick }) => {
+const EventCard = ({ event, userId }) => {
     const getImageUrl = (picture) => {
         if (!picture) return null;
         if (typeof picture === 'string') return picture;
@@ -13,18 +13,7 @@ const EventCard = ({ event, onClick }) => {
     };
 
     return (
-        <div id={event.name} className="event-card" onClick={onClick}>
-            <div className="image-container">
-                {getImageUrl(event.picture) ? (
-                    <img
-                        src={getImageUrl(event.picture)}
-                        alt=""
-                        className="event-image w-full h-48 object-cover"
-                    />
-                ) : (
-                    <div className="placeholder-image h-48">No Image Available</div>
-                )}
-            </div>
+        <div className="event-card">
             <div className="event-info">
                 <h3>{event.name || 'Untitled Event'}</h3>
                 <div className="admin">
@@ -33,15 +22,75 @@ const EventCard = ({ event, onClick }) => {
                     </span>
                 </div>
             </div>
+
+            <div className="image-container">
+                {/* {getImageUrl(event.picture) ? (
+                    <img
+                        src={getImageUrl(event.picture)}
+                        alt=""
+                    />
+                ) : (
+                    <div className="placeholder-image h-48">No Image Available</div>
+                )} */}
+
+                <img 
+
+                    src={getImageUrl(event.picture)} alt = ""
+                    className='event-image'
+                
+                />
+
+            </div>
+
+            <div className='eventinformation'>
+                
+                <h1> {event.name || 'Event Details'} </h1>
+                <p><strong>Organizer:</strong> {event.admin}</p>
+
+                <div className="genres">
+                    {Array.isArray(event.genres) &&
+                        event.genres.map((genre, index) => (
+                            <span key={index} className="genre-tag">
+                                {typeof genre === 'string' ? genre : ''}
+                            </span>
+                        ))}
+                </div>
+
+                <p className="description">{event.information}</p>
+
+                
+                <p>Location: {event.location}</p>
+                <p>
+                    Date: {event.date} | Start Time: {event.start_time} | End Time:{' '}
+                    {event.end_time}
+                </p>
+                <p>Ticket Price: ${event.ticket_price}</p>
+
+                {/* <HandleInterested 
+                        key={event.id}
+                        event={event}
+                        userId={userId}
+                
+                /> */}
+
+
+
+
+
+
+            </div>
+            
         </div>
     );
 };
 
-const EventDetails = ({ event, onClose, userId,auth }) => {
+
+const HandleInterested = ({event, userId}) => {
+
     const [isInterested, setIsInterested] = useState(event.is_interested || false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleInterested = async () => {
+    const handleInterested1 = async () => {
         if (!userId) {
             alert('Please log in to show interest in events');
             return;
@@ -59,49 +108,13 @@ const EventDetails = ({ event, onClose, userId,auth }) => {
             setIsLoading(false);
         }
     };
+    
+    return ( 
 
-    const getImageUrl = (picture) => {
-        if (!picture) return null;
-        if (typeof picture === 'string') return picture;
-        if (picture.title) return picture.title;
-        return null;
-    };
+        <div> 
 
-    return (
-        <div className="event-details-overlay" onClick={onClose}>
-            <div className="event-details" onClick={(e) => e.stopPropagation()}>
-                <button className="close-btn" onClick={onClose}>×</button>
-                <h2>{event.name || 'Event Details'}</h2>
-                <div className="image-container max-w-2xl mx-auto">
-                    {getImageUrl(event.picture) ? (
-                        <img
-                            src={getImageUrl(event.picture)}
-                            alt=""
-                            className="full-image w-full h-64 object-cover"
-                        />
-                    ) : (
-                        <div className="placeholder-image h-64">No Image Available</div>
-                    )}
-                </div>
-                <p><strong>Organizer:</strong> {event.admin}</p>
-                <div className="genres">
-                    {Array.isArray(event.genres) &&
-                        event.genres.map((genre, index) => (
-                            <span key={index} className="genre-tag">
-                                {typeof genre === 'string' ? genre : ''}
-                            </span>
-                        ))}
-                </div>
-                <p className="description">{event.information}</p>
-                <p>Location: {event.location}</p>
-                <p>
-                    Date: {event.date} | Start Time: {event.start_time} | End Time:{' '}
-                    {event.end_time}
-                </p>
-                <p>Ticket Price: {event.ticket_price}£</p>
-
-                {auth.account_type === "user" && <button
-                    onClick={handleInterested}
+        <button
+                    onClick={handleInterested1}
                     disabled={isLoading || isInterested}
                     className={`mt-4 px-6 py-2 rounded ${
                         isInterested
@@ -114,9 +127,16 @@ const EventDetails = ({ event, onClose, userId,auth }) => {
                     {isInterested ? 'Interested!' : isLoading ? 'Processing...' : 'Interested'}
                 </button>}
             </div>
-        </div>
+
+
     );
+
+    
+
 };
+
+
+
 
 export const EventPosts = () => {
     const [events, setEvents] = useState([]);
@@ -143,18 +163,10 @@ export const EventPosts = () => {
                     <EventCard
                         key={event.id}
                         event={event}
-                        onClick={() => setSelectedEvent(event)}
+                        userId={userData?.id}
                     />
                 ))}
             </div>
-            {selectedEvent && (
-                <EventDetails
-                    event={selectedEvent}
-                    onClose={() => setSelectedEvent(null)}
-                    userId={userData?.id}
-                    auth = {auth}
-                />
-            )}
         </div>
     );
 };
