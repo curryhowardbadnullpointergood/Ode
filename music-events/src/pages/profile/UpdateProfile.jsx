@@ -56,18 +56,21 @@ export default function UpdateProfile(){
     return(  // for simplicity in functionality development, I use br/ for simple styling. Should be change later : Lucas
         <div className="update_profile">
             { auth.account_type === "user" &&  <form onSubmit={e => HandleProfileUpdate(e, auth.token, "name" )}>
+                <h3>Enter your name</h3>
                 <input type="text" placeholder="Enter your name here" name="name" onChange={e => handleChange(e,"name")} value={formName.name}></input>
                 <br/>
                 <button type="submit">Confirm update</button>
             </form>}
 
             { auth.account_type === "admin" &&  <form onSubmit={e => HandleAdminUpdate(e, auth.token, "name" )}>
+                <h3>Enter your name</h3>
                 <input type="text" placeholder="Enter your name here" name="name" onChange={e => handleChange(e,"name")} value={formName.name}></input>
                 <br/>
                 <button type="submit">Confirm update</button>
             </form>}
 
             {auth.account_type === "user" && <form onSubmit={e => HandleProfileUpdate(e, auth.token,"bio" )}>
+                <h3>Introduce yourself!</h3>
                 <textarea id="w3review" name="bio" rows="4" cols="100" onChange={e => handleChange(e,"bio")}  value={formBio.bio}
                     placeholder="Type your bio here to describe yourself!" ></textarea>
                 <br/>
@@ -75,6 +78,7 @@ export default function UpdateProfile(){
             </form>}
 
             {auth.account_type === "admin" && <form onSubmit={e => HandleAdminUpdate(e, auth.token,"bio" )}>
+                <h3>Introduce your organisation!</h3>
                 <textarea id="w3review" name="bio" rows="4" cols="100" onChange={e => handleChange(e,"bio")}  value={formBio.bio}
                     placeholder="Type your bio here to describe yourself!" ></textarea>
                 <br/>
@@ -83,6 +87,7 @@ export default function UpdateProfile(){
 
             {/*upload profile pic */}
             {auth.account_type === "user" && <form onSubmit={e => HandleProfileUpdate(e, auth.token,"pic",{file : file} )}>
+                <h3>Profile Picture</h3>
                 <div className="addingImage">
                     <h4>Add Image:</h4>
                     <input type="file" onChange={handleImgFile}  name="profile_picture" />
@@ -93,6 +98,7 @@ export default function UpdateProfile(){
             </form>}
 
             {auth.account_type === "admin" && <form onSubmit={e => HandleAdminUpdate(e, auth.token,"pic",{file : file} )}>
+                <h3>Profile Picture</h3>
                 <div className="addingImage">
                     <h4>Add Image:</h4>
                     <input type="file" onChange={handleImgFile}  name="profile_picture" />
@@ -105,19 +111,27 @@ export default function UpdateProfile(){
             
             {auth.account_type === "user" && <form className="interests_choice" 
                 onSubmit={e => HandleProfileUpdate(e, auth.token, "interest", { interest : favorites} )}> {/*need amendment later */}
+                <h3>Genre</h3>
                 <label>Please select at least three genre of music you love below</label> 
                 <br/>
-                {interests.map((item) => (
-                    <button type="button" key={item} onClick={() => toggleFavorite(item)}>
-                        {item}
-                    </button>
-                ))}
-                {/*displaying current choice */}
-                <ul>
-                    {favorites.map((fav) => (
-                    <li key={fav}>{fav}</li>
+
+
+               
+
+                <div className="genreList">
+                    {interests.map((item) => (
+                        <button 
+                            type="button" 
+                            key={item} 
+                            onClick={() => toggleFavorite(item)}
+                            className={`genre-button ${favorites.includes(item) ? "active" : ""}`}
+                        >
+                            {item}
+                        </button>
                     ))}
-                </ul>
+                </div>
+
+                
                 
                 <button type="submit">Confirm update</button>
            </form>}

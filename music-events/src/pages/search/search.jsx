@@ -1,6 +1,6 @@
 import "./search.scss";
 import { useLoaderData, useParams, withRouter } from "react-router-dom";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import {useState, useContext} from "react";
 import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
 import AuthContext from "../../authentication/AuthContext";
