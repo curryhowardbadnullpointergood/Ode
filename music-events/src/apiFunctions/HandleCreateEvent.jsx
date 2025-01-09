@@ -1,51 +1,65 @@
 import axios from "axios";
+import {storage} from "../firebaseConfig";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-export default async function HandleCreateEvent(e, navigate) {
-    e.preventDefault();
+export default async function HandleCreateEvent(data, navigate) {
     const path = `${process.env.REACT_APP_BACKEND_ENDPOINT}event/create`;
     console.log("1. HandleCreateEvent was called!");
     console.log("2. Using endpoint:", path);
 
-    const form = e.target;
-    const formData = new FormData(form);
-    let data = {
-        users: [],
-        genres: []
-    };
-
-    for (var [key, value] of formData.entries()) {
-        console.log(`3. Processing form field - ${key}:`, value);
-        if (key === 'picture' && value instanceof File) {
-            const base64 = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(value);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-            data[key] = base64;
-        } else if (key === 'genres') {
-            data[key] = value.split(',').map(genre => genre.trim());
-        } else {
-            data[key] = value;
-        }
-    }
-
     console.log("4. Final data being sent:", data);
-
     try {
-        console.log("5. Attempting POST request...");
-        const response = await axios.post(path, data, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        console.log("6. Response:", response);
+        if (data["picture"]!== undefined){ // send picture to firestore, data["picture"] -> the img file
+            //console.log("pic");
+            const filename = 'event_pic/' + data["name"] + "-"+ data["picture"].name ;
+            const storageRef = ref(storage, filename);
+            const uploadTask = uploadBytesResumable(storageRef, data["picture"]);
 
-        if (response.data.status === "success") {
-            alert(response.data.message);
-            navigate("/");
-        } else {
-            alert(response.data.error);
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    // Update progress
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    //setProgress(progress);
+                },
+                (error) => {
+                    console.error("Upload error:", error);
+                    alert("Failed to upload image. Please try again.");
+                },
+                async () => {
+                    // Get download URL
+                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                    //console.log("downloadURL: ", downloadURL);
+                    let imgURL = downloadURL;
+                    data["picture"] = imgURL;
+                    // api call through axios to update firestore
+                    console.log("data to api: ", data);
+                    const response = await axios.post(path, data);
+                    if (response.data.status === "success") {
+                        //console.log(response.data);
+                        alert("Update successful!");
+                        console.log(response.data.message);
+                        navigate("/home");
+                    } else {
+                        alert(response.data.error);
+                    }
+                }
+            );
+        }
+        else{ // update with no image
+            console.log("5. Attempting POST request...");
+            const response = await axios.post(path, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log("6. Response:", response);
+            if (response.data.status === "success") {
+                alert(response.data.message);
+                navigate("/");
+            } else {
+                alert(response.data.error);
+            }
         }
     } catch (error) {
         console.error("7. Error details:", error);

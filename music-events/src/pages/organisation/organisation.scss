@@ -1,16 +1,192 @@
+@import url("https://cdn.syncfusion.com/ej2/material.css");
 .organisation{
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: aquamarine;
-    height: 100vmax;
+    justify-items: center;
+    background-color:  rgb(175, 238, 238);
+    height: 100%;
     width: 100vmax;
+    form{
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        
+        flex-direction: column;
+        span{
+            font-weight: bold;
+            font-size: 17px;
+        }
+        .upload_picture{
+            display: flex;
+            align-items: center;
+            width: 100%;
+            flex-direction: column;
+            border-color: #ffffff;
+            border-width: 2px;
+            border-radius: 20px;
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 20px;
+            
+        }
+        .input_word{
+            min-width: 250px;
+            max-width:  100%;
+            margin-bottom: 12px;
+            margin-top: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        textarea {
+            resize: none;
+         }
+        .submitButton{
+            margin-top: 12px;
+            height : 50px;
+            padding : 10px 10px;
+            color : white;
+            background-color: black;
+            border : 1px solid black;
+            
+        }
+        button:hover{
+            background-color :white ;
+            color: black;
+            
+        }
+        .timeDate{
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            
+            flex-direction: column;
+        }
+        .genreList{
+            display: "flex";
+            flex-direction: column;
+            gap: "10px"; // Space between buttons
+            max-width: 600px;
+            padding: 20px;
+            align-items: center;
+            .genre-button {
+                padding: 10px 20px;
+                font-size: 16px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                background-color: #f9f9f9; /* Default background */
+                color: #000;
+                cursor: pointer;
+                text-align: center;
+                margin: 5px;
+                transition: background-color 0.3s ease, color 0.3s ease;
+              }
+              
+              /* Active button styles */
+              .genre-button.active {
+                background-color: #007bff; /* Selected button background */
+                color: #fff; /* Selected button text color */
+              }
+        }
 
 
-    .span{
-        font-weight: bold;
-        font-size: 17px;
-    }
+
+        .date-picker-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-family: Arial, sans-serif;
+          }
+          
+        /* Input styling */
+        .react-datepicker__input-container input {
+        width: 250px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        }
+        
+        /* Calendar popup */
+        .react-datepicker {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Selected date highlight */
+        .react-datepicker__day--selected {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 50%;
+        }
+        
+        /* Hover effect */
+        .react-datepicker__day:hover {
+        background-color: #f0f0f0;
+        border-radius: 50%;
+        }
+        
+        /* Navigation buttons */
+        .react-datepicker__navigation {
+        top: 10px;
+        }
+        
+        .react-datepicker__navigation-icon::before {
+        border-color: #007bff;
+        }
+
+
+        
+        .time-picker-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-family: Arial, sans-serif;
+        }
+        
+        /* Input box styling */
+        .react-time-picker {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 250px; /* Adjust width */
+        padding: 2px;
+        font-size: 14px;
+        background-color: #f9f9f9;
+        }
+        
+        .react-time-picker__wrapper {
+        border: none;
+        padding: 5px;
+        }
+        
+        .react-time-picker__inputGroup__input {
+        font-size: 16px;
+        color: #333;
+        }
+        
+        .react-time-picker__clear-button,
+        .react-time-picker__clock-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        }
+        
+        .react-time-picker__clock-button svg {
+        fill: #007bff;
+        width: 20px;
+        height: 20px;
+        }
+          
+    };
+
+    
 
 
 }

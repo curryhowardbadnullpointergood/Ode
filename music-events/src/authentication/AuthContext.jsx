@@ -47,7 +47,7 @@ export const AuthProvider = ({children}) => {
             setAuth({isLoggedIn: true, token: token, loading: false, account_type : acc_type});
             setUserData(parsedData);
         } else {
-            setAuth({isLoggedIn: false, token: null, loading: false});
+            setAuth({isLoggedIn: false, token: null, loading: false, ccount_type : ""});
         }
     }, []);
 
