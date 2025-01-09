@@ -140,7 +140,8 @@ const Profile = () => {
     const handleFollow = () => {
         //console.log("Button clicked!");
         if (followed == "Click to Follow!"){
-            HandleFollowUser(userData_profile["username"], auth.token );
+            HandleFollowUser(userData_profile["username"], auth.token , setFollowed,  auth,  userData,set_user_detail);
+
         }
         else{
             alert("You have followed this person!");
@@ -172,7 +173,9 @@ const Profile = () => {
                 <ul className="events_interested">
                 
                     {events_interested.map((id,name) => (
-                        <li key={id}>{id.name}</li>
+                        <Link to={'/home#'+ id.id}>
+                            <button key={id}>{id.name}</button>
+                        </Link>
                     ))}
                 </ul>
             </>

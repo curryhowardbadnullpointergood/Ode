@@ -137,6 +137,7 @@
             
             align-items: center;
             justify-content: center;
+            cursor: "pointer"
 
             li {
                 list-style-type: none; /* Removes the bullet point */
@@ -147,6 +148,16 @@
                 min-height: 100px;
                 border-radius: 10px;
               }
+            button{
+              list-style-type: none; /* Removes the bullet point */
+                background: #c5c5c5; /* Optional: Add a background */
+                padding: 20px; /* Optional: Add some padding */
+                text-align: center; /* Optional: Center text */
+                min-width: 100px;
+                min-height: 50px;
+                border-radius: 10px;
+                cursor: "pointer"
+            }
 
         }
         .centered-title {
