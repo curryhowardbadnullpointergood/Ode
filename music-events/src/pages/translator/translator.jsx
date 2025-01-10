@@ -75,8 +75,8 @@ function Translator() {
       for (let i = 0; i < textsToTranslate.length; i += batchSize) {
         const batch = textsToTranslate.slice(i, i + batchSize);
         console.log("Sending batch:", batch);
-
-        const response = await axios.post("http://localhost:8080/translate", {
+        const path = process.env.REACT_APP_BACKEND_ENDPOINT + 'translate';
+        const response = await axios.post(path, {
           texts: batch,
           target_language: languageCode,
         });
