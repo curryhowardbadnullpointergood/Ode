@@ -6,7 +6,7 @@ import HandleUserInfo from "../../apiFunctions/HandleUserInfo";
 import AuthContext from "../../authentication/AuthContext";
 import placeholder from "../../assets/placeholder.jpg";
 import React from "react";
-import {liteClient as algoliasearch} from 'algoliasearch/lite';
+import algoliasearch from 'algoliasearch/lite';
 import {
     InstantSearch,
     SearchBox,
@@ -28,18 +28,18 @@ export default function Search(props) {
     const Hit = ({ hit }) => (
         <div className="search_entity" onClick={() =>handleClick(hit, hit["username"])}>
             <h2>
-                {hit["username"]} 
+                {hit["username"]}
             </h2>
             {hit["profile_picture"] ? (
                 <img src={hit["profile_picture"]} alt="" className="profile_img" />
             ) : (
                 <img src={placeholder} alt="" className="profile_img" />
             )}
-            
+
             <h4>
-                {hit["name"]}   
+                {hit["name"]}
             </h4>
-                
+
         </div>
     );
 
@@ -47,19 +47,19 @@ export default function Search(props) {
     const Hit_admin = ({ hit }) => (
         <div className="search_entity" onClick={() =>handleClick(hit, hit["organisation"])}>
             <h2>
-                {hit["organisation"]} 
+                {hit["organisation"]}
             </h2>
             {hit["profile_picture"] ? (
                 <img src={hit["profile_picture"]} alt="" className="profile_img" />
             ) : (
                 <img src={placeholder} alt="" className="profile_img" />
             )}
-            
+
             <h4>
-                {hit["name"]}   
+                {hit["name"]}
             </h4>
             <p>
-                {hit["interests"]}  
+                {hit["interests"]}
             </p>
         </div>
     );
@@ -95,12 +95,12 @@ export default function Search(props) {
                 <h2>User search</h2>
                 <Display_hit/>
 
-            <Index indexName="organisation_name" >
+                <Index indexName="organisation_name" >
                     <h2>organiser search</h2>
                     <Display_hit_admin />
                 </Index>
 
-                
+
                 {/*<Pagination />*/}
             </InstantSearch>
         </div>

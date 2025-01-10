@@ -33,17 +33,17 @@ const EventCard = ({ event, userId }) => {
                     <div className="placeholder-image h-48">No Image Available</div>
                 )} */}
 
-                <img 
+                <img
 
                     src={getImageUrl(event.picture)} alt = ""
                     className='event-image'
-                
+
                 />
 
             </div>
 
             <div className='eventinformation'>
-                
+
                 <h1> {event.name || 'Event Details'} </h1>
                 <p><strong>Organizer:</strong> {event.admin}</p>
 
@@ -58,7 +58,7 @@ const EventCard = ({ event, userId }) => {
 
                 <p className="description">{event.information}</p>
 
-                
+
                 <p>Location: {event.location}</p>
                 <p>
                     Date: {event.date} | Start Time: {event.start_time} | End Time:{' '}
@@ -66,12 +66,12 @@ const EventCard = ({ event, userId }) => {
                 </p>
                 <p>Ticket Price: ${event.ticket_price}</p>
 
-                {/* <HandleInterested 
-                        key={event.id}
-                        event={event}
-                        userId={userId}
-                
-                /> */}
+                {<HandleInterested
+                    key={event.id}
+                    event={event}
+                    userId={userId}
+
+                />}
 
 
 
@@ -79,7 +79,7 @@ const EventCard = ({ event, userId }) => {
 
 
             </div>
-            
+
         </div>
     );
 };
@@ -108,30 +108,30 @@ const HandleInterested = ({event, userId}) => {
             setIsLoading(false);
         }
     };
-    
-    return ( 
 
-        <div> 
+    return (
 
-        <button
-                    onClick={handleInterested1}
-                    disabled={isLoading || isInterested}
-                    className={`mt-4 px-6 py-2 rounded ${
-                        isInterested
-                            ? 'bg-green-500 text-white cursor-not-allowed'
-                            : isLoading
-                                ? 'bg-gray-400 cursor-not-allowed'
-                                : 'bg-blue-500 hover:bg-blue-600 text-white'
-                    }`}
-                >
-                    {isInterested ? 'Interested!' : isLoading ? 'Processing...' : 'Interested'}
-                </button>
-            </div>
+        <div>
+
+            <button
+                onClick={handleInterested1}
+                disabled={isLoading || isInterested}
+                className={`mt-4 px-6 py-2 rounded ${
+                    isInterested
+                        ? 'bg-green-500 text-white cursor-not-allowed'
+                        : isLoading
+                            ? 'bg-gray-400 cursor-not-allowed'
+                            : 'bg-blue-500 hover:bg-blue-600 text-white'
+                }`}
+            >
+                {isInterested ? 'Interested!' : isLoading ? 'Processing...' : 'Interested'}
+            </button>
+        </div>
 
 
     );
 
-    
+
 
 };
 
