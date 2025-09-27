@@ -1,4 +1,4 @@
-# ODE 🎶
+# ODE 
 
 A **social media platform for music lovers** that connects people around live events.  
 Event organizers can post about upcoming shows, and anyone who buys a ticket is automatically added to a group chat with other attendees. From there, users can create smaller group chats to meet new people and organize meetups before or after the event.  
@@ -7,7 +7,7 @@ This was developed as a group project — I personally built and designed the **
 
 ---
 
-## ✨ Features
+## Features
 - Event organizers can publish upcoming concerts and music events  
 - Ticket holders are automatically placed in a shared group chat  
 - Users can create and join smaller sub-groups for meetups  
@@ -15,19 +15,16 @@ This was developed as a group project — I personally built and designed the **
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 **Frontend**: React.js · Svelte · SCSS · HTML  
 **Backend**: Node.js · Python  
 **Other**: JavaScript · Git · Linux  
 
 ---
 
-## 🖼️ Screenshots
-*(Add screenshots of the UI here — event feed, group chat, etc.)*  
-
 ---
 
-## 🔧 Setup
+## Setup
 1. Clone the repo  
 2. Install dependencies:  
    ```bash
