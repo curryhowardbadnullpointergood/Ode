@@ -1,4 +1,4 @@
-# ODE 
+# Ode
 
 A **social media platform for music lovers** that connects people around live events.  
 Event organizers can post about upcoming shows, and anyone who buys a ticket is automatically added to a group chat with other attendees. From there, users can create smaller group chats to meet new people and organize meetups before or after the event.  
